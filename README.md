@@ -34,7 +34,13 @@ ApeRepublic bietet eine realistische und risikofreie Umgebung für angehende Tra
 # Our Team
 
 <table>
-
+<tr>
+<td align="center"><img src="https://avatars.githubusercontent.com/u/66224637?v=4" width="100px"></img></td>
+<td align="center"><img src="https://avatars.githubusercontent.com/u/147487525?v=4" width="100px"></img></td>
+<td align="center"><img src="https://avatars.githubusercontent.com/u/90132658?v=4" width="100px"></img></td>
+<td align="center"><img src="" width="100px"></img></td>
+<td align="center"><img src="" width="100px"></img></td>
+</tr>
 <tr>
 <td align="center"><a align="center" href="https://github.com/codajoda">@codajoda</a></td>
 <td align="center"><a align="center" href="https://github.com/MatejEvc">@MetajEvc</a></td>
