@@ -3,7 +3,7 @@
 
 # Ape Republic - Simulationsbasierte Trading Software
 
-[Wiki](https://github.com/SE-TINF22B2/G3-ApeRepublic/wiki)
+Finde die Dokumentation [hier](https://github.com/SE-TINF22B2/G3-ApeRepublic/wiki).
 
 ApeRepublic ist eine leistungsstarke Web-Anwendung, die es Nutzern ermöglicht, ein simuliertes Depot zu erstellen und Aktien mit virtuellem Geld zu traden. Mit einer benutzerfreundlichen Oberfläche und umfassenden Funktionen ist ApeRepublic die ideale Plattform für Trader, die ihre Fähigkeiten verbessern und Strategien testen möchten, ohne echtes Kapital zu riskieren.
 
