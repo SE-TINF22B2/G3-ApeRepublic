@@ -3,7 +3,7 @@
 
 # Ape Republic - Simulationsbasierte Trading Software
 
-ApeRepublic ist Hochschulprojekt an der DHBW Karlsruhe und hat einen Aufwandshorizont von 2 Semestern.
+ApeRepublic ist ein Hochschulprojekt an der DHBW Karlsruhe und hat einen Aufwandshorizont von 2 Semestern.
 
 Die Grundidee ist es eine leistungsstarke und skalierbare Web-Anwendung zu entwickeln, die es Nutzern ermöglicht, ein simuliertes Aktien-Depot zu erstellen und Aktien mit virtuellem Geld zu traden. Mit einer benutzerfreundlichen Oberfläche und realisitischen Funktionen ist ApeRepublic die ideale Plattform für Trader, die ihre Fähigkeiten verbessern und Strategien testen möchten, ohne echtes Kapital zu riskieren.
 
