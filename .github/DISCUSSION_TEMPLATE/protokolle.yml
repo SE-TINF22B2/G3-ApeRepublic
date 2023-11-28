@@ -4,7 +4,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        
+      "Hello"
   - type: textarea
     id: improvements
     attributes:
@@ -15,6 +15,6 @@ body:
         2.
         3.
         ...
-      render: bash
+      render: markdown
     validations:
       required: true
