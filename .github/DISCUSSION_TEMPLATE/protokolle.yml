@@ -4,7 +4,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        This is text that will show up in the template!
+        
   - type: textarea
     id: improvements
     attributes:
@@ -18,8 +18,3 @@ body:
       render: bash
     validations:
       required: true
-   - type: markdown
-      attributes:
-      value: |
-        ## Markdown header
-        And some more markdown
