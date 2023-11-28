@@ -4,17 +4,35 @@ body:
   - type: markdown
     attributes:
       value: |
-        This is text that will show up in the template!
+        Agenda:
+          * Begrüßung
+          * Status-Update zum Projektfortschritt
+          * Diskussion von offenen Aufgaben
+          * Neue Anforderungen oder Änderungen 
+          * Aufgabenverteilung
+          * Termin für das nächste Treffen
+          * Sonstiges
   - type: textarea
-    id: improvements
+    id: teilnehmer
     attributes:
-      label: Top 3 improvements
-      description: "What are the top 3 improvements we could make to this project?"
+      label: Teilnehmer
+      description: "Wer hat am Meeting teilgenommen?"
       value: |
         1.
         2.
         3.
         ...
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: offeneAufgaben
+    attributes:
+      label: Offene Aufgaben
+      description: "Was wurde nicht gemacht, bzw. woran muss man weiter arbeiten?"
+      value: |
+        1.
+        2.
       render: markdown
     validations:
       required: true
