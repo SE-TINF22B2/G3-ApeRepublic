@@ -29,7 +29,7 @@ body:
     id: offeneAufgaben
     attributes:
       label: Offene Aufgaben
-      description: "Was wurde nicht gemacht, bzw. woran muss man weiter arbeiten?"
+      description: "[Beschreibung] [#IssueNr] - [evtl. Erklärung]"
       value: |
         1.
         2.
@@ -40,7 +40,7 @@ body:
     id: aenderungen
     attributes:
       label: Neue Anforderungen/Änderungen
-      description: "Hier kommen neue Issues rein"
+      description: "[Beschreibung] [#IssueNr]"
       value: |
         1.
         2.
@@ -49,8 +49,26 @@ body:
     id: aufgabenverteilung
     attributes:
       label: Aufgabenverteilung
-      description: "Wer macht was?"
+      description: "[#Issue] [Person/en]"
       value: |
-        [#Issue] [Person/en]
+        * 
+        * 
       render: markdown
-        
+  - type: markdown
+    attributes:
+      value: |
+        Nächstes Termin
+  - type: dropdown
+    id: tag
+    attributes:
+      label: "Tag"
+      options:
+        - Mo
+        - Di
+        - Mi
+        - Do
+        - Fr
+        - Sa
+        - So
+    - type: input
+      label: "Datum"
