@@ -35,4 +35,14 @@ body:
         2.
       render: markdown
     validations:
-      required: true
+      required: false
+  - type: textarea
+     id: aenderungen
+    attributes:
+      label: Neue Anforderungen/Änderungen
+      description: "Hier kommen neue Issues rein"
+      value: |
+        1.
+        2.
+      render: markdown
+        
