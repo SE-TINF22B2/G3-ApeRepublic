@@ -37,7 +37,7 @@ body:
     validations:
       required: false
   - type: textarea
-     id: aenderungen
+    id: aenderungen
     attributes:
       label: Neue Anforderungen/Änderungen
       description: "Hier kommen neue Issues rein"
