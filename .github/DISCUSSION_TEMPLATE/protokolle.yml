@@ -1,5 +1,6 @@
 title: "Protokoll [Datum]"
-labels: body:
+labels: ""
+body:
   - type: markdown
     attributes:
       value: |
