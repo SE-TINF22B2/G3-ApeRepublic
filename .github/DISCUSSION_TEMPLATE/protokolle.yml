@@ -70,5 +70,5 @@ body:
         - Fr
         - Sa
         - So
-    - type: input
+  - type: input
       label: "Datum"
