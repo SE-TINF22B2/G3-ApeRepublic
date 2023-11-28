@@ -45,4 +45,12 @@ body:
         1.
         2.
       render: markdown
+  - type: textarea
+    id: aufgabenverteilung
+    attributes:
+      label: Aufgabenverteilung
+      description: "Wer macht was?"
+      value: |
+        [#Issue] [Person/en]
+      render: markdown
         
