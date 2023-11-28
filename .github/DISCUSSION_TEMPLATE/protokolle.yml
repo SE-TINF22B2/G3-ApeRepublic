@@ -18,8 +18,8 @@ body:
       render: bash
     validations:
       required: true
- - type: markdown
-    attributes:
+   - type: markdown
+      attributes:
       value: |
         ## Markdown header
         And some more markdown
