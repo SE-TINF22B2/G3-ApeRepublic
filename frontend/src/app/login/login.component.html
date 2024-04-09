@@ -1,0 +1,26 @@
+<div style="display: flex; flex-direction: column; align-items: center;">
+    <div>
+        <h1>Login</h1>
+    </div>
+    <div>
+        <form (submit)="$event.preventDefault()" style="display: block;">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Username</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input matInput>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+    <div>
+        <button mat-raised-button (click)="userValidation()">Log In</button>
+    </div>
+</div>
+
+

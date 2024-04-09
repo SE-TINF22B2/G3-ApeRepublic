@@ -30,7 +30,7 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
   declarations: [
     AppComponent,
     GraphComponent,
-    
+
     PageMainComponent,
     PageLoginComponent,
     PageSignUpComponent,
