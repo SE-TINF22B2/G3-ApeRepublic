@@ -62,7 +62,7 @@ body:
     id: beschluesse
     attributes:
       label: Beschlüsse
-      description: ""
+      description: "Beschlüsse"
       value: |
         1.
         2.
@@ -73,7 +73,7 @@ body:
     id: notizen
     attributes:
       label: Notizen
-      description: 
+      description: "Notizen"
       value: |
       render: markdown
     validations:
