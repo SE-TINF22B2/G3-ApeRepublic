@@ -29,7 +29,7 @@ body:
     id: offeneAufgaben
     attributes:
       label: Offene Aufgaben
-      description: "[Beschreibung] [#IssueNr] - [evtl. Erklärung]"
+      description: "[Beschreibung] [#IssueNr] - [Erklärung wieso nicht fertig]" 
       value: |
         1.
         2.
