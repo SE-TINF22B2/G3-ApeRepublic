@@ -75,7 +75,7 @@ body:
       label: Notizen
       description: "Notizen"
       value: |
-      ""
+        Notizen
       render: markdown
     validations:
       required: false
