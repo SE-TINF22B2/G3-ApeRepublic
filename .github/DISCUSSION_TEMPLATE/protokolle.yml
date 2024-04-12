@@ -58,6 +58,26 @@ body:
     attributes:
       value: |
         Nächstes Termin
+  - type: textarea
+    id: beschluesse
+    attributes:
+      label: Beschlüsse
+      description: ""
+      value: |
+        1.
+        2.
+      render: markdown
+    validations:
+      required: false
+  - type: textarea
+    id: notizen
+    attributes:
+      label: Notizen
+      description: 
+      value: |
+      render: markdown
+    validations:
+      required: false
   - type: dropdown
     id: tag
     attributes:
