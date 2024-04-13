@@ -6,7 +6,7 @@
         <h2 [hidden]="Username === ''"> Welcome <span style="color: red;">{{Username}} </span></h2>
         <h2 [hidden]="Username !== ''">Please enter your username</h2>
     </div>
-    
+
     <div>
         <form (submit)="$event.preventDefault()" style="display: block;">
             <div>
@@ -47,7 +47,6 @@
                     <input (input)="retypepasswordOnChange($event)" matInput>
                 </mat-form-field>
             </div>
-
             <label [hidden]="!isPasswordsmatch">
                 <p style="color: green;"> Password correct!  </p>
             </label>
@@ -56,13 +55,12 @@
             </label>
         </form>
     </div>
-    <div> 
+    <div>
     <br/>
     </div>
     <div>
-        
        <button  mat-raised-button (click)="userValidation()" [disabled]="isEnabled" ><b>Sign up</b></button>
-    
+
     </div>
 </div>
 
