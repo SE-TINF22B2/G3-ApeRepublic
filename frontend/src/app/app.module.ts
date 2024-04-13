@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { GraphComponent } from './graph/graph.component';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './login/login.component';
+import { PageSignUpComponent} from './page-sign-up/page-sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -17,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 
 
 
+
 const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModule, MatFormFieldModule, TextFieldModule, MatTableModule];
 
 @NgModule({
@@ -25,6 +27,7 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     GraphComponent,
     MainComponent,
     LoginComponent,
+    PageSignUpComponent,
   ],
   imports: [
     BrowserModule,
