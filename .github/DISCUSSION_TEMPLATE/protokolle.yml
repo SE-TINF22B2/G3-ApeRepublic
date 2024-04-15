@@ -29,7 +29,7 @@ body:
     id: offeneAufgaben
     attributes:
       label: Offene Aufgaben
-      description: "[Beschreibung] [#IssueNr] - [evtl. Erklärung]"
+      description: "[Beschreibung] [#IssueNr] - [Erklärung wieso nicht fertig]" 
       value: |
         1.
         2.
@@ -58,6 +58,27 @@ body:
     attributes:
       value: |
         Nächstes Termin
+  - type: textarea
+    id: beschluesse
+    attributes:
+      label: Beschlüsse
+      description: "Beschlüsse"
+      value: |
+        1.
+        2.
+      render: markdown
+    validations:
+      required: false
+  - type: textarea
+    id: notizen
+    attributes:
+      label: Notizen
+      description: "Notizen"
+      value: |
+        Notizen
+      render: markdown
+    validations:
+      required: false
   - type: dropdown
     id: tag
     attributes:
