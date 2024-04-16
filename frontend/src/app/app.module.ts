@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -34,10 +36,15 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     AppRoutingModule,
     BrowserAnimationsModule,
 
-    MaterialComponents
+    MaterialComponents, 
+    MatDatepickerModule,
+    MatNativeDateModule
+
+  
   ],
   exports: [MaterialComponents],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 export class AppModule { }

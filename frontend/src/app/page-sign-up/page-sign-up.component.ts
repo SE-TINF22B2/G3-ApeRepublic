@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UsernameService } from '../username.service';
+
 
 @Component({
   selector: '[app-page-sign-up]',
@@ -11,6 +14,8 @@ export class PageSignUpComponent {
   retypePassword :string = '';
   isPasswordsmatch : boolean = false;
   isEnabled : boolean = false;
+  constructor(private router: Router, private un: UsernameService) {
+  }
 
   public OnInputChanged (e : Event){
     console.log(e);
@@ -26,5 +31,9 @@ this.password = (<HTMLInputElement>e.target).value;
      }else{
       this.isPasswordsmatch = true;
      }
+  }
+  public userValidation(){
+    this.un.username = " ";
+    this.router.navigate(['/main'], {});
   }
 }
