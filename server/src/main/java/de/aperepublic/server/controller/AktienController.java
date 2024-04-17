@@ -28,7 +28,6 @@ public class AktienController {
 
     @GetMapping("aktie/historie")
     public AktieHistorie bedieneHistorie() {
-
         Map<LocalDateTime, Double> historyMap = new HashMap<>();
         historyMap.put(LocalDateTime.now(), 150.4);
         historyMap.put(LocalDateTime.now().minusSeconds(1), 153.3);
