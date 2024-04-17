@@ -12,8 +12,73 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$traderTrainer-primary: mat.define-palette(mat.$indigo-palette);
-$traderTrainer-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$my-custom-primary : (
+  50: #000000,
+  100: #000000,
+  200: #000000,
+  300: #000000,
+  400: #000000,
+  500: #000000,
+  600: #000000,
+  700: #000000,
+  800: #000000,
+  900: #000000,
+  A100: #000000,
+  A200: #000000,
+  A400: #000000,
+  A700: #000000,
+  contrast: (
+    50: #ffffff,
+    100: #ffffff,
+    200: #ffffff,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #ffffff,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+$my-custom-secondary : (
+  50: #ffffff,
+  100: #ffffff,
+  200: #ffffff,
+  300: #ffffff,
+  400: #ffffff,
+  500: #ffffff,
+  600: #ffffff,
+  700: #ffffff,
+  800: #ffffff,
+  900: #ffffff,
+  A100: #ffffff,
+  A200: #ffffff,
+  A400: #ffffff,
+  A700: #ffffff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #000000,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #000000,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+$traderTrainer-primary: mat.define-palette($my-custom-primary, 900);
+$traderTrainer-accent: mat.define-palette($my-custom-secondary, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $traderTrainer-warn: mat.define-palette(mat.$red-palette);
@@ -35,5 +100,20 @@ $traderTrainer-theme: mat.define-light-theme((
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { background-color: #E5E5E5; padding: 2%; margin: 1%;}
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html {
+  background-color: #E5E5E5;
+}
+body {
+  margin: 0;
+  padding: 3%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.router-outlet {
+  margin: 5% 10% 10% 10%;
+  width: 50%;
+  justify-content: center;
+}
+
+div {
+  display: flex;
+}

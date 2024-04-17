@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'
-import { UsernameService } from '../username.service';
+import { UsernameService } from '../../services/username-example/username.service';
 
 export interface Company {
   isin: number;
@@ -11,11 +11,11 @@ export interface Company {
 }
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector: 'app-page-main',
+  templateUrl: './page-main.component.html',
+  styleUrls: ['./page-main.component.scss']
 })
-export class MainComponent {
+export class PageMainComponent {
   displayedColumns: String[] = ["ISIN", "Name", "Amount", "Absolute", "Relative"];
   dataSource: Company[] = [
     {isin : 182312838, name : "Apple", amount : "3030$", absolute : "483428", relative : "283282%"},
@@ -28,7 +28,7 @@ export class MainComponent {
   }
 
   logOut() {
-    
+
     this.router.navigate(['/login'], {});
   }
 }
