@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainComponent } from './main.component';
+import { PageStockComponent } from './page-stock.component';
 
-describe('MainComponent', () => {
-  let component: MainComponent;
-  let fixture: ComponentFixture<MainComponent>;
+describe('PageStockComponent', () => {
+  let component: PageStockComponent;
+  let fixture: ComponentFixture<PageStockComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MainComponent]
+      declarations: [PageStockComponent]
     });
-    fixture = TestBed.createComponent(MainComponent);
+    fixture = TestBed.createComponent(PageStockComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

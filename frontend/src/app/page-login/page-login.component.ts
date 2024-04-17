@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsernameService } from '../username.service';
+import { UsernameService } from '../../services/username-example/username.service';
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-page-login',
+  templateUrl: './page-login.component.html',
+  styleUrls: ['./page-login.component.scss']
 })
-export class LoginComponent {
+export class PageLoginComponent {
 
   constructor(private router: Router, private un: UsernameService) {
   }

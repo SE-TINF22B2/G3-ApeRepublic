@@ -4,8 +4,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphComponent } from './graph/graph.component';
-import { MainComponent } from './main/main.component';
-import { LoginComponent } from './login/login.component';
+import { PageMainComponent } from './page-main/page-main.component';
+import { PageLoginComponent } from './page-login/page-login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -14,8 +14,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatTableModule } from '@angular/material/table';
-
-
+import { PageStockComponent } from './page-stock/page-stock.component';
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatIconModule } from "@angular/material/icon";
 
 const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModule, MatFormFieldModule, TextFieldModule, MatTableModule];
 
@@ -23,15 +24,18 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
   declarations: [
     AppComponent,
     GraphComponent,
-    MainComponent,
-    LoginComponent,
+    PageMainComponent,
+    PageLoginComponent,
+    PageStockComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
 
-    MaterialComponents
+    MaterialComponents,
+    MatButtonToggleModule,
+    MatIconModule,
   ],
   exports: [MaterialComponents],
   providers: [],
