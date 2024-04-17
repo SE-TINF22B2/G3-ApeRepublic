@@ -1,27 +1,31 @@
 package de.aperepublic.server.models;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "User")
-public class UserModel {
+public class UserModel implements UserDetails {
 
     @Id
-    private Long userID;
+    public Long userID;
 
-    private String Username;
+    public String username;
 
-    private String firstName;
+    public String firstName;
 
-    private String lastName;
+    public String lastName;
 
-    private String email;
+    public String email;
 
-    private String password;
+    public String password;
 
-    private Date birthday;
+    public Date birthday;
 
     public UserModel(String email, String firstName, String lastName, String password) {
         this.email = email;
@@ -30,59 +34,38 @@ public class UserModel {
         this.password = password;
     }
 
-    public Long getUserID() {
-        return userID;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
-    }
-
-    public String getUsername() {
-        return Username;
-    }
-
-    public void setUsername(String username) {
-        Username = username;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    @Override
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String getUsername() {
+        return username;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
     }
 
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
