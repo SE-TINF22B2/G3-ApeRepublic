@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsernameService } from '../../services/username-example/username.service';
 
 
 @Component({
@@ -10,11 +9,11 @@ import { UsernameService } from '../../services/username-example/username.servic
 })
 export class PageLoginComponent {
 
-  constructor(private router: Router, private un: UsernameService) {
+  constructor(private router: Router) {
   }
 
   userValidation() {
-    this.un.username = "Simon";
+    //this.un.username = "Simon";
     this.router.navigate(['/main'], {});
  }
 }

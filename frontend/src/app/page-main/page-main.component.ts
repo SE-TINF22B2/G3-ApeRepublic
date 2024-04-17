@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'
-import { UsernameService } from '../../services/username-example/username.service';
 
 export interface Company {
   isin: number;
@@ -24,7 +23,7 @@ export class PageMainComponent {
   ]
 
 
-  constructor(private router: Router, public un: UsernameService) {
+  constructor(private router: Router) {
   }
 
   logOut() {
