@@ -19,10 +19,3 @@ body:
     render: bash
   validations:
     required: true
-**Aufgabe**
-
-
-**Beschreibung**
-
-
-**Alternativen?**
