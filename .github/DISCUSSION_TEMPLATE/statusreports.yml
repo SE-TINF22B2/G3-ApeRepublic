@@ -48,8 +48,8 @@ body:
       label: table
       description: table
       value: |
-        | -------- | Column 2 | Column 3 | Column 4 | Column 5 |
-        |----------|----------|----------|----------|----------|
+        | -------- | Requirements | Design | Projektmanagement | Sonstiges |
+        |----------|--------------|--------|-------------------|-----------|
         | Anisa    |          |          |          |          |
         | Elnaz    |          |          |          |          |
         | Marc     |          |          |          |          |
