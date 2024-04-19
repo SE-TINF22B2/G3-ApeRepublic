@@ -42,6 +42,7 @@ body:
         ...
     validations:
       required: true
-  - markdown: | 
+  - markdown: 
+    value: |
       | Name | Zeit |
       | Matej| 1h   |
