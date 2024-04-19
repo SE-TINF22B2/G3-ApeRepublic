@@ -55,5 +55,5 @@ body:
         | Row 3    |          |          |          |          |
         | Row 4    |          |          |          |          |
         | Row 5    |          |          |          |          |
-      validations:
-        required: true
+    validations:
+      required: true
