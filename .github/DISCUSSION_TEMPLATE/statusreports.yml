@@ -33,7 +33,7 @@ body:
       render:  Markdown
     validations:
       required: true
-        - type: textarea
+   - type: textarea
     id: nextSteps
     attributes:
       label: 🗺️ Next Steps
