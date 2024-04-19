@@ -30,7 +30,7 @@ body:
         * 
         * 
         ...
-      render:  Markdown
+
     validations:
       required: true
   - type: textarea
