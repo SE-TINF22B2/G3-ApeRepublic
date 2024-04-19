@@ -42,3 +42,13 @@ body:
         ...
     validations:
       required: true
+  - type: textarea
+    id: tabelle
+    attributes:
+      label: Zeitaufwand
+      description: Zeitaufwände
+      value: |
+      First Header  | Second Header
+      ------------- | -------------
+      Content Cell  | Content Cell
+      Content Cell  | Content Cell
