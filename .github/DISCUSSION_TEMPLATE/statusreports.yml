@@ -12,13 +12,36 @@ body:
   - type: textarea
     id: Quicktakes
     attributes:
-      label: Teilnehmer
+      label: ⚡Quicktakes
       description: "Status in Kurze"
       value: |
-        ## ⚡ Quicktakes
         * 
         * 
         ...
-      render:  Text
+      render:  Markdown
+    validations:
+      required: true
+  - type: textarea
+    id: Achievements
+    attributes:
+      label: 🥇 Achievements
+      description: "Unsere Achievements"
+      value: |
+        * 
+        * 
+        ...
+      render:  Markdown
+    validations:
+      required: true
+        - type: textarea
+    id: nextSteps
+    attributes:
+      label: 🗺️ Next Steps
+      description: "Die nächsten Schritte"
+      value: |
+        * 
+        * 
+        ...
+      render:  Markdown
     validations:
       required: true
