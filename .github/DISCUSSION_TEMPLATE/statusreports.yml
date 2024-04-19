@@ -19,6 +19,6 @@ body:
         * 
         * 
         ...
-      render:  Markdown
+      render:  Text
     validations:
       required: true
