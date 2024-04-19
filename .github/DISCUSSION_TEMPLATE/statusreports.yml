@@ -42,7 +42,8 @@ body:
         ...
     validations:
       required: true
-  - markdown: 
-    value: |
-      | Name | Zeit |
-      | Matej| 1h   |
+  - type: markdown
+    attributes:
+      value: |
+        | Name | Zeit |
+        | Matej| 1h   |
