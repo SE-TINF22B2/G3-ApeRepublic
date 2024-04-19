@@ -48,7 +48,5 @@ body:
       label: Zeitaufwand
       description: Zeitaufwände
       value: |
-      First Header  | Second Header
-      ------------- | -------------
-      Content Cell  | Content Cell
-      Content Cell  | Content Cell
+      | Name | Zeit |
+      | Matej| 1h   |
