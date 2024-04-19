@@ -42,11 +42,6 @@ body:
         ...
     validations:
       required: true
-  - type: textarea
-    id: tabelle
-    attributes:
-      label: Zeitaufwand
-      description: Zeitaufwände
-      value: |
+  - markdown: | 
       | Name | Zeit |
       | Matej| 1h   |
