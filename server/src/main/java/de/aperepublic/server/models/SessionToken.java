@@ -6,11 +6,11 @@ import java.util.UUID;
 public class SessionToken {
 
     private UUID tokenId;
-    private Date expireDate;
+    private String username;
 
-    public SessionToken(UUID token, Date expireDate) {
+    public SessionToken(UUID token, String username) {
         this.tokenId = token;
-        this.expireDate = expireDate;
+        this.username = username;
     }
 
     public UUID getTokenId() {
@@ -21,11 +21,11 @@ public class SessionToken {
         this.tokenId = tokenId;
     }
 
-    public Date getCreated() {
-        return expireDate;
+    public String getUsername() {
+        return username;
     }
 
-    public void setExpireDate(Date expireDate) {
-        this.expireDate = expireDate;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

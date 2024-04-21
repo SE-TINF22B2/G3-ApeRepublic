@@ -12,15 +12,13 @@ import java.util.UUID;
 public class ActiveUserService {
 
     private List<SessionToken> sessionTokens;
-    private long lifetime;
 
-    public ActiveUserService(@Value("${sessionToken.lifetime}") long lifetime) {
+    public ActiveUserService() {
         sessionTokens = List.of();
-        this.lifetime = lifetime;
     }
 
-    public UUID createToken() {
-        SessionToken sessionToken = new SessionToken(UUID.randomUUID(), createdDate());
+    public UUID createToken(String username) {
+        SessionToken sessionToken = new SessionToken(UUID.randomUUID(), username);
         sessionTokens.add(sessionToken);
         return sessionToken.getTokenId();
     }
@@ -29,25 +27,9 @@ public class ActiveUserService {
         return 1 <= sessionTokens.stream().filter(token -> token.getTokenId().equals(tokenId)).count();
     }
 
-    public void refreshSessionTokenExpireDate(String token) {
-
+    public boolean containsUser(String username) {
+        return 1 <= sessionTokens.stream().filter(token -> token.getUsername().contentEquals(username)).count();
     }
 
-    public void refreshSessionTokens() {
-        sessionTokens = sessionTokens.stream().filter(token -> token.getCreated().getTime() < System.currentTimeMillis() - lifetime).toList();
-    }
-
-    public void setLifetime(long lifetime) {
-        this.lifetime = lifetime;
-        refreshSessionTokens();
-    }
-
-    public long getLifetime() {
-        return lifetime;
-    }
-
-    private Date createdDate() {
-        return new Date(System.currentTimeMillis());
-    }
 
 }

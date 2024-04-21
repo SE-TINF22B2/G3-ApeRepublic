@@ -1,14 +1,14 @@
 package de.aperepublic.server.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 
 import java.sql.Date;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "User")
-public class UserModel {
+@AllArgsConstructor
+public class User {
 
     @Id
     public Long userID;
@@ -24,12 +24,5 @@ public class UserModel {
     public String password;
 
     public Date birthday;
-
-    public UserModel(String email, String firstName, String lastName, String password) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-    }
 
 }
