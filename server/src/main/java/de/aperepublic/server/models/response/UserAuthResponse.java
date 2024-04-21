@@ -1,16 +1,17 @@
 package de.aperepublic.server.models.response;
 
 import com.google.gson.Gson;
+import org.json.JSONObject;
 
 import java.util.Map;
 
 public class UserAuthResponse {
 
     private ResponseStatus responseStatus;
-    private Map<String, Object> arguments;
+    private JSONObject arguments;
 
     public UserAuthResponse() {
-        arguments = Map.of();
+        arguments = new JSONObject();
     }
 
     public UserAuthResponse(ResponseStatus responseStatus) {
@@ -30,7 +31,7 @@ public class UserAuthResponse {
 
     public String build() {
         arguments.put("message", responseStatus.message);
-        return new Gson().toJson(Map.of(responseStatus.statusText, arguments));
+        return new JSONObject().put(responseStatus.statusText, arguments).toString();
     }
 
 }

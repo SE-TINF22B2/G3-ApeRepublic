@@ -20,13 +20,23 @@ public class UserAuthenticationTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testUserNotRegisteredGettingRegistered() throws Exception {
-        String requestBody = "{\"token\": \"abc123\", \"username\": \"testuser\", \"password\": \"password123\", \"email\": \"test@example.com\"}";
+    public void testUserRegisterWithMissingBirthday() throws Exception {
+        String requestBody = "{\"username\": \"testuser\", \"email\": \"test@example.com\", \"password\": \"password123\", \"firstname\":\"Dieter\", \"lastname\":\"Insta\"}";
         mockMvc.perform(post("/api/user/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk())
-                .andExpect(content().string("User registered successfully!"));
+                .andExpect(content().string("{\"error\":{\"message\":\"One or more parameter are missing!\"}}"));
+    }
+
+    @Test
+    public void testUnregisteredUserRegistration() throws Exception {
+        String requestBody = "{\"username\": \"testuser\", \"email\": \"test@example.com\", \"password\": \"password123\", \"firstname\":\"Dieter\", \"lastname\":\"Insta\", \"birthday\":\"2002-08-07\"}";
+        mockMvc.perform(post("/api/user/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"success\":{\"sessionToken\":5,\"message\":\"Registration successful!\"}}"));
     }
 
     @Test

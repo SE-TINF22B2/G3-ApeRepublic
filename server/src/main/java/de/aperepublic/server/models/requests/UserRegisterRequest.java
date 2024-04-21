@@ -24,6 +24,10 @@ public class UserRegisterRequest {
     public String lastname;
 
     @JsonProperty("birthday")
-    public Date birthday;
+    public String birthday;
+
+    public boolean anyNullValue() {
+        return username == null || email == null || password == null || firstname == null || lastname == null || birthday == null;
+    }
 
 }
