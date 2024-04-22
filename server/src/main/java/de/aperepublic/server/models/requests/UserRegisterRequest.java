@@ -3,9 +3,6 @@ package de.aperepublic.server.models.requests;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 
-import java.sql.Date;
-
-@AllArgsConstructor
 public class UserRegisterRequest {
 
     @JsonProperty("username")
@@ -26,8 +23,17 @@ public class UserRegisterRequest {
     @JsonProperty("birthday")
     public String birthday;
 
-    public boolean anyNullValue() {
-        return username == null || email == null || password == null || firstname == null || lastname == null || birthday == null;
+    public UserRegisterRequest(String username, String email, String password, String firstname, String lastname, String birthday) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.birthday = birthday;
+    }
+
+    public boolean isValid() {
+        return username != null && email != null && password != null && firstname != null && lastname != null && birthday != null;
     }
 
 }

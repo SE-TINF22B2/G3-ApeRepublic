@@ -10,6 +10,8 @@ import java.sql.Date;
 @AllArgsConstructor
 public class User {
 
+    // TODO: Builder
+
     @Id
     public Long userID;
 
