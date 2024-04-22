@@ -1,34 +1,26 @@
 package de.aperepublic.server;
 
 import de.aperepublic.server.models.User;
-import de.aperepublic.server.models.requests.UserLogRequest;
+import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
-import de.aperepublic.server.repositories.UserRepository;
 import de.aperepublic.server.services.ActiveUserService;
 import de.aperepublic.server.services.UserAuthService;
 import de.aperepublic.server.services.UserRepositoryService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
-import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.lenient;
 
 @ExtendWith(MockitoExtension.class)
 public class UserAuthServiceTest {
@@ -78,7 +70,7 @@ public class UserAuthServiceTest {
                 .thenAnswer(invocation -> {
                     String email = invocation.getArgument(0);
                     if(email.contentEquals(registeredUser.email)) {
-                        return registeredUser;
+                        return Optional.of(registeredUser);
                     } else {
                         return Optional.empty();
                     }
@@ -122,9 +114,9 @@ public class UserAuthServiceTest {
 
     @Test
     public void testLoggingInNewUser() {
-        UserLogRequest userLogRequest = new UserLogRequest(unregisteredUser.username, unregisteredUser.email, unregisteredUser.password, unregisteredUser.password);
+        UserLoginRequest userLoginRequest = new UserLoginRequest(unregisteredUser.username, unregisteredUser.email, unregisteredUser.password, unregisteredUser.password);
 
-        ResponseEntity<String> res = userAuthService.processLoginUser(userLogRequest);
+        ResponseEntity<String> res = userAuthService.processLoginUser(userLoginRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
@@ -133,9 +125,9 @@ public class UserAuthServiceTest {
 
     @Test
     public void testLoggingInRegisteredUser() {
-        UserLogRequest userLogRequest = new UserLogRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
+        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
 
-        ResponseEntity<String> res = userAuthService.processLoginUser(userLogRequest);
+        ResponseEntity<String> res = userAuthService.processLoginUser(userLoginRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
