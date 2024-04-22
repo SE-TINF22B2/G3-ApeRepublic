@@ -1,7 +1,6 @@
 package de.aperepublic.server.models.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 
 public class UserLogRequest {
 

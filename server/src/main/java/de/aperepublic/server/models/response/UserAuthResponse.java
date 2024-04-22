@@ -19,7 +19,7 @@ public class UserAuthResponse {
         this.responseStatus = responseStatus;
     }
 
-    public UserAuthResponse addSessionToken(long sessionToken) {
+    public UserAuthResponse addSessionToken(String sessionToken) {
         arguments.put("sessionToken", sessionToken);
         return this;
     }

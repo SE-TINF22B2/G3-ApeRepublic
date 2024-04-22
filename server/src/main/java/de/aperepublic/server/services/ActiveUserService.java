@@ -1,20 +1,19 @@
 package de.aperepublic.server.services;
 
 import de.aperepublic.server.models.SessionToken;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class ActiveUserService {
 
-    private List<SessionToken> sessionTokens;
+    private final List<SessionToken> sessionTokens;
 
     public ActiveUserService() {
-        sessionTokens = List.of();
+        sessionTokens = new ArrayList<>();
     }
 
     public UUID createToken(String username) {
@@ -24,11 +23,11 @@ public class ActiveUserService {
     }
 
     public boolean containsToken(UUID tokenId) {
-        return 1 <= sessionTokens.stream().filter(token -> token.getTokenId().equals(tokenId)).count();
+        return sessionTokens.stream().anyMatch(token -> token.getTokenId().equals(tokenId));
     }
 
-    public boolean containsUser(String username) {
-        return 1 <= sessionTokens.stream().filter(token -> token.getUsername().contentEquals(username)).count();
+    public boolean containsUserByEmail(String email) {
+        return sessionTokens.stream().anyMatch(token -> token.getEmail().contentEquals(email));
     }
 
 

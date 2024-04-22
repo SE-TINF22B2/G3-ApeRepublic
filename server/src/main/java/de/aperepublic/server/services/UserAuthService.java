@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class UserAuthService {
 
@@ -29,8 +31,8 @@ public class UserAuthService {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.EMAIL_TAKEN).build());
         }
         // TODO: Register User Logic
-        // TODO: Create SessionToken
-        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionToken(5L).build());
+        UUID sessionToken = activeUserService.createToken(userRegisterRequest.email);
+        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionToken(sessionToken.toString()).build());
     }
 
     public ResponseEntity<String> processLoginUser(UserLogRequest userLogRequest) {
