@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UsernameService } from '../username.service';
 
 
 @Component({
@@ -12,7 +11,7 @@ export class LoginComponent {
 
 
   Username : String = '';
-  constructor(private router: Router, private un: UsernameService) {
+  constructor(private router: Router) {
   }
 
   public OnInputChanged (e : Event){
@@ -21,7 +20,6 @@ export class LoginComponent {
   }
 
   userValidation() {
-    this.un.username = "Simon";
     this.router.navigate(['/main'], {});
  }
 }

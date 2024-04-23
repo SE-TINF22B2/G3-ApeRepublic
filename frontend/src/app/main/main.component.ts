@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'
-import { UsernameService } from '../username.service';
 
 export interface Company {
   isin: number;
@@ -28,7 +27,7 @@ export class MainComponent {
   }
 
   logOut() {
-    
+
     this.router.navigate(['/login'], {});
   }
 }
