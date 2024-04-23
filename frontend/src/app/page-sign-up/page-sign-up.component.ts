@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: '[app-page-sign-up]',
@@ -24,11 +25,7 @@ this.password = (<HTMLInputElement>e.target).value;
   }
   public retypepasswordOnChange(e : Event){
     this.retypePassword = (<HTMLInputElement>e.target).value;
-     if(this.password !== this.retypePassword){
-      this.isPasswordsmatch = false;
-     }else{
-      this.isPasswordsmatch = true;
-     }
+     this.isPasswordsmatch = this.password === this.retypePassword;
   }
   public userValidation(){
     this.router.navigate(['/main'], {});

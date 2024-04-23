@@ -9,11 +9,16 @@ import { Router } from '@angular/router';
 })
 export class PageLoginComponent {
 
+  Username : String = '';
   constructor(private router: Router) {
   }
 
+  public OnInputChanged (e : Event){
+    console.log(e);
+    this.Username = (<HTMLInputElement>e.target).value;
+  }
+
   userValidation() {
-    //this.un.username = "Simon";
     this.router.navigate(['/main'], {});
  }
 }
