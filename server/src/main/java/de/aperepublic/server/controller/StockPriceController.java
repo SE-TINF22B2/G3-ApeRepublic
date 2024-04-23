@@ -20,18 +20,18 @@ public class StockPriceController {
     }
 
     @GetMapping("aktie/historie")
-    public AktieHistorie bedieneHistorie() {
+    public Map<String, Object> bedieneHistorie() {
         Map<LocalDateTime, Double> historyMap = new HashMap<>();
         historyMap.put(LocalDateTime.now(), 150.4);
         historyMap.put(LocalDateTime.now().minusSeconds(1), 153.3);
         historyMap.put(LocalDateTime.now().minusSeconds(3), 151.2);
         historyMap.put(LocalDateTime.now().minusMinutes(2), 150.0);
-        return new AktieHistorie();
+        return Map.of("anfrageStatus", 0, "history", List.of(150.4, 148.7, 145.3, 146.1));
     }
 
     @GetMapping("/aktie/preis/echtzeit")
-    public AktiePreis bedieneAktiePreisEchtzeit(@RequestParam String symbol) {
-        return new AktiePreis();
+    public Map<String, Object> bedieneAktiePreisEchtzeit(@RequestParam String symbol) {
+        return Map.of("anfrageStatus", 0, "history", List.of(150.4, 148.7, 145.3, 146.1));
     }
 
     @PostMapping("/aktie/handeln") //bin mir nicht sicher ob hier ein get kommt
