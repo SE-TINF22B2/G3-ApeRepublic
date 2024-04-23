@@ -5,12 +5,15 @@ import { PageMainComponent } from './page-main/page-main.component';
 import { PageLoginComponent } from './page-login/page-login.component';
 import { PageStockComponent } from "./page-stock/page-stock.component";
 import { PageSignUpComponent} from './page-sign-up/page-sign-up.component';
+import {AuthService} from "../services/auth/auth.service";
 
 const routes: Routes = [
-  {path: 'main', component: PageMainComponent},
+  {path: 'main', component: PageMainComponent, canActivate: [AuthService] },
+  {path: 'stock', component: PageStockComponent, canActivate: [AuthService] },
   {path: 'login', component: PageLoginComponent},
   {path: 'signup', component: PageSignUpComponent},
-  {path: 'stock', component: PageStockComponent}
+
+  { path: '',   redirectTo: '/main', pathMatch: 'full' }
 ];
 
 @NgModule({

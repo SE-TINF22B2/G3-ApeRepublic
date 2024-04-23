@@ -1,43 +1,41 @@
 <div style="display: flex; flex-direction: column; align-items: center;">
-    <div>
-        <h1><b>Login</b></h1>
-    </div>
-    <div>
-        <h2 [hidden]="Username === ''"> Welcome back <span style="color: red;">{{Username}} </span></h2>
-        <h2 [hidden]="Username !== ''">Please enter your username and password</h2>
-    </div>
-    <div>
-        <form (submit)="$event.preventDefault()" style="display: block;">
-            <div>
-                <mat-form-field appearance="fill">
-                    <mat-label>Type your username</mat-label>
-                    <input type="text" (input)="OnInputChanged($event)" matInput>
-                </mat-form-field>
-            </div>
-            <div>
-                <mat-form-field appearance="fill">
-                    <mat-label>Type your password</mat-label>
-                    <input type="text" matInput>
-                </mat-form-field>
-            </div>
-            <div>
-                <a [routerLink]="['/signup']">
-                   Forgot your Password?
-                  </a>
-            </div>
-            <br>
-            <div>
-                <a [routerLink]="['/signup']">
-                    Not a member?
-                   </a>
-            </div>
-        </form>
-    </div>
-    <div>
-        <button mat-raised-button (click)="userValidation()">Log In</button>
-    </div>
+  <div>
+    <h1><b>Login</b></h1>
+  </div>
+  <div>
+    <h2 [hidden]="Username === ''"> Welcome back <span style="color: red;">{{Username}} </span></h2>
+    <h2 [hidden]="Username !== ''">Please enter your username and password</h2>
 
+  </div>
+  <div>
+    <form [formGroup]="form" (submit)="$event.preventDefault()" style="display: block;">
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Type your Email</mat-label>
+          <input type="text" (input)="OnInputChanged($event)" matInput formControlName="email">
 
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Type your password</mat-label>
+          <input type="text" matInput formControlName="password">
+        </mat-form-field>
+      </div>
+      <div>
+        <a [routerLink]="['/signup']">
+          Forgot your Password?
+        </a>
+      </div>
+      <br>
+      <div>
+        <a [routerLink]="['/signup']">
+          Not a member?
+        </a>
+      </div>
+    </form>
+  </div>
+  <div>
+    <button mat-raised-button (click)="userValidation()">Log In</button>
+  </div>
 </div>
-
-

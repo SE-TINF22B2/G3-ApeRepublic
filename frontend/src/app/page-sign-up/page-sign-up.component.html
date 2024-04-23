@@ -1,46 +1,75 @@
 <div style="display: flex; flex-direction: column; align-items: center;">
-    <div>
-        <h1>Create Account</h1>
-    </div>
-    <div>
-        <h2 [hidden]="Username === ''"> Welcome <span style="color: red;">{{Username}} </span></h2>
-        <h2 [hidden]="Username !== ''">Please enter your username</h2>
-    </div>
+  <div>
+    <h1>Create Account</h1>
+  </div>
+  <div>
+    <h2 [hidden]="Username === ''"> Welcome <span style="color: red;">{{Username}} </span></h2>
+    <h2 [hidden]="Username !== ''">Please enter your username</h2>
+  </div>
 
-    <div>
-        <form (submit)="$event.preventDefault()" style="display: block;">
-            <div>
-                <mat-form-field appearance="fill">
-                    <mat-label>Username</mat-label>
-                    <input type="text" (input)="OnInputChanged($event)" matInput>
-                </mat-form-field>
-            </div>
-            <div>
-                <mat-form-field appearance="fill">
-                    <mat-label>Password</mat-label>
-                    <input (input)="passwordOnChange($event)" matInput>
-                </mat-form-field>
-            </div>
-            <div>
-                <mat-form-field appearance="fill">
-                    <mat-label>Confirm password</mat-label>
-                    <input (input)="retypepasswordOnChange($event)" matInput>
-                </mat-form-field>
-            </div>
-            <label [hidden]="!isPasswordsmatch">
-                <p style="color: green;"> Password correct!  </p>
-            </label>
-            <label [hidden]="isPasswordsmatch || password === ''" >
-                <p style="color: red;"> Password incorrect!  </p>
-            </label>
-        </form>
-    </div>
-    <div>
+  <div>
+    <form [formGroup]="form" (submit)="$event.preventDefault()" style="display: block;">
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input type="text" (input)="OnInputChanged($event)" formControlName="username" matInput >
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input formControlName="firstname" matInput>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastname" matInput>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Birthday</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthday">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input (input)="passwordOnChange($event)" formControlName="password" matInput>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Confirm password</mat-label>
+          <input (input)="retypepasswordOnChange($event)" matInput>
+        </mat-form-field>
+      </div>
+
+      <label [hidden]="!isPasswordsmatch">
+        <p style="color: green;"> Password correct!  </p>
+      </label>
+      <label [hidden]="isPasswordsmatch || password === ''" >
+        <p style="color: red;"> Password incorrect!  </p>
+      </label>
+    </form>
+  </div>
+  <div>
     <br/>
-    </div>
-    <div>
-       <button  mat-raised-button (click)="userValidation()" [disabled]="isEnabled" ><b>Sign up</b></button>
-    </div>
+  </div>
+  <div>
+
+    <button  mat-raised-button (click)="userValidation()" [disabled]="isEnabled" ><b>Sign up</b></button>
+
+  </div>
 </div>
 
 

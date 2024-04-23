@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import {FormControl, FormGroup} from "@angular/forms";
+import {ServerApiService} from "../../services/server-api/server-api.service";
 
 
 @Component({
-  selector: '[app-page-sign-up]',
+  selector: 'app-page-sign-up',
   templateUrl: './page-sign-up.component.html',
   styleUrls: ['./page-sign-up.component.scss']
 })
@@ -13,7 +15,17 @@ export class PageSignUpComponent {
   retypePassword :string = '';
   isPasswordsmatch : boolean = false;
   isEnabled : boolean = false;
-  constructor(private router: Router) {
+
+  form = new FormGroup({
+    email: new FormControl(''),
+    username: new FormControl(''),
+    firstname: new FormControl(''),
+    lastname: new FormControl(''),
+    password: new FormControl(''),
+    birthday: new FormControl(''),
+  });
+
+  constructor(private router: Router, private serverApi : ServerApiService) {
   }
 
   public OnInputChanged (e : Event){
@@ -28,6 +40,5 @@ this.password = (<HTMLInputElement>e.target).value;
      this.isPasswordsmatch = this.password === this.retypePassword;
   }
   public userValidation(){
-    this.router.navigate(['/main'], {});
   }
 }
