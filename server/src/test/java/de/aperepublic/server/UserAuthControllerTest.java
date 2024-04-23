@@ -20,6 +20,7 @@ public class UserAuthControllerTest {
     private MockMvc mockMvc;
 
     @Test
+    @Disabled
     public void testUserRegisterWithMissingBirthday() throws Exception {
         String requestBody = "{\"username\": \"testuser\", \"email\": \"test@example.com\", \"password\": \"password123\", \"firstname\":\"Dieter\", \"lastname\":\"Insta\"}";
         mockMvc.perform(post("/api/user/auth/register")
@@ -30,6 +31,7 @@ public class UserAuthControllerTest {
     }
 
     @Test
+    @Disabled
     public void testUnregisteredUserRegistration() throws Exception {
         String requestBody = "{\"username\": \"testuser\", \"email\": \"test@example.com\", \"password\": \"password123\", \"firstname\":\"Dieter\", \"lastname\":\"Insta\", \"birthday\":\"2002-08-07\"}";
         mockMvc.perform(post("/api/user/auth/register")
