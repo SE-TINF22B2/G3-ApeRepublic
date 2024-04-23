@@ -4,20 +4,20 @@ import java.util.UUID;
 
 public class SessionToken {
 
-    private UUID tokenId;
+    private UUID sessionTokenId;
     private String email;
 
     public SessionToken(UUID token, String email) {
-        this.tokenId = token;
+        this.sessionTokenId = token;
         this.email = email;
     }
 
-    public UUID getTokenId() {
-        return tokenId;
+    public UUID getSessionTokenId() {
+        return sessionTokenId;
     }
 
-    public void setTokenId(UUID tokenId) {
-        this.tokenId = tokenId;
+    public void setSessionTokenId(UUID sessionTokenId) {
+        this.sessionTokenId = sessionTokenId;
     }
 
     public String getEmail() {

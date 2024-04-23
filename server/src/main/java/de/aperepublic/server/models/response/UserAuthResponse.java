@@ -1,9 +1,6 @@
 package de.aperepublic.server.models.response;
 
-import com.google.gson.Gson;
 import org.json.JSONObject;
-
-import java.util.Map;
 
 public class UserAuthResponse {
 
@@ -19,8 +16,8 @@ public class UserAuthResponse {
         this.responseStatus = responseStatus;
     }
 
-    public UserAuthResponse addSessionToken(String sessionToken) {
-        arguments.put("sessionToken", sessionToken);
+    public UserAuthResponse addSessionTokenId(String sessionTokenId) {
+        arguments.put("sessionTokenId", sessionTokenId);
         return this;
     }
 

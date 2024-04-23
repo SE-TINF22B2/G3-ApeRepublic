@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -23,7 +22,7 @@ public class ActiveUserService {
         }
         SessionToken sessionToken = new SessionToken(UUID.randomUUID(), email);
         sessionTokens.add(sessionToken);
-        return sessionToken.getTokenId();
+        return sessionToken.getSessionTokenId();
     }
 
     public UUID updateToken(String email) {
@@ -34,12 +33,12 @@ public class ActiveUserService {
         return sessionTokens.removeIf(token -> token.getEmail().contentEquals(email));
     }
 
-    public boolean removeIfTokenAndEmailMatch(String tokenId, String email) {
-        return sessionTokens.removeIf(token -> token.getTokenId().toString().contentEquals(tokenId) && token.getEmail().contentEquals(email));
+    public boolean removeIfTokenMatch(String tokenId) {
+        return sessionTokens.removeIf(token -> token.getSessionTokenId().toString().contentEquals(tokenId));
     }
 
     public boolean containsToken(UUID tokenId) {
-        return sessionTokens.stream().anyMatch(token -> token.getTokenId().equals(tokenId));
+        return sessionTokens.stream().anyMatch(token -> token.getSessionTokenId().equals(tokenId));
     }
 
     public boolean containsUserByEmail(String email) {

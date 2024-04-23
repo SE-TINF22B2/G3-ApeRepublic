@@ -2,6 +2,7 @@ package de.aperepublic.server;
 
 import de.aperepublic.server.models.User;
 import de.aperepublic.server.models.requests.UserLoginRequest;
+import de.aperepublic.server.models.requests.UserLogoutRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
 import de.aperepublic.server.services.ActiveUserService;
 import de.aperepublic.server.services.UserAuthService;
@@ -108,8 +109,8 @@ public class UserAuthServiceTest {
         JSONObject resBody = new JSONObject(res.getBody());
         assertTrue(resBody.has("success"));
         JSONObject messageBody = resBody.getJSONObject("success");
-        assertTrue(messageBody.has("sessionToken"));
-        assertTrue(activeUserService.containsToken(UUID.fromString(messageBody.getString("sessionToken"))));
+        assertTrue(messageBody.has("sessionTokenId"));
+        assertTrue(activeUserService.containsToken(UUID.fromString(messageBody.getString("sessionTokenId"))));
     }
 
     @Test
@@ -132,6 +133,40 @@ public class UserAuthServiceTest {
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
         assertTrue(resBody.has("success"));
+    }
+
+    @Test
+    public void testLoggingOutWithCorrectToken() {
+        // Login to get SessionTokenId
+        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
+
+        ResponseEntity<String> loginRes = userAuthService.processLoginUser(userLoginRequest);
+
+        assertEquals(HttpStatus.OK, loginRes.getStatusCode());
+        JSONObject loginResBody = new JSONObject(loginRes.getBody());
+        assertTrue(loginResBody.has("success"));
+
+        String sessionTokenId = loginResBody.getJSONObject("success").getString("sessionTokenId");
+
+        // Logout with SessionTokenId
+        UserLogoutRequest userLogoutRequest = new UserLogoutRequest(sessionTokenId);
+
+        ResponseEntity<String> logoutRes = userAuthService.processLogoutUser(userLogoutRequest);
+
+        assertEquals(HttpStatus.OK, logoutRes.getStatusCode());
+        JSONObject logoutResBody = new JSONObject(logoutRes.getBody());
+        assertTrue(logoutResBody.has("success"));
+    }
+
+    @Test
+    public void testLoggingOutWithWrongToken() {
+        UserLogoutRequest userLogoutRequest = new UserLogoutRequest("0");
+
+        ResponseEntity<String> res = userAuthService.processLogoutUser(userLogoutRequest);
+
+        assertEquals(HttpStatus.OK, res.getStatusCode());
+        JSONObject resBody = new JSONObject(res.getBody());
+        assertTrue(resBody.has("error"));
     }
 
 }

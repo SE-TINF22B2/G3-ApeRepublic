@@ -4,6 +4,8 @@ public class UserLogoutRequest {
 
     public String token;
 
-    public String username;
+    public UserLogoutRequest(String token) {
+        this.token = token;
+    }
 
 }

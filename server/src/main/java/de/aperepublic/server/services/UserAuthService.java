@@ -33,9 +33,9 @@ public class UserAuthService {
         if(userRepositoryService.existsByEmail(userRegisterRequest.email)) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.EMAIL_TAKEN).build());
         }
-        // TODO: Register User Logic
+        // TODO: Register DB Integration
         UUID sessionToken = activeUserService.createToken(userRegisterRequest.email);
-        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionToken(sessionToken.toString()).build());
+        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionTokenId(sessionToken.toString()).build());
     }
 
     public ResponseEntity<String> processLoginUser(UserLoginRequest userLoginRequest) {
@@ -47,12 +47,12 @@ public class UserAuthService {
         if(!requestUser.password.contentEquals(userLoginRequest.password)) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.UNSUCCESSFUL_LOGIN).build());
         }
-        String tokenId = activeUserService.createToken(requestUser.email).toString();
-        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGIN).addSessionToken(tokenId).build());
+        String sessionTokenId = activeUserService.createToken(requestUser.email).toString();
+        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGIN).addSessionTokenId(sessionTokenId).build());
     }
 
     public ResponseEntity<String> processLogoutUser(UserLogoutRequest userLogoutRequest) {
-        if(!activeUserService.removeIfTokenAndEmailMatch(userLogoutRequest.token, userLogoutRequest.username)) {
+        if(!activeUserService.removeIfTokenMatch(userLogoutRequest.token)) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.UNSUCCESSFUL_LOGOUT).build());
         }
         return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGOUT).build());
