@@ -57,3 +57,13 @@ body:
         | Simon    |              |          |                   |           |
     validations:
       required: true
+  - type: textarea
+    id: branches
+    attributes:
+      label: Veränderte Branches
+      description: "Diese Branches wurden geändert"
+      value: |
+        * 
+        * 
+    validations:
+      required: true
