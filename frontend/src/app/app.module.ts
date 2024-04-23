@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphComponent } from './graph/graph.component';
 import { MainComponent } from './main/main.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './page-login/page-login.component';
 import { PageSignUpComponent} from './page-sign-up/page-sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
