@@ -7,10 +7,7 @@ assignees: ''
 
 ---
 
-**Aufgabe**
-
-
 **Beschreibung**
 
 
-**Alternativen?**
+**Alternativen/Sonstiges**
