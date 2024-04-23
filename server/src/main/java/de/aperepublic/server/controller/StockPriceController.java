@@ -3,7 +3,6 @@ package de.aperepublic.server.controller;
 import de.aperepublic.server.models.AktieHistorie;
 import de.aperepublic.server.models.AktieInfo;
 import de.aperepublic.server.models.AktiePreis;
-import de.aperepublic.server.services.FinnhubCompanyProfile2Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +13,6 @@ import java.util.Map;
 @RestController
 public class StockPriceController {
 
-    FinnhubCompanyProfile2Service companyProfile2Service;
 
     @GetMapping("/aktie/preis/historisch")
     public Map<String, Object> bedieneAktienPreisHistorisch(@RequestBody String iteration) { //lieber RequestParam
