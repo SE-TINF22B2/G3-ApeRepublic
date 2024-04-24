@@ -1,12 +1,13 @@
 package de.aperepublic.server.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-public class AktieInfo {
+public class HandelAnfrage {
     int anfrageStatus;
+    boolean kaufStatus;
     String symbol;
-    String name;
+    double menge;
+    double preis;
 }
+
