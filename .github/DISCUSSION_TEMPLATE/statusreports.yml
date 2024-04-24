@@ -45,8 +45,8 @@ body:
   - type: textarea
     id: table
     attributes:
-      label: table
-      description: table
+      label: 🕑 Zeiterfassung
+      description: Zeiterfassung
       value: |
         | -------- | Requirements |  Design  | Projektmanagement | Sonstiges |
         |----------|--------------|----------|-------------------|-----------|
