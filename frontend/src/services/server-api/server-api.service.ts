@@ -83,6 +83,6 @@ export class ServerApiService implements ServerApi, CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.validate(this.authService.currentUserSig()?.token ?? '');
+    return this.validate(this.authService.currentUserSig()?.token ?? 'MockToken');
   }
 }
