@@ -6,10 +6,11 @@ import { PageLoginComponent } from './page-login/page-login.component';
 import { PageStockComponent } from "./page-stock/page-stock.component";
 import { PageSignUpComponent} from './page-sign-up/page-sign-up.component';
 import {AuthService} from "../services/auth/auth.service";
+import {ServerApiService} from "../services/server-api/server-api.service";
 
 const routes: Routes = [
-  {path: 'main', component: PageMainComponent, canActivate: [AuthService] },
-  {path: 'stock', component: PageStockComponent, canActivate: [AuthService] },
+  {path: 'main', component: PageMainComponent, canActivate: [ServerApiService] },
+  {path: 'stock', component: PageStockComponent, canActivate: [ServerApiService] },
   {path: 'login', component: PageLoginComponent},
   {path: 'signup', component: PageSignUpComponent},
 

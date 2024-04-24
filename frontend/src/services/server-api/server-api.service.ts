@@ -6,11 +6,13 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../auth/auth.service";
 import {UserInterface} from "../../models/user/user";
 import {UserAuthResponse} from "../../models/userAuthResponse/user-auth-response";
+import {ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree} from "@angular/router";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ServerApiService implements ServerApi {
+export class ServerApiService implements ServerApi, CanActivate {
 
   host: string = "localhost:8080";
 
@@ -74,8 +76,13 @@ export class ServerApiService implements ServerApi {
   }
 
   validate(token: string): boolean {
-    return false;
+    if (token.length === 0) {
+      return false;
+    }
+    return true;
   }
 
-
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    return this.validate(this.authService.currentUserSig()?.token ?? '');
+  }
 }
