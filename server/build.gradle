@@ -35,6 +35,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
     compileOnly 'com.google.code.gson:gson:2.8.2'
+    implementation 'org.springframework:spring-messaging:5.3.14'
+    implementation 'org.springframework:spring-websocket:5.3.14'
 }
 
 tasks.named('test') {

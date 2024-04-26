@@ -1,18 +1,17 @@
 package de.aperepublic.server.controller;
 
-import de.aperepublic.server.models.AktieHistorie;
-import de.aperepublic.server.models.AktieInfo;
-import de.aperepublic.server.models.AktiePreis;
+import de.aperepublic.server.services.FinnhubStockPriceService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 public class StockPriceController {
 
+    FinnhubStockPriceService finnhubStockPriceService;
 
     @GetMapping("/aktie/preis/historisch")
     public Map<String, Object> bedieneAktienPreisHistorisch(@RequestBody String iteration) { //lieber RequestParam
@@ -33,6 +32,7 @@ public class StockPriceController {
     public AktiePreis bedieneAktiePreisEchtzeit(@RequestParam String symbol) {
         return new AktiePreis();
     }
+
 
     @PostMapping("/aktie/handeln") //bin mir nicht sicher ob hier ein get kommt
     public Map<String, Object> bedieneAktiePreisEchtzeit(@RequestBody String aktion, @RequestBody String symbol, @RequestParam double menge) {
