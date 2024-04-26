@@ -1,6 +1,7 @@
 package de.aperepublic.server.services;
 
 import de.aperepublic.server.models.User;
+import de.aperepublic.server.models.UserDetails;
 import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserLogoutRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
@@ -27,19 +28,20 @@ public class UserAuthService {
         if(!userRegisterRequest.isValid()) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.MISSING_PARAMS).build());
         }
-        if(userRepositoryService.existsByUsername(userRegisterRequest.username)) {
+        if(userRepositoryService.existsUserByUsername(userRegisterRequest.username)) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.USERNAME_TAKEN).build());
         }
-        if(userRepositoryService.existsByEmail(userRegisterRequest.email)) {
+        if(userRepositoryService.existsUserByEmail(userRegisterRequest.email)) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.EMAIL_TAKEN).build());
         }
         // TODO: Register DB Integration
         UUID sessionToken = activeUserService.createToken(userRegisterRequest.email);
-        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionTokenId(sessionToken.toString()).build());
+        Optional<UserDetails> optUserDetails = userRepositoryService.findUserDetailsByEmail(userRegisterRequest.email);
+        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionTokenId(sessionToken.toString()).addUserDetails(optUserDetails.orElse(UserDetails.buildEmpty())).build());
     }
 
     public ResponseEntity<String> processLoginUser(UserLoginRequest userLoginRequest) {
-        Optional<User> optRequestUser = userRepositoryService.findByEmail(userLoginRequest.email);
+        Optional<User> optRequestUser = userRepositoryService.findUserByEmail(userLoginRequest.email);
         if(optRequestUser.isEmpty()) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.UNSUCCESSFUL_LOGIN).build());
         }
@@ -48,7 +50,7 @@ public class UserAuthService {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.UNSUCCESSFUL_LOGIN).build());
         }
         String sessionTokenId = activeUserService.createToken(requestUser.email).toString();
-        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGIN).addSessionTokenId(sessionTokenId).build());
+        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGIN).addSessionTokenId(sessionTokenId).addUserDetails(UserDetails.build(requestUser)).build());
     }
 
     public ResponseEntity<String> processLogoutUser(UserLogoutRequest userLogoutRequest) {

@@ -1,12 +1,10 @@
-package de.aperepublic.server;
+package de.aperepublic.server.services;
 
 import de.aperepublic.server.models.User;
+import de.aperepublic.server.models.UserDetails;
 import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserLogoutRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
-import de.aperepublic.server.services.ActiveUserService;
-import de.aperepublic.server.services.UserAuthService;
-import de.aperepublic.server.services.UserRepositoryService;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -62,16 +60,25 @@ public class UserAuthServiceTest {
     @BeforeEach
     public void setupUserRepositoryService() {
         //register
-        Mockito.lenient().when(mockUserRepositoryService.existsByUsername(any(String.class)))
+        Mockito.lenient().when(mockUserRepositoryService.existsUserByUsername(any(String.class)))
                 .thenAnswer(invocation -> ((String) invocation.getArgument(0)).contentEquals(registeredUser.username));
-        Mockito.lenient().when(mockUserRepositoryService.existsByEmail(any(String.class)))
+        Mockito.lenient().when(mockUserRepositoryService.existsUserByEmail(any(String.class)))
                 .thenAnswer(invocation -> ((String) invocation.getArgument(0)).contentEquals(registeredUser.email));
         //login
-        Mockito.lenient().when(mockUserRepositoryService.findByEmail(any(String.class)))
+        Mockito.lenient().when(mockUserRepositoryService.findUserByEmail(any(String.class)))
                 .thenAnswer(invocation -> {
                     String email = invocation.getArgument(0);
                     if(email.contentEquals(registeredUser.email)) {
                         return Optional.of(registeredUser);
+                    } else {
+                        return Optional.empty();
+                    }
+                });
+        Mockito.lenient().when(mockUserRepositoryService.findUserDetailsByEmail(any(String.class)))
+                .thenAnswer(invocation -> {
+                    String email = invocation.getArgument(0);
+                    if(email.contentEquals(registeredUser.email)) {
+                        return Optional.of(UserDetails.build(registeredUser));
                     } else {
                         return Optional.empty();
                     }
@@ -133,6 +140,20 @@ public class UserAuthServiceTest {
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
         assertTrue(resBody.has("success"));
+    }
+
+    @Test
+    public void testGettingUserDetailsOnLoggingInRegisteredUser() {
+        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
+
+        ResponseEntity<String> res = userAuthService.processLoginUser(userLoginRequest);
+
+        assertEquals(HttpStatus.OK, res.getStatusCode());
+        JSONObject resBody = new JSONObject(res.getBody());
+        assertTrue(resBody.has("success"));
+        JSONObject messageBody = resBody.getJSONObject("success");
+        assertTrue(messageBody.has("userDetails"));
+        assertEquals("enexhd@gmail.com", messageBody.getJSONObject("userDetails").getString("email"));
     }
 
     @Test

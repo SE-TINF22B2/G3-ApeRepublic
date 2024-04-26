@@ -1,4 +1,4 @@
-package de.aperepublic.server;
+package de.aperepublic.server.services;
 
 import de.aperepublic.server.models.response.ResponseStatus;
 import de.aperepublic.server.models.response.UserAuthResponse;
