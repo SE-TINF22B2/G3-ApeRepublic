@@ -14,7 +14,7 @@ import {Observable} from "rxjs";
 })
 export class ServerApiService implements ServerApi, CanActivate {
 
-  host: string = "localhost:8080";
+  host: string = "http://localhost:8080";
 
   constructor(private http : HttpClient, private fb : FormBuilder, private authService : AuthService) { }
 
@@ -33,13 +33,11 @@ export class ServerApiService implements ServerApi, CanActivate {
     });
 
     this.http
-      .post<{ userAuthResponse: UserAuthResponse }>(this.host + "/login", {
-        user: form.getRawValue(),
-      })
+      .post<UserAuthResponse>(this.host + "/api/user/auth/login", form.getRawValue())
       .subscribe((response) => {
         console.log('response', response);
-        localStorage.setItem('token', response.userAuthResponse.user.token);
-        this.authService.currentUserSig.set(response.userAuthResponse.user);
+        localStorage.setItem('token', response.user.token);
+        this.authService.currentUserSig.set(response.user);
       });
   }
 
@@ -57,13 +55,11 @@ export class ServerApiService implements ServerApi, CanActivate {
     });
 
     this.http
-      .post<{ userAuthResponse: UserAuthResponse }>(this.host + "/register", {
-        user: form.getRawValue(),
-      })
+      .post<UserAuthResponse>(this.host + "/api/user/auth/register", form.getRawValue())
       .subscribe((response) => {
         console.log('response', response);
-        localStorage.setItem('token', response.userAuthResponse.user.token);
-        this.authService.currentUserSig.set(response.userAuthResponse.user);
+        localStorage.setItem('token', response.user.token);
+        this.authService.currentUserSig.set(response.user);
       });
   }
 

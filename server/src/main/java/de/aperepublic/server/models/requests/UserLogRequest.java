@@ -13,14 +13,11 @@ public class UserLogRequest {
     @JsonProperty("password")
     public String password;
 
-    @JsonProperty("action")
-    public String action;
 
     public UserLogRequest(String username, String email, String password, String action) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.action = action;
     }
 
     public boolean isValid() {
