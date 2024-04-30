@@ -1,10 +1,13 @@
 package de.aperepublic.server.services;
 
+import de.aperepublic.server.ServerApplication;
 import de.aperepublic.server.models.User;
 import de.aperepublic.server.models.UserDetails;
 import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserLogoutRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
+import de.aperepublic.server.repositories.MockUserRepository;
+import de.aperepublic.server.repositories.UserRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -21,16 +26,17 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
+@SpringBootTest(classes = ServerApplication.class)
 @ExtendWith(MockitoExtension.class)
 public class UserAuthServiceTest {
 
-    @Mock
-    private UserRepositoryService mockUserRepositoryService;
+    @Autowired
+    private MockUserRepository userRepository;
 
-    @InjectMocks
+    @Autowired
     private UserAuthService userAuthService;
 
-    @Spy
+    @Autowired
     private ActiveUserService activeUserService;
 
     private static User registeredUser;
@@ -59,30 +65,32 @@ public class UserAuthServiceTest {
 
     @BeforeEach
     public void setupUserRepositoryService() {
-        //register
-        Mockito.lenient().when(mockUserRepositoryService.existsUserByUsername(any(String.class)))
-                .thenAnswer(invocation -> ((String) invocation.getArgument(0)).contentEquals(registeredUser.username));
-        Mockito.lenient().when(mockUserRepositoryService.existsUserByEmail(any(String.class)))
-                .thenAnswer(invocation -> ((String) invocation.getArgument(0)).contentEquals(registeredUser.email));
-        //login
-        Mockito.lenient().when(mockUserRepositoryService.findUserByEmail(any(String.class)))
-                .thenAnswer(invocation -> {
-                    String email = invocation.getArgument(0);
-                    if(email.contentEquals(registeredUser.email)) {
-                        return Optional.of(registeredUser);
-                    } else {
-                        return Optional.empty();
-                    }
-                });
-        Mockito.lenient().when(mockUserRepositoryService.findUserDetailsByEmail(any(String.class)))
-                .thenAnswer(invocation -> {
-                    String email = invocation.getArgument(0);
-                    if(email.contentEquals(registeredUser.email)) {
-                        return Optional.of(UserDetails.build(registeredUser));
-                    } else {
-                        return Optional.empty();
-                    }
-                });
+//        //register
+//        Mockito.lenient().when(mockUserRepository.existsByUsername(any(String.class)))
+//                .thenAnswer(invocation -> {
+//                    return ((String) invocation.getArgument(0)).contentEquals(registeredUser.username);
+//                });
+//        Mockito.lenient().when(mockUserRepository.existsByEmail(any(String.class)))
+//                .thenAnswer(invocation -> ((String) invocation.getArgument(0)).contentEquals(registeredUser.email));
+//        //login
+//        Mockito.lenient().when(mockUserRepository.findByEmail(any(String.class)))
+//                .thenAnswer(invocation -> {
+//                    String email = invocation.getArgument(0);
+//                    if(email.contentEquals(registeredUser.email)) {
+//                        return Optional.of(registeredUser);
+//                    } else {
+//                        return Optional.empty();
+//                    }
+//                });
+//        Mockito.lenient().when(mockUserRepository.findByEmail(any(String.class)))
+//                .thenAnswer(invocation -> {
+//                    String email = invocation.getArgument(0);
+//                    if(email.contentEquals(registeredUser.email)) {
+//                        return Optional.of(UserDetails.build(registeredUser));
+//                    } else {
+//                        return Optional.empty();
+//                    }
+//                });
     }
 
     @Test
