@@ -1,5 +1,7 @@
 package de.aperepublic.server.models.response;
 
+import com.google.gson.Gson;
+import de.aperepublic.server.models.UserDetails;
 import org.json.JSONObject;
 
 public class UserAuthResponse {
@@ -18,6 +20,11 @@ public class UserAuthResponse {
 
     public UserAuthResponse addSessionTokenId(String sessionTokenId) {
         arguments.put("sessionTokenId", sessionTokenId);
+        return this;
+    }
+
+    public UserAuthResponse addUserDetails(UserDetails userDetails) {
+        arguments.put("userDetails", new JSONObject(new Gson().toJson(userDetails)));
         return this;
     }
 
