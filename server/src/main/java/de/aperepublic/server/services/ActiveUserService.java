@@ -16,14 +16,29 @@ public class ActiveUserService {
         sessionTokens = new ArrayList<>();
     }
 
-    public UUID createToken(String username) {
-        SessionToken sessionToken = new SessionToken(UUID.randomUUID(), username);
+    public UUID createToken(String email) {
+        if(containsUserByEmail(email)) {
+            removeTokenByEmail(email);
+        }
+        SessionToken sessionToken = new SessionToken(UUID.randomUUID(), email);
         sessionTokens.add(sessionToken);
-        return sessionToken.getTokenId();
+        return sessionToken.getSessionTokenId();
+    }
+
+    public UUID updateToken(String email) {
+        return createToken(email);
+    }
+
+    public boolean removeTokenByEmail(String email) {
+        return sessionTokens.removeIf(token -> token.getEmail().contentEquals(email));
+    }
+
+    public boolean removeIfTokenMatch(String tokenId) {
+        return sessionTokens.removeIf(token -> token.getSessionTokenId().toString().contentEquals(tokenId));
     }
 
     public boolean containsToken(UUID tokenId) {
-        return sessionTokens.stream().anyMatch(token -> token.getTokenId().equals(tokenId));
+        return sessionTokens.stream().anyMatch(token -> token.getSessionTokenId().equals(tokenId));
     }
 
     public boolean containsUserByEmail(String email) {
