@@ -1,9 +1,7 @@
 package de.aperepublic.server.controller;
 
 import de.aperepublic.server.models.requests.RealtimeStockPriceRequest;
-import de.aperepublic.server.models.requests.UserRegisterRequest;
 import de.aperepublic.server.services.RealtimeStockPriceService;
-import de.aperepublic.server.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
