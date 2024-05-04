@@ -19,27 +19,40 @@ public class UserAuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-//    @Test
-//    @Disabled
-//    public void testUserRegisterWithMissingBirthday() throws Exception {
-//        String requestBody = "{\"username\": \"testuser\", \"email\": \"test@example.com\", \"password\": \"password123\", \"firstname\":\"Dieter\", \"lastname\":\"Insta\"}";
-//        mockMvc.perform(post("/api/user/auth/register")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string("{\"error\":{\"message\":\"One or more parameter are missing!\"}}"));
-//    }
-//
-//    @Test
-//    @Disabled
-//    public void testUnregisteredUserRegistration() throws Exception {
-//        String requestBody = "{\"username\": \"testuser\", \"email\": \"test@example.com\", \"password\": \"password123\", \"firstname\":\"Dieter\", \"lastname\":\"Insta\", \"birthday\":\"2002-08-07\"}";
-//        mockMvc.perform(post("/api/user/auth/register")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestBody))
-//                .andExpect(status().isOk())
-//                .andExpect(content().string("{\"success\":{\"sessionToken\":5,\"message\":\"Registration successful!\"}}"));
-//    }
+    @Test
+    public void testUserRegisterWithMissingBirthday() throws Exception {
+        // TODO: Fix error coming from sending request with not all params -> spring boot
+        String requestBody = "{" +
+                "\"username\":\"codayoda\"," +
+                "\"email\":\"codayoda@gmail.com\"," +
+                "\"password\":\"123\"," +
+                "\"firstname\":\"coda\"," +
+                "\"lastname\":\"yoda\"," +
+                //"\"birthday\":\"2004-04-19\"" +
+                "}";
+        mockMvc.perform(post("/api/user/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"error\":{\"message\":\"One or more parameter are missing!\"}}"));
+    }
+
+    @Test
+    public void testUnregisteredUserRegistration() throws Exception {
+        // TODO: Find out how to test dynamic response body
+        String requestBody = "{" +
+                "\"username\":\"codayoda\"," +
+                "\"email\":\"codayoda@gmail.com\"," +
+                "\"password\":\"123\"," +
+                "\"firstname\":\"coda\"," +
+                "\"lastname\":\"yoda\"," +
+                "\"birthday\":\"2004-04-19\"" +
+                "}";
+        mockMvc.perform(post("/api/user/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk());
+    }
 //
 //    @Test
 //    @Disabled

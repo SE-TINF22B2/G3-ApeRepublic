@@ -15,4 +15,12 @@ public enum ResponseStatus {
         this.message = message;
     }
 
+    String getStatusText() {
+        return statusText;
+    }
+
+    String getMessage() {
+        return message;
+    }
+
 }
