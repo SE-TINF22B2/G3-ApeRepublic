@@ -4,31 +4,32 @@ import com.google.gson.Gson;
 import de.aperepublic.server.models.UserDetails;
 import org.json.JSONObject;
 
-public class UserAuthResponse {
+public class APIResponse {
 
     private ResponseStatus responseStatus;
     private JSONObject arguments;
 
-    public UserAuthResponse() {
+    public APIResponse(ResponseStatus responseStatus) {
+        this.responseStatus = responseStatus;
         arguments = new JSONObject();
     }
 
-    public UserAuthResponse(ResponseStatus responseStatus) {
-        this();
+    public APIResponse setResponseStatus(ResponseStatus responseStatus) {
         this.responseStatus = responseStatus;
+        return this;
     }
 
-    public UserAuthResponse addSessionTokenId(String sessionTokenId) {
+    public APIResponse addSessionTokenId(String sessionTokenId) {
         arguments.put("sessionTokenId", sessionTokenId);
         return this;
     }
 
-    public UserAuthResponse addUserDetails(UserDetails userDetails) {
+    public APIResponse addUserDetails(UserDetails userDetails) {
         arguments.put("userDetails", new JSONObject(new Gson().toJson(userDetails)));
         return this;
     }
 
-    public UserAuthResponse addArgument(String argKey, Object argValue) {
+    public APIResponse addArgument(String argKey, Object argValue) {
         arguments.put(argKey, argValue);
         return this;
     }
@@ -36,6 +37,10 @@ public class UserAuthResponse {
     public String build() {
         arguments.put("message", responseStatus.message);
         return new JSONObject().put(responseStatus.statusText, arguments).toString();
+    }
+
+    public static APIResponse instance(ResponseStatus responseStatus) {
+        return new APIResponse(responseStatus);
     }
 
 }
