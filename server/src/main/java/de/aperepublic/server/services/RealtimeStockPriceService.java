@@ -14,12 +14,12 @@ public class RealtimeStockPriceService {
     private ActiveUserService activeUserService;
 
     public ResponseEntity<String> processRealtimeStockPriceRequest(RealtimeStockPriceRequest realtimeStockPriceRequest) {
-        if(!activeUserService.verify(realtimeStockPriceRequest.token)) {
-            return ResponseEntity.ok(APIResponse.instance(ResponseStatus.INVALID_TOKEN).build());
+        if(!activeUserService.validate(realtimeStockPriceRequest.token)) {
+            return ResponseEntity.ok(APIResponse.instance(ResponseStatus.INVALID_TOKEN).toString());
         }
         // TODO: Has ISIN
         // TODO: Get Value and Return
-        return ResponseEntity.ok(APIResponse.instance(ResponseStatus.ERROR).build());
+        return ResponseEntity.ok(APIResponse.instance(ResponseStatus.ERROR).toString());
     }
 
 }

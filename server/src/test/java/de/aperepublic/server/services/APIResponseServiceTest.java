@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class APIResponseServiceTest {
 
     @Test
-    public void testIfBuildThrowsException() {
+    public void testIfToStringThrowsException() {
         APIResponse res = new APIResponse(ResponseStatus.ERROR);
         assertDoesNotThrow( () -> {
-            res.build();
+            res.toString();
         });
     }
 

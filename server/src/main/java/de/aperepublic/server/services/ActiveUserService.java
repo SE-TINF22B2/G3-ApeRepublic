@@ -29,7 +29,7 @@ public class ActiveUserService {
         return createToken(email);
     }
 
-    public boolean verify(String stringToken) {
+    public boolean validate(String stringToken) {
         try {
             UUID token = UUID.fromString(stringToken);
             return containsToken(token);
