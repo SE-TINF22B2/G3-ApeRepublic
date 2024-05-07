@@ -5,6 +5,7 @@ import { CanvasJSAngularStockChartsModule } from '@canvasjs/angular-stockcharts'
 
 
 
+
 @Component({
   selector: 'app-graph',
   standalone: true,
@@ -14,46 +15,46 @@ import { CanvasJSAngularStockChartsModule } from '@canvasjs/angular-stockcharts'
 })
 
 export class GraphComponent {
-  generateRandomData = () => {
-    var y = 1000, dps = [];
-    for (var i = 0; i < 1000; i++) {
-        y += Math.round(5 + Math.random() * (-5 - 5));
-        dps.push({ y: y });
-    }
-    return dps;
-}
-stockChartOptions = {
-    exportEnabled: true,
-    title: {
-        text: " "
-    },
-    charts: [{
-        data: [{
-            type: "line",
-            dataPoints: this.generateRandomData()
-        }]
-    }],
-    rangeSelector: {
-        inputFields: {
-            startValue: 200,
-            endValue: 800
-        },
-        buttons: [{
-            label: "1m",
-            range: 100,
-            rangeType: "number"
-        }, {
-            label: "6m",
-            range: 200,
-            rangeType: "number"
-        }, {
-            label: "1y",
-            range: 500,
-            rangeType: "number"
-        }, {
-            label: "All",
-            rangeType: "all"
-        }]
-    }
-}
-}       
+    chart: any;
+    
+
+	chartOptions = {
+		
+		animationEnabled: true,
+		zoomEnabled: true,
+		title: {
+			text: "Apple"
+		},
+		axisY: {
+			labelFormatter: (e: any) => {
+				
+				return "$" + (e.value );
+			}
+		},
+		data: [{
+			type: "line",
+            color:'red',
+            
+			xValueFormatString: "YYYY",
+			yValueFormatString: "$#,###.##",
+			dataPoints: [
+			  { x: new Date(2017, 6, 1), y: 5000 },
+			  { x: new Date(2018, 1, 1), y: 4435},
+              { x: new Date(2018, 6, 1), y: 4585},
+			  { x: new Date(2019, 1, 1), y: 3652},
+              { x: new Date(2019, 6, 1), y: 4365},
+			  { x: new Date(2020, 1, 1), y: 1365},
+              { x: new Date(2020, 6, 1), y: 1365},
+			  { x: new Date(2021, 1, 1), y: 4505},
+              { x: new Date(2021, 6, 1), y: 3526},
+			  { x: new Date(2022, 1, 1), y: 3500},
+              { x: new Date(2022, 6, 1), y: 1365},
+              { x: new Date(2023, 1, 1), y: 3365},
+			  { x: new Date(2023, 6, 1), y: 5235},
+              { x: new Date(2024, 1, 1), y: 8802},
+		
+			 
+			]
+		}]
+	}
+}                        
