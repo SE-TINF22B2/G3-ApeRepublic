@@ -2,8 +2,8 @@
   <div>
     <h1><b>Login</b></h1>
   </div>
-  <div>
-    <h2 [hidden]="Username === ''"> Welcome back <span style="color: red;">{{Username}} </span></h2>
+  <div class="header-description-div">
+    <h2 [hidden]="Username === ''"> Welcome back <span style="color: red;">{{Username}}</span></h2>
     <h2 [hidden]="Username !== ''">Please enter your username and password</h2>
 
   </div>
@@ -12,7 +12,7 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Type your Email</mat-label>
-          <input type="text" (input)="OnInputChanged($event)" matInput formControlName="email">
+          <input type="text" (input)="OnInputChanged($event)" matInput formControlName="name">
 
         </mat-form-field>
       </div>
@@ -22,20 +22,21 @@
           <input type="text" matInput formControlName="password">
         </mat-form-field>
       </div>
-      <div>
+      <div style="justify-content: center">
         <a [routerLink]="['/signup']">
           Forgot your Password?
         </a>
       </div>
       <br>
-      <div>
+      <div style="justify-content: center">
         <a [routerLink]="['/signup']">
           Not a member?
         </a>
       </div>
     </form>
   </div>
+  <br>
   <div>
-    <button mat-raised-button (click)="userValidation()">Log In</button>
+    <button mat-raised-button (click)="login()">Log In</button>
   </div>
 </div>

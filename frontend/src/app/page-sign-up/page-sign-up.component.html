@@ -1,4 +1,4 @@
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div style="flex-direction: column; align-items: center;">
   <div>
     <h1>Create Account</h1>
   </div>
@@ -7,8 +7,8 @@
     <h2 [hidden]="Username !== ''">Please enter your username</h2>
   </div>
 
-  <div>
-    <form [formGroup]="form" (submit)="$event.preventDefault()" style="display: block;">
+  <div style="justify-content: center">
+    <form [formGroup]="form" (submit)="$event.preventDefault()" style="width: 80%">
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Username</mat-label>
@@ -67,9 +67,7 @@
   </div>
   <div>
 
-    <button  mat-raised-button (click)="userValidation()" [disabled]="isEnabled" ><b>Sign up</b></button>
+    <button  mat-raised-button (click)="register()" [disabled]="isEnabled" ><b>Sign up</b></button>
 
   </div>
 </div>
-
-

@@ -14,19 +14,36 @@ export class PageLoginComponent {
   Username : String = '';
 
   form = new FormGroup({
-    email: new FormControl("email"),
-    password: new FormControl("password"),
+    name: new FormControl(''),
+    password: new FormControl(''),
   });
 
   constructor(private router: Router, private serverApi: ServerApiService) {
   }
 
   public OnInputChanged (e : Event){
-    console.log(e);
     this.Username = (<HTMLInputElement>e.target).value;
   }
 
-  userValidation() {
-    this.serverApi.login(this.form.value.email ?? '', this.form.value.password ?? '');
+  login() {
+    for (const controlName in this.form.controls) {
+      const control = this.form.get(controlName);
+      if (control?.value === '') {
+        return;
+      }
+    }
+
+    let email = '';
+    let username = '';
+    if (this.form.getRawValue().name?.includes('@')) {
+      email = this.form.getRawValue().name?? '';
+    } else {
+      username = this.form.getRawValue().name?? '';
+    }
+    this.serverApi.login(email, this.form.value.name ?? '', username).subscribe((loginSuccessful) => {
+      if (loginSuccessful) {
+        this.router.navigate(['/main']);
+      }
+    });
  }
 }
