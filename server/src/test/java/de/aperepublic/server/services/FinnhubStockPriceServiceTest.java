@@ -13,8 +13,4 @@ class FinnhubStockPriceServiceTest {
         finnhubStockPriceService = new FinnhubStockPriceService();
     }
 
-//    @Test
-//    void checkWebSocketConnection() {
-//        finnhubStockPriceService.connectWebSocket("AAPL");
-//    }
 }
