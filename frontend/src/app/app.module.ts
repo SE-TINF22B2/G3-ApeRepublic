@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphComponent } from './graph/graph.component';
+import { CanvasJSStockChart } from '@canvasjs/angular-stockcharts';
 
 import { PageMainComponent } from './page-main/page-main.component';
 import { PageStockComponent } from './page-stock/page-stock.component';
@@ -32,24 +33,26 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
 @NgModule({
   declarations: [
     AppComponent,
-    GraphComponent,
-
+  
+ 
     PageMainComponent,
     PageLoginComponent,
     PageSignUpComponent,
     PageStockComponent,
+   
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    GraphComponent,
 
     MatDatepickerModule,
     MatNativeDateModule,
     MaterialComponents,
     MatButtonToggleModule,
     MatIconModule,
-
+   
     ReactiveFormsModule,
 
     HttpClientModule

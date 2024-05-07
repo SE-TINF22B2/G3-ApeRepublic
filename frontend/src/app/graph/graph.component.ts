@@ -1,53 +1,59 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CanvasJSAngularStockChartsModule } from '@canvasjs/angular-stockcharts';
+
+
 
 @Component({
   selector: 'app-graph',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule, CanvasJSAngularStockChartsModule],
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent {
-  stockChartOptions = {
-    title: {
-      text: "CanvasJS Angular StockChart"
-    },
-    theme: "light2",
-    charts: [{
-      data: [{
-        type: "line",
-        dataPoints: [
-          { x: new Date("2018-01-01"), y: 71 },
-          { x: new Date("2018-02-01"), y: 55 },
-          { x: new Date("2018-03-01"), y: 50 },
-          { x: new Date("2018-04-01"), y: 65 },
-          { x: new Date("2018-05-01"), y: 95 },
-          { x: new Date("2018-06-01"), y: 68 },
-          { x: new Date("2018-07-01"), y: 28 },
-          { x: new Date("2018-08-01"), y: 34 },
-          { x: new Date("2018-09-01"), y: 14 },
-          { x: new Date("2018-10-01"), y: 71 },
-          { x: new Date("2018-11-01"), y: 55 },
-          { x: new Date("2018-12-01"), y: 50 },
-          { x: new Date("2019-01-01"), y: 34 },
-          { x: new Date("2019-02-01"), y: 50 },
-          { x: new Date("2019-03-01"), y: 50 },
-          { x: new Date("2019-04-01"), y: 95 },
-          { x: new Date("2019-05-01"), y: 68 },
-          { x: new Date("2019-06-01"), y: 28 },
-          { x: new Date("2019-07-01"), y: 34 },
-          { x: new Date("2019-08-01"), y: 65 },
-          { x: new Date("2019-09-01"), y: 55 },
-          { x: new Date("2019-10-01"), y: 71 },
-          { x: new Date("2019-11-01"), y: 55 },
-          { x: new Date("2019-12-01"), y: 50 }
-        ]
-      }]
-    }],
-    navigator: {
-      slider: {
-        minimum: new Date("2018-07-01"),
-        maximum: new Date("2019-06-30")
-      }
-    }
-  }
 
+export class GraphComponent {
+  generateRandomData = () => {
+    var y = 1000, dps = [];
+    for (var i = 0; i < 1000; i++) {
+        y += Math.round(5 + Math.random() * (-5 - 5));
+        dps.push({ y: y });
+    }
+    return dps;
 }
+stockChartOptions = {
+    exportEnabled: true,
+    title: {
+        text: " "
+    },
+    charts: [{
+        data: [{
+            type: "line",
+            dataPoints: this.generateRandomData()
+        }]
+    }],
+    rangeSelector: {
+        inputFields: {
+            startValue: 200,
+            endValue: 800
+        },
+        buttons: [{
+            label: "1m",
+            range: 100,
+            rangeType: "number"
+        }, {
+            label: "6m",
+            range: 200,
+            rangeType: "number"
+        }, {
+            label: "1y",
+            range: 500,
+            rangeType: "number"
+        }, {
+            label: "All",
+            rangeType: "all"
+        }]
+    }
+}
+}       
