@@ -1,18 +1,18 @@
 package de.aperepublic.server.services;
 
 import de.aperepublic.server.models.response.ResponseStatus;
-import de.aperepublic.server.models.response.UserAuthResponse;
+import de.aperepublic.server.models.response.APIResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UserAuthResponseServiceTest {
+public class APIResponseServiceTest {
 
     @Test
-    public void testIfBuildThrowsException() {
-        UserAuthResponse res = new UserAuthResponse(ResponseStatus.ERROR);
+    public void testIfToStringThrowsException() {
+        APIResponse res = new APIResponse(ResponseStatus.ERROR);
         assertDoesNotThrow( () -> {
-            res.build();
+            res.toString();
         });
     }
 

@@ -1,7 +1,9 @@
 package de.aperepublic.server.models.requests;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public class UserLoginRequest {
 
     @JsonProperty("username")
