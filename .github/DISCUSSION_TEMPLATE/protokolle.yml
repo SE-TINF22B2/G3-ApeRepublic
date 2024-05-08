@@ -83,7 +83,7 @@ body:
   - type: dropdown
     id: tag
     attributes:
-      label: "Tag"
+      label: "Nächster Termin"
       options:
         - Mo
         - Di
