@@ -19,9 +19,10 @@ export class GraphComponent {
     
 
 	chartOptions = {
-		
+		theme: "dark2",
 		animationEnabled: true,
 		zoomEnabled: true,
+    
 		title: {
 			text: "Apple"
 		},
