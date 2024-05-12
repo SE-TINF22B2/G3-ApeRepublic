@@ -10,6 +10,8 @@ public enum ResponseStatus {
     SUCCESSFUL_LOGOUT("success", "Logout successful!"), UNSUCCESSFUL_LOGOUT("error", "Invalid logout parameter!"),
     // token
     INVALID_TOKEN("error", "The provided token is invalid!"),
+    // stock
+    INVALID_ISIN("error", "The provided isin is not registered!"), SUCCESSFUL_PRICE_REQUEST("success", "Pricerequest successful!"),
     // else
     ERROR("error", "An error occurred handling your request!"), MISSING_PARAMS("error", "One or more parameter are missing!");
 

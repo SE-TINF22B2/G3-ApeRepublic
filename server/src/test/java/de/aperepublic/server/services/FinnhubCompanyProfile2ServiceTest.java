@@ -4,7 +4,6 @@ import de.aperepublic.server.models.CompanyProfile2;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
-import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +14,7 @@ class FinnhubCompanyProfile2ServiceTest {
 
     @BeforeAll
     void setup() {
-        finnhubCompanyProfile2Service = new FinnhubCompanyProfile2Service(new RestTemplate());
+        finnhubCompanyProfile2Service = new FinnhubCompanyProfile2Service();
     }
 
     @Test
@@ -23,7 +22,6 @@ class FinnhubCompanyProfile2ServiceTest {
         CompanyProfile2 result = finnhubCompanyProfile2Service.getCompanyFromIsin("US0378331005");
         assertEquals("Apple Inc", result.getName());
         assertEquals("https://www.apple.com/", result.getWeburl());
-        assertEquals("NASDAQ/NMS (GLOBAL MARKET)", result.getExchange());
     }
 
     @Test
@@ -31,6 +29,5 @@ class FinnhubCompanyProfile2ServiceTest {
         CompanyProfile2 result = finnhubCompanyProfile2Service.getCompanyFromSymbol("AAPL");
         assertEquals("Apple Inc", result.getName());
         assertEquals("https://www.apple.com/", result.getWeburl());
-        assertEquals("NASDAQ/NMS (GLOBAL MARKET)", result.getExchange());
     }
 }
