@@ -65,7 +65,6 @@ public class FinnhubWebSocket extends WebSocketClient {
     }
 
     public PriceEntry convertJsonToEntry(String message) {
-//        Gson gson = new GsonBuilder().setLenient().create();
         JsonObject jsonObject = new Gson().fromJson(message, JsonObject.class);
 
         // Get the data array

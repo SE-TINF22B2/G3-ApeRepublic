@@ -29,7 +29,6 @@ class FinnhubWebSocketTest {
     @Test
     void testConnectedToFinnhub() throws InterruptedException {
 //        webSocket.subscribeToStock("AAPL");
-        assertEquals("A", webSocketClient.getRemoteSocketAddress());
         assertEquals("ws.finnhub.io?token=cl0cekhr01qs0rbeo410cl0cekhr01qs0rbeo41g", webSocket.getRemoteSocketAddress());
     }
 
