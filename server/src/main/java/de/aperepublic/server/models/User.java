@@ -1,9 +1,6 @@
 package de.aperepublic.server.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-
-import java.sql.Date;
 
 @Entity
 @Table(name = "User")

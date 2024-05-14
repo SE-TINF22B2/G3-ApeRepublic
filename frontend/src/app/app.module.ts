@@ -23,6 +23,9 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+
 
 const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModule, MatFormFieldModule, TextFieldModule, MatTableModule];
 
@@ -30,7 +33,7 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
   declarations: [
     AppComponent,
     GraphComponent,
-    
+
     PageMainComponent,
     PageLoginComponent,
     PageSignUpComponent,
@@ -46,6 +49,10 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     MaterialComponents,
     MatButtonToggleModule,
     MatIconModule,
+
+    ReactiveFormsModule,
+
+    HttpClientModule
   ],
   exports: [MaterialComponents],
   providers: [],

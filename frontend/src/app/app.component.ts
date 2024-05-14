@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {CanvasJSAngularStockChartsModule} from "@canvasjs/angular-stockcharts";
 
 @Component({
   selector: 'app-root',
