@@ -48,13 +48,13 @@ body:
       label: 🕑 Zeiterfassung
       description: Zeiterfassung
       value: |
-        | -------- | Requirements |  Design  | Projektmanagement | Sonstiges |
-        |----------|--------------|----------|-------------------|-----------|
-        | Anisa    |              |          |                   |           |
-        | Elnaz    |              |          |                   |           |
-        | Marc     |              |          |                   |           |
-        | Matej    |              |          |                   |           |
-        | Simon    |              |          |                   |           |
+        | -------- | Requirements |  Design  | Projektmanagement | Implementierung | Sonstiges |
+        |----------|--------------|----------|-------------------|-----------------|-----------|
+        | Anisa    |              |          |                   |                 |           |
+        | Elnaz    |              |          |                   |                 |           |
+        | Marc     |              |          |                   |                 |           |
+        | Matej    |              |          |                   |                 |           |
+        | Simon    |              |          |                   |                 |           |
     validations:
       required: true
   - type: textarea
