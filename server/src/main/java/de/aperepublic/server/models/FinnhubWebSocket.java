@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import de.aperepublic.server.models.response.PriceEntry;
+import de.aperepublic.server.services.PriceHistoryTracker;
 import lombok.extern.slf4j.Slf4j;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
@@ -17,13 +18,16 @@ public class FinnhubWebSocket extends WebSocketClient {
 
     private boolean isSubscribed = false;
     private String latestSymbol;
+    private PriceHistoryTracker priceTracker;
 
     public FinnhubWebSocket(URI serverUri) {
         super(serverUri);
+        priceTracker = new PriceHistoryTracker();
     }
 
     public FinnhubWebSocket(URI serverUri, Map<String, String> httpHeaders) {
         super(serverUri, httpHeaders);
+        priceTracker = new PriceHistoryTracker();
     }
 
     @Override
@@ -33,10 +37,9 @@ public class FinnhubWebSocket extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        log.info(message);
+//        log.info(message);
         if (message.contains("data")) {
-            convertJsonToEntry(message);
-            //TODO add Implementation for saving Prices
+            priceTracker.addEntry(findSymbolInMessage(message), convertJsonToEntry(message));
         }
     }
 
@@ -51,25 +54,23 @@ public class FinnhubWebSocket extends WebSocketClient {
     }
 
     public void subscribeToStock(String symbol) {
-        if (isSubscribed) {
-            unsubscribe(latestSymbol);
-        }
+//        if (isSubscribed) {
+//            unsubscribe(latestSymbol);
+//        }
         send("{\"type\":\"subscribe\", \"symbol\": \"" + symbol + "\"}");
         latestSymbol = symbol;
-        isSubscribed = true;
+//        isSubscribed = true;
     }
 
     public void unsubscribe(String symbol) {
         send("{\"type\":\"unsubscribe\", \"symbol\": \"" + symbol + "\"}");
-        isSubscribed = false;
+//        isSubscribed = false;
     }
 
     public PriceEntry convertJsonToEntry(String message) {
         JsonObject jsonObject = new Gson().fromJson(message, JsonObject.class);
-
         // Get the data array
         JsonArray dataArray = jsonObject.getAsJsonArray("data");
-
         // Get the first element of the data array
         String priceMessage = dataArray.get(0).toString();
         try {
@@ -80,6 +81,23 @@ public class FinnhubWebSocket extends WebSocketClient {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String findSymbolInMessage(String message) {
+        JsonObject jsonObject = new Gson().fromJson(message, JsonObject.class);
+        // Get the data array
+        JsonArray dataArray = jsonObject.getAsJsonArray("data");
+        // Get the first element of the data array
+        JsonObject dataObj = dataArray.get(0).getAsJsonObject();
+        return dataObj.get("s").getAsString();
+    }
+
+    public void setPriceTracker(PriceHistoryTracker priceTracker) {
+        this.priceTracker = priceTracker;
+    }
+
+    public PriceHistoryTracker getPriceTracker() {
+        return priceTracker;
     }
 
 }

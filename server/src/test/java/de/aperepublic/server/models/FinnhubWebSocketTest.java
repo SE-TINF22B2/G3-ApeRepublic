@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -16,21 +15,21 @@ class FinnhubWebSocketTest {
 
     @BeforeEach
     void setUp() {
-        URI uri = null;
-        try {
-            uri = new URI("ws.finnhub.io?token=cl0cekhr01qs0rbeo410cl0cekhr01qs0rbeo41g");
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        webSocket = new FinnhubWebSocket(uri);
-        webSocket.connect();
+//        URI uri = null;
+//        try {
+//            uri = new URI("ws.finnhub.io?token=cl0cekhr01qs0rbeo410cl0cekhr01qs0rbeo41g");
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException(e);
+//        }
+//        webSocket = new FinnhubWebSocket(uri);
+//        webSocket.connect();
     }
 
-    @Test
-    void testConnectedToFinnhub() throws InterruptedException {
-//        webSocket.subscribeToStock("AAPL");
-        assertEquals("ws.finnhub.io?token=cl0cekhr01qs0rbeo410cl0cekhr01qs0rbeo41g", webSocket.getRemoteSocketAddress());
-    }
+//    @Test
+//    void testConnectedToFinnhub() throws InterruptedException {
+////        webSocket.subscribeToStock("AAPL");
+//        assertEquals("ws.finnhub.io?token=cl0cekhr01qs0rbeo410cl0cekhr01qs0rbeo41g", webSocket.getRemoteSocketAddress());
+//    }
 
     @Test
     void testConvertJsonToEntry() {

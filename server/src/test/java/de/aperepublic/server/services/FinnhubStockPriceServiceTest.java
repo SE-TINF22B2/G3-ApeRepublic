@@ -10,7 +10,7 @@ class FinnhubStockPriceServiceTest {
 
     @BeforeAll
     void setup() {
-        finnhubStockPriceService = new FinnhubStockPriceService();
+//        finnhubStockPriceService = new FinnhubStockPriceService();
     }
 
 }

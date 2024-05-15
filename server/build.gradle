@@ -37,8 +37,6 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter:5.7.0'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
-    implementation 'org.java-websocket:Java-WebSocket:1.5.2' // for WebSocket client
-    implementation 'com.google.code.gson:gson:2.7'
     implementation 'org.java-websocket:Java-WebSocket:1.5.6'
 
 }
