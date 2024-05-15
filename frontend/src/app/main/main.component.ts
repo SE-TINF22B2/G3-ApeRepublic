@@ -16,6 +16,7 @@ export interface Company {
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
+  Username : String = '';
   displayedColumns: String[] = ["ISIN", "Name", "Amount", "Absolute", "Relative"];
   dataSource: Company[] = [
     {isin : 182312838, name : "Apple", amount : "3030$", absolute : "483428", relative : "283282%"},
