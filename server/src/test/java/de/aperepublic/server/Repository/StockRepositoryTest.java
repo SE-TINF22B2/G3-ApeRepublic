@@ -59,7 +59,7 @@ public class StockRepositoryTest {
     @Test
     @Transactional
     public void stockErstellen() {
-        sRp.saveStockWithCommit();
+        sRp.saveStock();
        // assertNotNull(sRp.getReferenceById("PURRRRRRR"));
     }
 }

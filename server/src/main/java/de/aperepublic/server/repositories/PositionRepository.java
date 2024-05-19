@@ -1,2 +1,5 @@
-package de.aperepublic.server.repositories;public interface PositionRepository {
+package de.aperepublic.server.repositories;
+
+
+public interface PositionRepository {
 }
