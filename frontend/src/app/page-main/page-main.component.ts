@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, WritableSignal} from '@angular/core';
 import { Router } from '@angular/router'
+import {AuthService} from "../../services/auth/auth.service";
+import {UserInterface} from "../../models/user/userIntf";
 
 export interface Company {
   isin: number;
@@ -22,12 +24,10 @@ export class PageMainComponent {
     {isin : 182312838, name : "Nvidia", amount : "12313$", absolute : "1273", relative : "127321%"},
   ]
 
-
-  constructor(private router: Router) {
+  constructor(private router: Router, private auth : AuthService) {
   }
 
-  logOut() {
-
-    this.router.navigate(['/login'], {});
+  getUsername() : String {
+    return this.auth.currentUserSig()?.username ?? '';
   }
 }

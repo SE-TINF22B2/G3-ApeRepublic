@@ -1,6 +1,6 @@
 <header style="display: flex; justify-content: space-around; margin-bottom: 3%;">
     <div style="font-size: large;">
-        Hello User
+        Hello {{ getUsername() }}
     </div>
     <div>
         <form (submit)="$event.preventDefault()">
@@ -11,7 +11,6 @@
         </form>
     </div>
     <div>
-        <button mat-raised-button (click)="logOut()">Log Out</button>
     </div>
 </header>
 <main style="margin-left: 20%; margin-right: 20%;">

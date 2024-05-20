@@ -4,7 +4,7 @@
         Ape Republic
     </div>
     <div>
-      <button mat-raised-button>LOG OUT</button>
+      <button *ngIf="!loggedOut()" mat-raised-button (click)="logOut()">LOG OUT</button>
     </div>
   </div>
   <div class="router-outlet">
