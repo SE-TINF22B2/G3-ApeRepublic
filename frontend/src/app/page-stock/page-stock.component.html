@@ -1,10 +1,10 @@
 <div style="flex-direction: column">
   <div class="headerDiv">
     <div class="backDiv">
-      <button mat-raised-button color="primary"><div><mat-icon>arrow_back</mat-icon></div></button>
+      <button mat-raised-button color="primary" (click)="backToMain()"><div><mat-icon>arrow_back</mat-icon></div></button>
     </div>
     <div class="stockHeadInfoDiv">
-      <div><b>Apple</b></div>
+      <div><b>{{ stock.currentStock()?.name}}</b></div>
       <div><b>120.78$</b></div>
       <div style="color: green">+2.00$ (1.8%)</div>
     </div>
@@ -14,8 +14,27 @@
     </app-graph>
   </div>
   <div class="buySellDiv">
-    <button class="buy" mat-raised-button color="primary" >BUY</button>
-    <button class="sell" mat-raised-button color="primary">SELL</button>
+    <button class="buy" mat-raised-button color="primary" (click)="openBuyDialog()" >BUY</button>
+    <button class="sell" mat-raised-button color="primary" (click)="openSellDialog()">SELL</button>
+  </div>
+  <div class="positionDiv">
+    <h2>Position</h2>
+    <div style="display: table">
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3><b>Total</b></h3>
+          300$
+        </div>
+        <div style="display: table-cell">
+          <h3><b>Shares</b></h3>
+          7.4
+        </div>
+        <div style="display: table-cell">
+          <h3><b>Buy In</b></h3>
+          50$
+        </div>
+      </div>
+    </div>
   </div>
   <div>
     <h2>Metrics</h2>

@@ -1,9 +1,8 @@
 <header style="display: flex; justify-content: space-around; margin-bottom: 3%;">
     <div style="font-size: large;">
-        Hello {{ getUsername() }}
     </div>
     <div>
-        <form (submit)="$event.preventDefault()">
+        <form (ngSubmit)="onSubmit()">
             <mat-form-field appearance="fill">
                 <mat-label>Enter ISIN</mat-label>
                 <input matInput>

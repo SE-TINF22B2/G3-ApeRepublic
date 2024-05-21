@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {ServerApi} from "./server-api";
-import {Stock} from "../../models/stock/stock";
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../auth/auth.service";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
 import {Observable, tap} from "rxjs";
+import {StockInfoService} from "../stockInfo/stock-info.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +14,23 @@ export class ServerApiService implements ServerApi, CanActivate {
 
   host: string = "http://localhost:8080";
 
-  constructor(private http : HttpClient, private fb : FormBuilder, private authService : AuthService, private router : Router) { }
+  constructor(private http : HttpClient, private fb : FormBuilder, private authService : AuthService, private stockService: StockInfoService, private router : Router) { }
 
-  buyStock(): boolean {
+  buyStock(isin: any, result: any): boolean {
+    return true;
+  }
+
+  sellStock(isin: any, result: any): boolean {
     return false;
   }
 
-  getStock(isin: string): Stock {
-    return new Stock();
+  getStock(isin: string | null): boolean {
+    if (isin !== null) {
+      this.stockService.currentStock.set(JSON.parse('{ "name" : "Apple", "price" : "53", "isin" : "812382138"}'));
+      return true;
+    }
+    this.router.navigate(['/main']);
+    return false;
   }
 
   login(email: string, password: string, username: string): Observable<boolean> {
@@ -35,10 +44,9 @@ export class ServerApiService implements ServerApi, CanActivate {
       this.http.post<any>(this.host + "/api/user/auth/login", form.getRawValue())
         .pipe(
           tap((response) => {
-            console.log('response', response);
-            if (response.success) {
-              localStorage.setItem('token', response.success.sessionTokenId);
-              this.authService.currentUserSig.set(response.success.userDetails);
+            if (response.status == 'success') {
+              localStorage.setItem('token', response.sessionTokenId);
+              this.authService.currentUserSig.set(response.userDetails);
               observer.next(true);
             } else {
               observer.next(false);
@@ -83,10 +91,6 @@ export class ServerApiService implements ServerApi, CanActivate {
           observer.complete();
         });
     });
-  }
-
-  sellStock(): boolean {
-    return false;
   }
 
   stockExists(isin: string): boolean {

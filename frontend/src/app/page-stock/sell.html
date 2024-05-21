@@ -1,0 +1,82 @@
+<style>
+  .table {
+    display: table;
+  }
+  .table-row {
+    display: table-row;
+  }
+  .table-cell {
+    display: table-cell;
+    padding: 10px;
+  }
+</style>
+<h1 mat-dialog-title>Sell {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>{{ Math.round(parseFloat(this.data.position) / parseFloat(this.data.price) * 100) / 100 }} Shares available</p>
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [selectedIndex]="1">
+    <mat-tab label="Amount">
+      <div class="table" style="padding-top: 3%;" >
+        <div class="table-row">
+          <div class="table-cell">
+            Amount
+          </div>
+          <div class="table-cell">
+            <mat-form-field>
+              <input label="Amount" matInput [(ngModel)]="data.amount" (input)="OnAmountInputChanged($event)">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell">
+            Shares
+          </div>
+          <div class="table-cell">
+            <mat-form-field>
+              <input label="Shares" matInput [(ngModel)]="data.shares" disabled>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab label="Shares">
+      <div style="padding-top: 3%">
+        <div class="table" style="padding-top: 3%;" >
+          <div class="table-row">
+            <div class="table-cell">
+              Shares
+            </div>
+            <div class="table-cell">
+              <mat-form-field>
+                <input label="Amount" matInput [(ngModel)]="data.shares" (input)="OnShareInputChanged($event)">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="table-row">
+            <div class="table-cell">
+              Market Price
+            </div>
+            <div class="table-cell">
+              <mat-form-field>
+                <input label="Shares" matInput [(ngModel)]="data.price" disabled>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="table-row">
+            <div class="table-cell">
+              Sum (indicative)
+            </div>
+            <div class="table-cell">
+              <mat-form-field>
+                <input label="Shares" matInput [(ngModel)]="data.amount" disabled>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Back</button>
+  <button mat-button [mat-dialog-close]="data.amount" [disabled]="!this.enoughPosition()">Sell</button>
+</div>

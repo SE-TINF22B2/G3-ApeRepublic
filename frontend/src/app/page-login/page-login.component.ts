@@ -32,7 +32,7 @@ export class PageLoginComponent {
         return;
       }
     }
-
+    /*
     let email = '';
     let username = '';
     if (this.form.getRawValue().name?.includes('@')) {
@@ -40,7 +40,13 @@ export class PageLoginComponent {
     } else {
       username = this.form.getRawValue().name?? '';
     }
-    this.serverApi.login(email, this.form.value.name ?? '', username).subscribe((loginSuccessful) => {
+    this.serverApi.login(email, this.form.value.password ?? '', username).subscribe((loginSuccessful) => {
+      if (loginSuccessful) {
+        this.router.navigate(['/main']);
+      }
+    });
+    */
+    this.serverApi.login(this.form.value.name ?? '', this.form.value.password ?? '', 'enexhd').subscribe((loginSuccessful) => {
       if (loginSuccessful) {
         this.router.navigate(['/main']);
       }

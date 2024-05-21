@@ -4,6 +4,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphComponent } from './graph/graph.component';
+import { BuyPopup } from "./page-stock/page-stock.component";
+import { SellPopup } from "./page-stock/page-stock.component";
+import { ErrorPopup } from "./page-stock/page-stock.component";
+import { SuccessPopup } from "./page-stock/page-stock.component";
 
 import { PageMainComponent } from './page-main/page-main.component';
 import { PageStockComponent } from './page-stock/page-stock.component';
@@ -18,21 +22,27 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatTableModule } from '@angular/material/table';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import {MatTabsModule} from "@angular/material/tabs";
 
 
-const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModule, MatFormFieldModule, TextFieldModule, MatTableModule];
+const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModule, MatFormFieldModule, TextFieldModule, MatTableModule, MatDialogModule];
 
 @NgModule({
   declarations: [
     AppComponent,
     GraphComponent,
+    BuyPopup,
+    SellPopup,
+    SuccessPopup,
+    ErrorPopup,
 
     PageMainComponent,
     PageLoginComponent,
@@ -52,7 +62,9 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
 
     ReactiveFormsModule,
 
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    MatTabsModule
   ],
   exports: [MaterialComponents],
   providers: [],

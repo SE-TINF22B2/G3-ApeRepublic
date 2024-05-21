@@ -30,4 +30,10 @@ export class PageMainComponent {
   getUsername() : String {
     return this.auth.currentUserSig()?.username ?? '';
   }
+
+  protected readonly onsubmit = onsubmit;
+
+  onSubmit() {
+    this.router.navigate( ['/stock'], { queryParams: { name: 'apple'} } );
+  }
 }
