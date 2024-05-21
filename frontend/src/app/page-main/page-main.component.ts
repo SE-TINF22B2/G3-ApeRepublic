@@ -1,4 +1,4 @@
-import {Component, WritableSignal} from '@angular/core';
+import {Component, ElementRef, ViewChild, WritableSignal} from '@angular/core';
 import { Router } from '@angular/router'
 import {AuthService} from "../../services/auth/auth.service";
 import {UserInterface} from "../../models/user/userIntf";
@@ -17,6 +17,8 @@ export interface Company {
   styleUrls: ['./page-main.component.scss']
 })
 export class PageMainComponent {
+  @ViewChild('isinInput') isinInput!: ElementRef;
+
   displayedColumns: String[] = ["ISIN", "Name", "Amount", "Absolute", "Relative"];
   dataSource: Company[] = [
     {isin : 182312838, name : "Apple", amount : "3030$", absolute : "483428", relative : "283282%"},
@@ -34,6 +36,6 @@ export class PageMainComponent {
   protected readonly onsubmit = onsubmit;
 
   onSubmit() {
-    this.router.navigate( ['/stock'], { queryParams: { name: 'apple'} } );
+    this.router.navigate( ['/stock'], { queryParams: { isin: this.isinInput.nativeElement.value} } );
   }
 }

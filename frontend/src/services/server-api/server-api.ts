@@ -2,7 +2,7 @@ import {Observable} from "rxjs";
 
 export interface ServerApi {
   stockExists: (isin: string) => boolean;
-  getStock: (isin: string | null) => boolean;
+  getStock: (isin: string | null) => Observable<boolean>;
   buyStock: (isin: any, result: any) => boolean;
   sellStock: (isin: string | undefined, result: any) => boolean;
 

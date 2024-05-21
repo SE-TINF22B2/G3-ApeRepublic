@@ -17,12 +17,12 @@ export class PageStockComponent {
   openBuyDialog(): void {
     const dialogRef = this.dialog.open(BuyPopup, {
       width: '30%',
-      data: {name: this.stock.currentStock()?.name, price: this.stock.currentStock()?.price, capital: "400$"}
+      data: {name: this.stock.currentStock()?.name, price: this.stock.currentStock()?.ticker, capital: "400$"}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        if (this.serverApi.buyStock(this.stock.currentStock()?.isin, result)) {
+        if (this.serverApi.buyStock(this.stock.currentStock()?.ticker, result)) {
           this.openSuccessDialog();
         } else {
           this.openErrorDialog();
@@ -34,12 +34,12 @@ export class PageStockComponent {
   openSellDialog(): void {
     const dialogRef = this.dialog.open(SellPopup, {
       width: '30%',
-      data: {name: this.stock.currentStock()?.name, price: this.stock.currentStock()?.price, position: "600$"}
+      data: {name: this.stock.currentStock()?.name, price: this.stock.currentStock()?.shareOutstanding, position: "600$"}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        if (this.serverApi.sellStock(this.stock.currentStock()?.isin, result)) {
+        if (this.serverApi.sellStock(this.stock.currentStock()?.ticker, result)) {
           this.openSuccessDialog();
         } else {
           this.openErrorDialog();

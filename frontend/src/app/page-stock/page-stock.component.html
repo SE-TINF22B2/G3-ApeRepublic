@@ -4,9 +4,12 @@
       <button mat-raised-button color="primary" (click)="backToMain()"><div><mat-icon>arrow_back</mat-icon></div></button>
     </div>
     <div class="stockHeadInfoDiv">
-      <div><b>{{ stock.currentStock()?.name}}</b></div>
-      <div><b>120.78$</b></div>
-      <div style="color: green">+2.00$ (1.8%)</div>
+      <img style="width: 10%; height: fit-content" src="{{ stock.currentStock()?.logo }}" alt="">
+      <div style="flex-direction: column; margin-left: 5%;">
+        <div><b>{{ stock.currentStock()?.name }}</b></div>
+        <div><b>120.78$</b></div>
+        <div style="color: green">+2.00$ (1.8%)</div>
+      </div>
     </div>
   </div>
   <div class="graphDiv">
@@ -36,8 +39,48 @@
       </div>
     </div>
   </div>
-  <div>
+  <div class="metricsDiv">
     <h2>Metrics</h2>
+    <div style="display: table">
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3><b> Name </b></h3>
+        </div>
+        <div style="display: table-cell">
+          <h3><b> Ticker </b></h3>
+        </div>
+        <div style="display: table-cell">
+          <h3><b> Country </b></h3>
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.name}}</h3>
+        </div>
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.ticker}}</h3>
+        </div>
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.country}}</h3>
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3><b> Market Capitalization </b></h3>
+        </div>
+        <div style="display: table-cell">
+          <h3><b> Exchange </b></h3>
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.marketCapitalization }}</h3>
+        </div>
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.exchange}}</h3>
+        </div>
+      </div>
+    </div>
   </div>
   <div style="flex-direction: column;">
     <h2>Information</h2>

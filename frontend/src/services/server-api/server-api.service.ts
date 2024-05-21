@@ -24,13 +24,30 @@ export class ServerApiService implements ServerApi, CanActivate {
     return false;
   }
 
-  getStock(isin: string | null): boolean {
+  getStock(isin: string | null): Observable<boolean> {
     if (isin !== null) {
-      this.stockService.currentStock.set(JSON.parse('{ "name" : "Apple", "price" : "53", "isin" : "812382138"}'));
-      return true;
+      return new Observable<boolean>(observer => {
+        this.http.get<any>(this.host + "/companyIsin", {params: {isin: isin,}})
+          .pipe(
+            tap((response) => {
+              if (response.name !== null) {
+                console.log(response);
+                this.stockService.currentStock.set(response);
+                observer.next(true);
+              } else {
+                observer.next(false);
+              }
+            })
+          )
+          .subscribe(() => {
+            observer.complete();
+          });
+      });
+      /* this.stockService.currentStock.set(JSON.parse('{ "name" : "Apple", "price" : "53", "isin" : "812382138"}'));
+      return true; */
     }
     this.router.navigate(['/main']);
-    return false;
+    return new Observable<boolean>(observer => {observer.next(false)});
   }
 
   login(email: string, password: string, username: string): Observable<boolean> {
