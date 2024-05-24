@@ -4,6 +4,7 @@ import de.aperepublic.server.models.CompanyProfile2;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.springframework.web.client.RestTemplate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -14,7 +15,7 @@ class FinnhubCompanyProfile2ServiceTest {
 
     @BeforeAll
     void setup() {
-        finnhubCompanyProfile2Service = new FinnhubCompanyProfile2Service();
+        finnhubCompanyProfile2Service = new FinnhubCompanyProfile2Service(new RestTemplate());
     }
 
     @Test
