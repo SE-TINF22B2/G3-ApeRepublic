@@ -20,7 +20,7 @@ public class StockPriceService {
     @Autowired
     private PriceHistoryTracker priceHistoryTracker;
 
-    public ResponseEntity<String> processCurrentStockPriceRequest(StockPriceRequest stockPriceRequest) {
+    public ResponseEntity<String> processRealtimeStockPriceRequest(StockPriceRequest stockPriceRequest) {
         if(!activeUserService.validate(stockPriceRequest.token)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.INVALID_TOKEN).toString());
         }
