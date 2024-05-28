@@ -1,4 +1,4 @@
-<div style="display: flex; flex-direction: column; align-items: center;">
+<div class="border-shadow" style="display: flex; flex-direction: column; align-items: center; width: 400px">
   <div>
     <h1><b>Login</b></h1>
   </div>
@@ -7,8 +7,8 @@
     <h2 [hidden]="Username !== ''">Please enter your username and password</h2>
 
   </div>
-  <div>
-    <form [formGroup]="form" (submit)="$event.preventDefault()" style="display: block;">
+  <div style="justify-content: center">
+    <form [formGroup]="form" (submit)="$event.preventDefault()" style="display: block; width: 85%">
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Type your Email</mat-label>
@@ -19,7 +19,8 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Type your password</mat-label>
-          <input type="text" matInput formControlName="password">
+          <input type="text" matInput formControlName="password" [type]="hide ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>
       </div>
       <div style="justify-content: center">

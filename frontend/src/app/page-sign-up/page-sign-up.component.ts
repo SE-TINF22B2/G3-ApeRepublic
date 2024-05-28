@@ -16,6 +16,7 @@ export class PageSignUpComponent {
   retypePassword :string = '';
   isPasswordsmatch : boolean = false;
   isEnabled : boolean = false;
+  hide: boolean = true;
 
   form = new FormGroup({
     email: new FormControl(''),

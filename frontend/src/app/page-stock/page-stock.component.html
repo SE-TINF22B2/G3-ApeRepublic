@@ -1,10 +1,10 @@
-<div style="flex-direction: column">
+<div class="border-shadow" style="flex-direction: column; ">
   <div class="headerDiv">
     <div class="backDiv">
       <button mat-raised-button color="primary" (click)="backToMain()"><div><mat-icon>arrow_back</mat-icon></div></button>
     </div>
     <div class="stockHeadInfoDiv">
-      <img style="width: 10%; height: fit-content" src="{{ stock.currentStock()?.logo }}" alt="">
+      <img style="width: 10%; height: auto" src="{{ stock.currentStock()?.logo }}" alt="">
       <div style="flex-direction: column; margin-left: 5%;">
         <div><b>{{ stock.currentStock()?.name }}</b></div>
         <div><b>120.78$</b></div>

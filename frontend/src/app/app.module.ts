@@ -27,10 +27,11 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import {MatNativeDateModule, MatOptionModule} from '@angular/material/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatListModule} from "@angular/material/list";
 
 
 const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModule, MatFormFieldModule, TextFieldModule, MatTableModule, MatDialogModule];
@@ -64,7 +65,9 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
 
     HttpClientModule,
     FormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatListModule,
+    MatOptionModule
   ],
   exports: [MaterialComponents],
   providers: [],

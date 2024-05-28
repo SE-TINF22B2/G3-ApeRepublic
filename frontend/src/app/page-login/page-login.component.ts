@@ -12,6 +12,7 @@ import {FormControl, FormGroup} from "@angular/forms";
 export class PageLoginComponent {
 
   Username : String = '';
+  hide = true;
 
   form = new FormGroup({
     name: new FormControl(''),
