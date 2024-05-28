@@ -11,7 +11,7 @@ public enum ResponseStatus {
     // token
     INVALID_TOKEN("error", "The provided token is invalid!"),
     // stock
-    INVALID_ISIN("error", "The provided isin is not registered!"), SUCCESSFUL_PRICE_REQUEST("success", "Pricerequest successful!"),
+    INVALID_SYMBOL("error", "The provided symbol is not registered!"), SUCCESSFUL_PRICE_REQUEST("success", "PriceRequest successful!"),
     // else
     ERROR("error", "An error occurred handling your request!"), MISSING_PARAMS("error", "One or more parameter are missing!");
 

@@ -1,8 +1,7 @@
 package de.aperepublic.server.controller;
 
-import de.aperepublic.server.models.requests.RealtimeStockPriceRequest;
 import de.aperepublic.server.models.requests.StockPriceRequest;
-import de.aperepublic.server.services.RealtimeStockPriceService;
+import de.aperepublic.server.services.StockPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class RealtimeStockPriceController {
 
     @Autowired
-    private RealtimeStockPriceService realtimeStockPriceService;
+    private StockPriceService stockPriceService;
 
     @PostMapping("")
     public ResponseEntity<String> serveStockPriceRequest(@RequestBody StockPriceRequest stockPriceRequest) {
-        return realtimeStockPriceService.processRealtimeStockPriceRequest(stockPriceRequest);
+        return stockPriceService.processCurrentStockPriceRequest(stockPriceRequest);
     }
 
 }

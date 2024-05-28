@@ -7,10 +7,7 @@ public class StockPriceRequest {
     @JsonProperty("token")
     public String token;
 
-    @JsonProperty("isin")
-    public String isin;
-
-    @JsonProperty("period") // "n" = now, "d" = day, "w" = week, "m" = month, "y" = year
-    public String period;
+    @JsonProperty("symbol")
+    public String symbol;
 
 }
