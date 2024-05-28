@@ -1,7 +1,7 @@
 package de.aperepublic.server.controller;
 
+import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
-import de.aperepublic.server.models.requests.UserLogoutRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
 import de.aperepublic.server.services.UserAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +26,13 @@ public class UserAuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> serviceLogoutRequest(@RequestBody UserLogoutRequest userLogoutRequest) {
-        return userAuthService.processLogoutUser(userLogoutRequest);
+    public ResponseEntity<String> serviceLogoutRequest(@RequestBody TokenRequest tokenRequest) {
+        return userAuthService.processLogoutUser(tokenRequest);
+    }
+
+    @PostMapping("/validate")
+    public ResponseEntity<String> serviceTokenValidationRequest(@RequestBody TokenRequest tokenRequest) {
+        return userAuthService.processValidateToken(tokenRequest);
     }
 
 }
