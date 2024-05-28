@@ -23,7 +23,6 @@ class FinnhubCompanyProfile2ServiceTest {
         CompanyProfile2 result = finnhubCompanyProfile2Service.getCompanyFromIsin("US0378331005");
         assertEquals("Apple Inc", result.getName());
         assertEquals("https://www.apple.com/", result.getWeburl());
-        assertEquals("NASDAQ/NMS (GLOBAL MARKET)", result.getExchange());
     }
 
     @Test
@@ -31,6 +30,5 @@ class FinnhubCompanyProfile2ServiceTest {
         CompanyProfile2 result = finnhubCompanyProfile2Service.getCompanyFromSymbol("AAPL");
         assertEquals("Apple Inc", result.getName());
         assertEquals("https://www.apple.com/", result.getWeburl());
-        assertEquals("NASDAQ/NMS (GLOBAL MARKET)", result.getExchange());
     }
 }

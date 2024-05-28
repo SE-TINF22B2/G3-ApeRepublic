@@ -1,32 +1,23 @@
 package de.aperepublic.server.controller;
 
-import de.aperepublic.server.models.AktieHistorie;
-import de.aperepublic.server.models.AktieInfo;
-import de.aperepublic.server.models.AktiePreis;
+import de.aperepublic.server.models.response.PriceEntry;
+import de.aperepublic.server.services.FinnhubStockPriceService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
 public class StockPriceController {
 
+    FinnhubStockPriceService finnhubStockPriceService;
 
     @GetMapping("/aktie/preis/historisch")
-    public Map<String, Object> bedieneAktienPreisHistorisch(@RequestBody String iteration) { //lieber RequestParam
-        return Map.of("anfrageStatus", 0, "history", List.of(150.4, 148.7, 145.3, 146.1));
-    }
-
-    @GetMapping("aktie/historie")
-    public Map<String, Object> bedieneHistorie() {
-        Map<LocalDateTime, Double> historyMap = new HashMap<>();
-        historyMap.put(LocalDateTime.now(), 150.4);
-        historyMap.put(LocalDateTime.now().minusSeconds(1), 153.3);
-        historyMap.put(LocalDateTime.now().minusSeconds(3), 151.2);
-        historyMap.put(LocalDateTime.now().minusMinutes(2), 150.0);
-        return Map.of("anfrageStatus", 0, "history", List.of(150.4, 148.7, 145.3, 146.1));
+    public List<PriceEntry> bedieneAktienPreisHistorisch(@RequestParam String symbol) { //lieber RequestParam
+        return finnhubStockPriceService.getPriceHistory(symbol);
     }
 
     @GetMapping("/aktie/preis/echtzeit")
@@ -43,6 +34,13 @@ public class StockPriceController {
         } else {
             return Map.of("anfrageStatus", 1);
         }
+    }
+
+    @GetMapping("/aktie/openWebSockets")
+    public void openWebSockets() throws InterruptedException {
+        List<String> temp = new ArrayList<>();
+        temp.add("AAPL");
+        finnhubStockPriceService.openWebSockets(temp);
     }
 
 }
