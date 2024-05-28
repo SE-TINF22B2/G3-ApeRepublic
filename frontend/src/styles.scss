@@ -116,3 +116,10 @@ body {
 div {
   display: flex;
 }
+
+.border-shadow {
+  padding: 3%; background-color: #ffffff;
+  border: 2px solid #000000;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}

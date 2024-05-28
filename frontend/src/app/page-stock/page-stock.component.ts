@@ -17,7 +17,7 @@ export class PageStockComponent {
   openBuyDialog(): void {
     const dialogRef = this.dialog.open(BuyPopup, {
       width: '30%',
-      data: {name: this.stock.currentStock()?.name, price: this.stock.currentStock()?.ticker, capital: "400$"}
+      data: {name: this.stock.currentStock()?.name, price: "300$", capital: "400$"}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -34,7 +34,7 @@ export class PageStockComponent {
   openSellDialog(): void {
     const dialogRef = this.dialog.open(SellPopup, {
       width: '30%',
-      data: {name: this.stock.currentStock()?.name, price: this.stock.currentStock()?.shareOutstanding, position: "600$"}
+      data: {name: this.stock.currentStock()?.name, price: "300$", position: "600$"}
     });
 
     dialogRef.afterClosed().subscribe(result => {

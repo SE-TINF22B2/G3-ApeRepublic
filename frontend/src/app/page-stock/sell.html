@@ -12,7 +12,7 @@
 </style>
 <h1 mat-dialog-title>Sell {{data.name}}</h1>
 <div mat-dialog-content>
-  <p>{{ Math.round(parseFloat(this.data.position) / parseFloat(this.data.price) * 100) / 100 }} Shares available</p>
+  <p>Owning {{ Math.round(parseFloat(this.data.position) / parseFloat(this.data.price) * 100) / 100 }} Shares</p>
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [selectedIndex]="1">
     <mat-tab label="Amount">
       <div class="table" style="padding-top: 3%;" >
