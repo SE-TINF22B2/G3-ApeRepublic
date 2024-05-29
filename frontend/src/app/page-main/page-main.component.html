@@ -20,20 +20,24 @@
   </header>
   <main style="margin-left: 20%; margin-right: 20%;">
     <div style="display: flex; justify-content: space-between;">
-      <div style="font-size: medium;">
-        Portfolio
-        <br>
-        8749$
-      </div>
-      <div style="font-size: medium;">
-        Cash
-        <br>
-        3400$
-      </div>
+        <div style="font-size: medium;">
+            Portfolio
+            <br>
+            8749$
+        </div>
+        <div style="font-size: medium;">
+            Cash
+            <br>
+            3400$
+            <br>
+        </div>
     </div>
-    <div style="display: flex; justify-content: center; margin-top: 10%; margin-bottom: 10%;">
-      <app-graph></app-graph>
+    <br>
+    <div style="display: flex; justify-content: left; margin-top: 5%; margin-bottom: 5%;margin-left: 5%;">
+        <app-graph></app-graph>
     </div>
+  <br>
+  <br>
     <div style="display: flex; justify-content: center; flex-direction: column;">
       <h3>Investments</h3>
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

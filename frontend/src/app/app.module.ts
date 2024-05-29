@@ -8,6 +8,7 @@ import { BuyPopup } from "./page-stock/page-stock.component";
 import { SellPopup } from "./page-stock/page-stock.component";
 import { ErrorPopup } from "./page-stock/page-stock.component";
 import { SuccessPopup } from "./page-stock/page-stock.component";
+import { CanvasJSStockChart } from '@canvasjs/angular-stockcharts';
 
 import { PageMainComponent } from './page-main/page-main.component';
 import { PageStockComponent } from './page-stock/page-stock.component';
@@ -49,6 +50,7 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     PageLoginComponent,
     PageSignUpComponent,
     PageStockComponent,
+
   ],
   imports: [
     BrowserModule,

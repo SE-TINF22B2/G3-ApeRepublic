@@ -1,53 +1,61 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { CanvasJSAngularStockChartsModule } from '@canvasjs/angular-stockcharts';
+
+
+
 
 @Component({
   selector: 'app-graph',
+  standalone: true,
+  imports: [RouterOutlet, CommonModule, CanvasJSAngularStockChartsModule],
   templateUrl: './graph.component.html',
   styleUrls: ['./graph.component.scss']
 })
-export class GraphComponent {
-  stockChartOptions = {
-    title: {
-      text: "CanvasJS Angular StockChart"
-    },
-    theme: "light2",
-    charts: [{
-      data: [{
-        type: "line",
-        dataPoints: [
-          { x: new Date("2018-01-01"), y: 71 },
-          { x: new Date("2018-02-01"), y: 55 },
-          { x: new Date("2018-03-01"), y: 50 },
-          { x: new Date("2018-04-01"), y: 65 },
-          { x: new Date("2018-05-01"), y: 95 },
-          { x: new Date("2018-06-01"), y: 68 },
-          { x: new Date("2018-07-01"), y: 28 },
-          { x: new Date("2018-08-01"), y: 34 },
-          { x: new Date("2018-09-01"), y: 14 },
-          { x: new Date("2018-10-01"), y: 71 },
-          { x: new Date("2018-11-01"), y: 55 },
-          { x: new Date("2018-12-01"), y: 50 },
-          { x: new Date("2019-01-01"), y: 34 },
-          { x: new Date("2019-02-01"), y: 50 },
-          { x: new Date("2019-03-01"), y: 50 },
-          { x: new Date("2019-04-01"), y: 95 },
-          { x: new Date("2019-05-01"), y: 68 },
-          { x: new Date("2019-06-01"), y: 28 },
-          { x: new Date("2019-07-01"), y: 34 },
-          { x: new Date("2019-08-01"), y: 65 },
-          { x: new Date("2019-09-01"), y: 55 },
-          { x: new Date("2019-10-01"), y: 71 },
-          { x: new Date("2019-11-01"), y: 55 },
-          { x: new Date("2019-12-01"), y: 50 }
-        ]
-      }]
-    }],
-    navigator: {
-      slider: {
-        minimum: new Date("2018-07-01"),
-        maximum: new Date("2019-06-30")
-      }
-    }
-  }
 
-}
+export class GraphComponent {
+    chart: any;
+    
+
+	chartOptions = {
+		theme: "dark2",
+		animationEnabled: true,
+		zoomEnabled: true,
+    
+		title: {
+			text: "Apple"
+		},
+		axisY: {
+			labelFormatter: (e: any) => {
+				
+				return "$" + (e.value );
+			}
+		},
+		data: [{
+			type: "line",
+            color:'red',
+            
+			xValueFormatString: "YYYY",
+			yValueFormatString: "$#,###.##",
+			dataPoints: [
+			  { x: new Date(2017, 6, 1), y: 5000 },
+			  { x: new Date(2018, 1, 1), y: 4435},
+              { x: new Date(2018, 6, 1), y: 4585},
+			  { x: new Date(2019, 1, 1), y: 3652},
+              { x: new Date(2019, 6, 1), y: 4365},
+			  { x: new Date(2020, 1, 1), y: 1365},
+              { x: new Date(2020, 6, 1), y: 1365},
+			  { x: new Date(2021, 1, 1), y: 4505},
+              { x: new Date(2021, 6, 1), y: 3526},
+			  { x: new Date(2022, 1, 1), y: 3500},
+              { x: new Date(2022, 6, 1), y: 1365},
+              { x: new Date(2023, 1, 1), y: 3365},
+			  { x: new Date(2023, 6, 1), y: 5235},
+              { x: new Date(2024, 1, 1), y: 8802},
+		
+			 
+			]
+		}]
+	}
+}                        
