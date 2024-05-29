@@ -40,7 +40,6 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
 @NgModule({
   declarations: [
     AppComponent,
-    GraphComponent,
     BuyPopup,
     SellPopup,
     SuccessPopup,
@@ -57,6 +56,8 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     AppRoutingModule,
     BrowserAnimationsModule,
 
+    GraphComponent,
+
     MatDatepickerModule,
     MatNativeDateModule,
     MaterialComponents,
@@ -69,7 +70,8 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     FormsModule,
     MatTabsModule,
     MatListModule,
-    MatOptionModule
+    MatOptionModule,
+    GraphComponent
   ],
   exports: [MaterialComponents],
   providers: [],

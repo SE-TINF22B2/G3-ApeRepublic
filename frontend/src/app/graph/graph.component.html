@@ -1,4 +1,3 @@
-<div>
-
-  <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+<div [style.width]="width" style="height: 400px; padding: 0;" class="border-shadow">
+  <canvasjs-chart [options]="chartOptions" [styles]="{width: width}"></canvasjs-chart>
 </div>
