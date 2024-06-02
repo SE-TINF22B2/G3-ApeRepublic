@@ -71,13 +71,13 @@ public class UserAuthService {
         try {
             token = UUID.fromString(tokenValidationRequest.token);
         } catch(IllegalArgumentException e) {
-            return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.ERROR).build());
+            return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
         }
         if(!activeUserService.containsToken(token)) {
-            return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.ERROR).build());
+            return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
         }
         // TODO: SUCCESSFUL_LOGIN zu SUCCESSFUL_VALIDATION umändern
-        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGIN).build());
+        return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_LOGIN).toString());
     }
 
 }
