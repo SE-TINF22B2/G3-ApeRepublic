@@ -1,6 +1,6 @@
-<div style="flex-direction: column; align-items: center;">
+<div class="border-shadow" style="flex-direction: column; align-items: center; width: 400px">
   <div>
-    <h1>Create Account</h1>
+    <h1><b>Create Account</b></h1>
   </div>
   <div>
     <h2 [hidden]="Username === ''"> Welcome <span style="color: red;">{{Username}} </span></h2>
@@ -44,13 +44,14 @@
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Password</mat-label>
-          <input (input)="passwordOnChange($event)" formControlName="password" matInput>
+          <input (input)="passwordOnChange($event)" formControlName="password" matInput [type]="hide ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Confirm password</mat-label>
-          <input (input)="retypepasswordOnChange($event)" matInput>
+          <input (input)="retypepasswordOnChange($event)" matInput [type]="'password'">
         </mat-form-field>
       </div>
 
@@ -62,9 +63,15 @@
       </label>
     </form>
   </div>
+  <div style="justify-content: center">
+    <a [routerLink]="['/login']">
+      Already have an Account?
+    </a>
+  </div>
   <div>
     <br/>
   </div>
+
   <div>
 
     <button  mat-raised-button (click)="register()" [disabled]="isEnabled" ><b>Sign up</b></button>

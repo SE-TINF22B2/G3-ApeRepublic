@@ -10,7 +10,7 @@ import {ServerApiService} from "../services/server-api/server-api.service";
 export class AppComponent {
   title = 'traderTrainer';
 
-  constructor(private router : Router, private server : ServerApiService) {}
+  constructor(protected router : Router, private server : ServerApiService) {}
 
   logOut() {
     this.server.logout(localStorage.getItem('token')??'');

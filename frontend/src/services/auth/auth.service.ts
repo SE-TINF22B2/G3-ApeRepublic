@@ -9,6 +9,5 @@ import {ServerApiService} from "../server-api/server-api.service";
 })
 export class AuthService {
   currentUserSig = signal<UserInterface | undefined | null>(undefined);
-
   constructor(private router: Router) {}
 }
