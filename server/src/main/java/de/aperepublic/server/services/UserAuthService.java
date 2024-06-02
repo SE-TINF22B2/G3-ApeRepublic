@@ -2,8 +2,9 @@ package de.aperepublic.server.services;
 
 import de.aperepublic.server.models.User;
 import de.aperepublic.server.models.UserDetails;
+import de.aperepublic.server.models.requests.TokenRequest;
+import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
-import de.aperepublic.server.models.requests.UserLogoutRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
 import de.aperepublic.server.models.response.ResponseStatus;
 import de.aperepublic.server.models.response.UserAuthResponse;
@@ -54,7 +55,7 @@ public class UserAuthService {
         return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGIN).addSessionTokenId(sessionTokenId).addUserDetails(UserDetails.build(requestUser)).build());
     }
 
-    public ResponseEntity<String> processLogoutUser(UserLogoutRequest userLogoutRequest) {
+    public ResponseEntity<String> processLogoutUser(TokenRequest userLogoutRequest) {
         if(!activeUserService.removeIfTokenMatch(userLogoutRequest.token)) {
             return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.UNSUCCESSFUL_LOGOUT).build());
         }
@@ -63,6 +64,20 @@ public class UserAuthService {
 
     public ResponseEntity<String> processDeleteUser(UserLoginRequest userLoginRequest) {
         return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.ERROR).build());
+    }
+
+    public ResponseEntity<String> processValidateToken(TokenRequest tokenValidationRequest) {
+        UUID token = null;
+        try {
+            token = UUID.fromString(tokenValidationRequest.token);
+        } catch(IllegalArgumentException e) {
+            return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.ERROR).build());
+        }
+        if(!activeUserService.containsToken(token)) {
+            return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.ERROR).build());
+        }
+        // TODO: SUCCESSFUL_LOGIN zu SUCCESSFUL_VALIDATION umändern
+        return ResponseEntity.ok(new UserAuthResponse(ResponseStatus.SUCCESSFUL_LOGIN).build());
     }
 
 }
