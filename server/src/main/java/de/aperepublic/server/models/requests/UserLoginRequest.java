@@ -19,8 +19,7 @@ public class UserLoginRequest {
     public String password;
 
 
-    public UserLoginRequest(String username, String email, String password, String action) {
-        this.username = username;
+    public UserLoginRequest(String email, String password, String action) {
         this.email = email;
         this.password = password;
     }

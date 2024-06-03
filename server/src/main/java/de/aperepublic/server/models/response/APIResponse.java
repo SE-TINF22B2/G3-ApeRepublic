@@ -2,12 +2,14 @@ package de.aperepublic.server.models.response;
 
 import com.google.gson.Gson;
 import de.aperepublic.server.models.UserDetails;
+import lombok.Getter;
 import org.json.JSONObject;
 
 import java.util.UUID;
 
 public class APIResponse {
 
+    @Getter
     private ResponseStatus status;
     private JSONObject attributes;
 
@@ -19,10 +21,6 @@ public class APIResponse {
     public APIResponse(ResponseStatus responseStatus) {
         this.status = responseStatus;
         attributes = new JSONObject();
-    }
-
-    public ResponseStatus getStatus() {
-        return status;
     }
 
     public APIResponse setStatus(ResponseStatus status) {

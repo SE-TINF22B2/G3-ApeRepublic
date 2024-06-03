@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 public class StockPriceController {
@@ -22,12 +23,12 @@ public class StockPriceController {
 
     FinnhubStockPriceService finnhubStockPriceService;
 
-    @GetMapping("/stock/price/realtime")
+    @PostMapping("/stock/price/realtime")
     public ResponseEntity<String> serveRealtimeStockPriceRequest(@RequestBody StockPriceRequest stockPriceRequest) {
         return stockPriceService.processRealtimeStockPriceRequest(stockPriceRequest);
     }
 
-    @GetMapping("/stock/price/progression")
+    @PostMapping("/stock/price/progression")
     public ResponseEntity<String> serverProgressionStockPriceRequest(@RequestBody StockPriceRequest stockPriceRequest) {
         return stockPriceService.processProgressionStockPriceRequest(stockPriceRequest);
     }
