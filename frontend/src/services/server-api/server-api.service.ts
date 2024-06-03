@@ -16,23 +16,39 @@ export class ServerApiService implements ServerApi, CanActivate {
 
   constructor(private http : HttpClient, private fb : FormBuilder, private authService : AuthService, private stockService: StockInfoService, private router : Router) { }
 
-  buyStock(isin: any, result: any): boolean {
+  buyStock(symbol: any, result: any): boolean {
     return true;
   }
 
-  sellStock(isin: any, result: any): boolean {
+  sellStock(symbol: any, result: any): boolean {
     return false;
   }
 
-  getStock(isin: string | null): Observable<boolean> {
-    if (isin !== null) {
+  getStockPrice() : string {
+    let form = this.fb.nonNullable.group({
+      token: [localStorage.getItem('token')??'', Validators.required],
+      symbol: [this.stockService.symbol, Validators.required]
+    });
+    this.http.post<any>(this.host + "/stock/price/realtime", form.getRawValue()  )
+      .pipe(
+        tap((response) => {
+          console.log(response);
+        })
+      )
+      .subscribe(() => {
+      });
+    return "lol";
+  }
+
+  getStockInfo(symbol: string | null): Observable<boolean> {
+    if (symbol !== null) {
       return new Observable<boolean>(observer => {
-        this.http.get<any>(this.host + "/companyIsin", {params: {isin: isin,}})
+        this.http.get<any>(this.host + "/companySymbol", {params: {symbol: symbol,}})
           .pipe(
             tap((response) => {
               if (response.name !== null) {
-                console.log(response);
                 this.stockService.currentStock.set(response);
+                this.stockService.symbol = symbol;
                 observer.next(true);
               } else {
                 observer.next(false);
@@ -43,19 +59,18 @@ export class ServerApiService implements ServerApi, CanActivate {
             observer.complete();
           });
       });
-      /* this.stockService.currentStock.set(JSON.parse('{ "name" : "Apple", "price" : "53", "isin" : "812382138"}'));
+      /* this.stockService.currentStock.set(JSON.parse('{ "name" : "Apple", "price" : "53", "symbol" : "812382138"}'));
       return true; */
     }
     this.router.navigate(['/main']);
     return new Observable<boolean>(observer => {observer.next(false)});
   }
 
-  login(email: string, password: string, username: string): Observable<boolean> {
+  login(email: string, password: string): Observable<boolean> {
     return new Observable<boolean>(observer => {
       let form = this.fb.nonNullable.group({
         email: [email, Validators.required],
-        password: [password, Validators.required],
-        username: [username, Validators.required]
+        password: [password, Validators.required]
       });
 
       this.http.post<any>(this.host + "/api/user/auth/login", form.getRawValue())
@@ -94,7 +109,6 @@ export class ServerApiService implements ServerApi, CanActivate {
       this.http.post<any>(this.host + "/api/user/auth/register", form.getRawValue())
         .pipe(
           tap((response) => {
-            console.log('response', response);
             if (response.success) {
               localStorage.setItem('token', response.success.sessionTokenId);
               this.authService.currentUserSig.set(response.success.userDetails);
@@ -110,36 +124,61 @@ export class ServerApiService implements ServerApi, CanActivate {
     });
   }
 
-  stockExists(isin: string): boolean {
+  stockExists(symbol: string): boolean {
     return false;
   }
 
-  validate(token: string): boolean {
-    if (token.length === 0) {
-      return false;
-    }
-    return true;
+  validate(token: string): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      let form = this.fb.nonNullable.group({
+        token: [token, Validators.required]
+      });
+
+      this.http.post<any>(this.host + "/api/user/auth/validate", form.getRawValue())
+        .pipe(
+          tap((response) => {
+            if (response.status == 'success') {
+              observer.next(true);
+              this.authService.isValid = true;
+            } else {
+              observer.next(false);
+              this.authService.isValid = false;
+            }
+          })
+        )
+        .subscribe(() => {
+          observer.complete();
+        });
+    });
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // @ts-ignore
     if (route.url.at(0).path == 'logout') {
       this.logout(localStorage.getItem('token')??'');
+      this.authService.isValid = true;
       return true;
     }
-    // @ts-ignore
-    if (route.url.at(0).path == 'login') {
-      if (this.validate(localStorage.getItem('token')??'')) {
-        this.router.navigate(['/main']);
-        return false;
+    return this.validate(localStorage.getItem('token') ?? '').toPromise().then(isValidToken => {
+      // @ts-ignore
+      if (isValidToken) {
+        if (route.url[0].path === 'login') {
+          this.router.navigate(['/main']);
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        if (route.url[0].path === 'login') {
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
       }
-      return true;
-    }
-
-    if (this.validate(localStorage.getItem('token')??'')) {
-      return true;
-    }
-    this.router.navigate(['/login']);
-    return false;
+    }).catch(() => {
+      this.router.navigate(['/login']);
+      return false;
+    });
   }
 }

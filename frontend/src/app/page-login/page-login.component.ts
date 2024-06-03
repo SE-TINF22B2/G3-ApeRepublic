@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {ServerApiService} from "../../services/server-api/server-api.service";
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 
 @Component({
@@ -11,12 +11,13 @@ import {FormControl, FormGroup} from "@angular/forms";
 })
 export class PageLoginComponent {
 
+  loginSuccessful : boolean = true;
   Username : String = '';
-  hide = true;
+  hide : boolean = true;
 
   form = new FormGroup({
-    name: new FormControl(''),
-    password: new FormControl(''),
+    name: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required]),
   });
 
   constructor(private router: Router, private serverApi: ServerApiService) {
@@ -47,10 +48,11 @@ export class PageLoginComponent {
       }
     });
     */
-    this.serverApi.login(this.form.value.name ?? '', this.form.value.password ?? '', 'enexhd').subscribe((loginSuccessful) => {
+    this.serverApi.login(this.form.value.name ?? '', this.form.value.password ?? '').subscribe((loginSuccessful) => {
       if (loginSuccessful) {
         this.router.navigate(['/main']);
       }
+      this.loginSuccessful = loginSuccessful;
     });
  }
 }

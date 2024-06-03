@@ -8,7 +8,7 @@
       Ape Republic
     </div>
     <div style="border-radius: 20px; background-color: black; color: white; width: fit-content; padding: 1%; font-size: large; align-items: center;">
-      <button *ngIf="!loggedOut()" mat-raised-button (click)="logOut()" style="background-color:  #E5E5E5">LOG OUT</button>
+      <button *ngIf="loggedIn()" mat-raised-button (click)="logOut()" style="background-color:  #E5E5E5">LOG OUT</button>
     </div>
   </div>
   <div class="router-outlet">

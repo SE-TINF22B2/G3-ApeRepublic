@@ -24,6 +24,9 @@
         </mat-form-field>
       </div>
       <div style="justify-content: center">
+        <mat-error *ngIf="!loginSuccessful">Invalid Password or Email</mat-error>
+      </div>
+      <div style="justify-content: center">
         <a [routerLink]="['/signup']">
           Forgot your Password?
         </a>

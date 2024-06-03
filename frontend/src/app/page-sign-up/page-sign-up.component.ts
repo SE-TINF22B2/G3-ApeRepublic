@@ -1,6 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ServerApiService} from "../../services/server-api/server-api.service";
 
 
@@ -19,12 +19,12 @@ export class PageSignUpComponent {
   hide: boolean = true;
 
   form = new FormGroup({
-    email: new FormControl(''),
-    username: new FormControl(''),
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    password: new FormControl(''),
-    birthday: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    birthday: new FormControl('', [Validators.required]),
   });
 
   constructor(private router: Router, private serverApi : ServerApiService) {
