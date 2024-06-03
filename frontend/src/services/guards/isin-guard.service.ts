@@ -11,6 +11,6 @@ export class IsinGuardService implements CanActivate{
   constructor( private serverApi : ServerApiService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.serverApi.getStock(route.queryParamMap.get('isin'));
+    return this.serverApi.getStockInfo(route.queryParamMap.get('symbol'));
   }
 }

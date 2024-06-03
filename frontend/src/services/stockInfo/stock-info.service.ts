@@ -6,6 +6,6 @@ import {StockInterface} from "../../models/stock/stockIntf";
 })
 export class StockInfoService {
   currentStock = signal<StockInterface | undefined | null>(undefined);
-
+  symbol : string = "";
   constructor() { }
 }

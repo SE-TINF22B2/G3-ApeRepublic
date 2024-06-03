@@ -1,4 +1,4 @@
-<div class="border-shadow" style="flex-direction: column; ">
+<div class="border-shadow" style="flex-direction: column; width: fit-content;">
   <div class="headerDiv">
     <div class="backDiv">
       <button mat-raised-button color="primary" (click)="backToMain()"><div><mat-icon>arrow_back</mat-icon></div></button>
@@ -7,7 +7,7 @@
       <img style="width: 10%; height: auto" src="{{ stock.currentStock()?.logo }}" alt="">
       <div style="flex-direction: column; margin-left: 5%;">
         <div><b>{{ stock.currentStock()?.name }}</b></div>
-        <div><b>120.78$</b></div>
+        <div><b>{{ latestStockPrice }}</b></div>
         <div style="color: green">+2.00$ (1.8%)</div>
       </div>
     </div>

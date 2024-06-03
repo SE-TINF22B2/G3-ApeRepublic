@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {StockInfoService} from "../../services/stockInfo/stock-info.service";
 import {AuthService} from "../../services/auth/auth.service";
@@ -10,9 +10,14 @@ import {Router} from "@angular/router";
   templateUrl: './page-stock.component.html',
   styleUrls: ['./page-stock.component.scss']
 })
-export class PageStockComponent {
+export class PageStockComponent implements OnInit {
+  latestStockPrice: string = "";
 
   constructor(public dialog: MatDialog, public stock: StockInfoService, public user: AuthService, private serverApi: ServerApiService, private router : Router) {}
+
+  ngOnInit(): void {
+    this.latestStockPrice = this.serverApi.getStockPrice();
+  }
 
   openBuyDialog(): void {
     const dialogRef = this.dialog.open(BuyPopup, {
@@ -57,6 +62,10 @@ export class PageStockComponent {
 
   backToMain() {
     this.router.navigate(['/main']);
+  }
+
+  getStockPrice() : string {
+    return this.serverApi.getStockPrice();
   }
 }
 
