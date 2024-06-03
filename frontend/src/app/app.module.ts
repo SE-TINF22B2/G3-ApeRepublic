@@ -33,6 +33,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatListModule} from "@angular/material/list";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 
 const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModule, MatFormFieldModule, TextFieldModule, MatTableModule, MatDialogModule];
@@ -71,7 +72,8 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     MatTabsModule,
     MatListModule,
     MatOptionModule,
-    GraphComponent
+    GraphComponent,
+    MatAutocompleteModule
   ],
   exports: [MaterialComponents],
   providers: [],

@@ -1,47 +1,41 @@
-<div class="border-shadow" style="display: block">
-  <header style="display: flex; justify-content: space-around; margin-bottom: 3%;">
-    <div style="font-size: large;">
-    </div>
-    <div style="position: relative">
-      <form (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill" style="margin: 0;">
-          <mat-label>Enter ISIN</mat-label>
-          <input matInput #isinInput (focus)="showSuggestions()" (input)="showSuggestions()">
-        </mat-form-field>
-        <mat-list *ngIf="showDropdown" style="position: relative; margin: 0">
-          <mat-list-item style="margin: 0; border: 1px solid black" *ngFor="let term of filteredSearches.reverse()" (click)="selectTerm(term)">
-            {{ term }}
-          </mat-list-item>
-        </mat-list>
-      </form>
+<div class="border-shadow" style="flex-direction: column; width: fit-content;">
+  <div style="display: flex; justify-content: space-between;">
+    <div class="portfolioInfo">
+      <div style="margin-bottom: 10%; margin-top: 10%"><b>Simons Portfolio</b></div>
+      <div><b>1800$</b></div>
     </div>
     <div>
+      <form style="margin-top: 7%;" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <mat-label>Enter Symbol</mat-label>
+          <input type="text"
+                 aria-label="symbol"
+                 matInput
+                 #symbolInput
+                 [formControl]="myControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <ng-container *ngFor="let option of filteredOptions | async;">
+              <mat-option [value]="option">{{option}}</mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-error *ngIf="error">Stock not found</mat-error>
+      </form>
     </div>
-  </header>
-  <main style="margin-left: 20%; margin-right: 20%;">
-    <div style="display: flex; justify-content: space-between;">
-        <div style="font-size: medium;">
-            Portfolio
-            <br>
-            8749$
-        </div>
-        <div style="font-size: medium;">
-            Cash
-            <br>
-            3400$
-            <br>
-        </div>
-    </div>
-    <div style="display: flex; justify-content: center; margin-top: 10%; margin-bottom: 10%;">
-        <app-graph [width]="'808px'"></app-graph>
-    </div>
-    <div style="display: flex; justify-content: center; flex-direction: column;">
-      <h3>Investments</h3>
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  </div>
+  <div class="graphDiv" style="justify-content: center">
+    <app-graph [width]="'750px'">
+    </app-graph>
+  </div>
+  <div style="display: flex; justify-content: center; flex-direction: column;">
+    <div style="font-size: large; margin-bottom: 5%"><b>Investments</b></div>
+    <div class="border-shadow" style="padding: 2px;">
+      <table mat-table [dataSource]="dataSource" >
 
-        <ng-container matColumnDef="ISIN">
-          <th mat-header-cell *matHeaderCellDef> ISIN </th>
-          <td mat-cell *matCellDef="let element"> {{element.isin}} </td>
+        <ng-container matColumnDef="Symbol">
+          <th mat-header-cell *matHeaderCellDef> Symbol </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
         </ng-container>
 
         <ng-container matColumnDef="Name">
@@ -59,16 +53,14 @@
           <td mat-cell *matCellDef="let element"> {{element.absolute}} </td>
         </ng-container>
 
-            <ng-container matColumnDef="Relative">
-                <th mat-header-cell *matHeaderCellDef> Relative </th>
-                <td mat-cell *matCellDef="let element"> {{element.relative}} </td>
-            </ng-container>
+        <ng-container matColumnDef="Relative">
+          <th mat-header-cell *matHeaderCellDef> Relative </th>
+          <td mat-cell *matCellDef="let element"> {{element.relative}} </td>
+        </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
     </div>
-
-  </main>
-  <footer></footer>
+  </div>
 </div>
