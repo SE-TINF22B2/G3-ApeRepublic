@@ -29,6 +29,15 @@ public class ActiveUserService {
         return createToken(email);
     }
 
+    public boolean validate(String stringToken) {
+        try {
+            UUID token = UUID.fromString(stringToken);
+            return containsToken(token);
+        } catch(IllegalArgumentException e) {
+            return false;
+        }
+    }
+
     public boolean removeTokenByEmail(String email) {
         return sessionTokens.removeIf(token -> token.getEmail().contentEquals(email));
     }
