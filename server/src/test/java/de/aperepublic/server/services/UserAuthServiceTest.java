@@ -6,17 +6,20 @@ import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
 import de.aperepublic.server.repositories.MockUserRepository;
+import de.aperepublic.server.repositories.UserRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,7 +100,7 @@ public class UserAuthServiceTest {
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("success"));
+        expectStatus(resBody, "success");
     }
 
     @Test
@@ -108,7 +111,7 @@ public class UserAuthServiceTest {
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("error"));
+        expectStatus(resBody, "error");
     }
 
     @Test
@@ -118,60 +121,58 @@ public class UserAuthServiceTest {
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("success"));
-        JSONObject messageBody = resBody.getJSONObject("success");
-        assertTrue(messageBody.has("sessionTokenId"));
-        assertTrue(activeUserService.containsToken(UUID.fromString(messageBody.getString("sessionTokenId"))));
+        expectStatus(resBody, "success");
+        assertTrue(resBody.has("sessionTokenId"));
+        assertTrue(activeUserService.containsToken(UUID.fromString(resBody.getString("sessionTokenId"))));
     }
 
     @Test
-    public void testLoggingInNewUser() {
-        UserLoginRequest userLoginRequest = new UserLoginRequest(unregisteredUser.username, unregisteredUser.email, unregisteredUser.password, unregisteredUser.password);
+    public void testLoggingInUnregisteredUser() {
+        UserLoginRequest userLoginRequest = new UserLoginRequest(unregisteredUser.email, unregisteredUser.password);
 
         ResponseEntity<String> res = userAuthService.processLoginUser(userLoginRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("error"));
+        expectStatus(resBody, "error");
     }
 
     @Test
     public void testLoggingInRegisteredUser() {
-        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
+        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.email, registeredUser.password);
 
         ResponseEntity<String> res = userAuthService.processLoginUser(userLoginRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("success"));
+        expectStatus(resBody, "success");
     }
 
     @Test
     public void testGettingUserDetailsOnLoggingInRegisteredUser() {
-        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
+        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.email, registeredUser.password);
 
         ResponseEntity<String> res = userAuthService.processLoginUser(userLoginRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("success"));
-        JSONObject messageBody = resBody.getJSONObject("success");
-        assertTrue(messageBody.has("userDetails"));
-        assertEquals("enexhd@gmail.com", messageBody.getJSONObject("userDetails").getString("email"));
+        expectStatus(resBody, "success");
+        assertTrue(resBody.has("userDetails"));
+        assertEquals("enexhd@gmail.com", resBody.getJSONObject("userDetails").getString("email"));
     }
 
     @Test
     public void testLoggingOutWithCorrectToken() {
         // Login to get SessionTokenId
-        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
+        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.email, registeredUser.password);
 
         ResponseEntity<String> loginRes = userAuthService.processLoginUser(userLoginRequest);
 
         assertEquals(HttpStatus.OK, loginRes.getStatusCode());
         JSONObject loginResBody = new JSONObject(loginRes.getBody());
-        assertTrue(loginResBody.has("success"));
+        expectStatus(loginResBody, "success");
 
-        String sessionTokenId = loginResBody.getJSONObject("success").getString("sessionTokenId");
+        String sessionTokenId = loginResBody.getString("sessionTokenId");
 
         // Logout with SessionTokenId
         TokenRequest userLogoutRequest = new TokenRequest(sessionTokenId);
@@ -180,7 +181,7 @@ public class UserAuthServiceTest {
 
         assertEquals(HttpStatus.OK, logoutRes.getStatusCode());
         JSONObject logoutResBody = new JSONObject(logoutRes.getBody());
-        assertTrue(logoutResBody.has("success"));
+        expectStatus(logoutResBody, "success");
     }
 
     @Test
@@ -191,21 +192,21 @@ public class UserAuthServiceTest {
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("error"));
+        expectStatus(resBody, "error");
     }
 
     @Test
     public void testValidateCorrectToken() {
         // Login to get SessionTokenId
-        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.password);
+        UserLoginRequest userLoginRequest = new UserLoginRequest(registeredUser.email, registeredUser.password);
 
         ResponseEntity<String> loginRes = userAuthService.processLoginUser(userLoginRequest);
 
         assertEquals(HttpStatus.OK, loginRes.getStatusCode());
         JSONObject loginResBody = new JSONObject(loginRes.getBody());
-        assertTrue(loginResBody.has("success"));
+        expectStatus(loginResBody, "success");
 
-        String sessionTokenId = loginResBody.getJSONObject("success").getString("sessionTokenId");
+        String sessionTokenId = loginResBody.getString("sessionTokenId");
 
         System.out.println("TokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenToken:" + sessionTokenId);
         // Logout with SessionTokenId
@@ -215,7 +216,7 @@ public class UserAuthServiceTest {
 
         assertEquals(HttpStatus.OK, logoutRes.getStatusCode());
         JSONObject logoutResBody = new JSONObject(logoutRes.getBody());
-        assertTrue(logoutResBody.has("success"));
+        expectStatus(logoutResBody, "success");
     }
 
     @Test
@@ -226,7 +227,12 @@ public class UserAuthServiceTest {
 
         assertEquals(HttpStatus.OK, res.getStatusCode());
         JSONObject resBody = new JSONObject(res.getBody());
-        assertTrue(resBody.has("error"));
+        expectStatus(resBody, "error");
+    }
+
+    private void expectStatus(JSONObject resBody, String exprect) {
+        assertTrue(resBody.has("status"));
+        assertTrue(resBody.getString("status").contentEquals(exprect));
     }
 
 }

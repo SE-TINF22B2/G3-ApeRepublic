@@ -31,6 +31,10 @@ public class PriceHistoryTracker {
         trimListOf(symbol);
     }
 
+    public boolean hasEntry(String symbol) {
+        return stocksMap.containsKey(symbol);
+    }
+
     public List<PriceEntry> getAllEntriesOf(String symbol) {
         return stocksMap.get(symbol);
     }
