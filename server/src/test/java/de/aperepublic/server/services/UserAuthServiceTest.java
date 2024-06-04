@@ -207,6 +207,7 @@ public class UserAuthServiceTest {
 
         String sessionTokenId = loginResBody.getJSONObject("success").getString("sessionTokenId");
 
+        System.out.println("TokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenToken:" + sessionTokenId);
         // Logout with SessionTokenId
         TokenRequest tokenRequest = new TokenRequest(sessionTokenId);
 

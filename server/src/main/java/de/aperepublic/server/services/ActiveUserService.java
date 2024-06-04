@@ -13,7 +13,8 @@ public class ActiveUserService {
     private final List<SessionToken> sessionTokens;
 
     public ActiveUserService() {
-        sessionTokens = new ArrayList<>();
+        // init with testtoken
+        sessionTokens = List.of(new SessionToken(UUID.fromString("84393891-5198-483b-930a-6505a37cb532"), "enexhd@gmail.com"));
     }
 
     public UUID createToken(String email) {
