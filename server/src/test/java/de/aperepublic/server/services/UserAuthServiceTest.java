@@ -1,7 +1,6 @@
 package de.aperepublic.server.services;
 
 import de.aperepublic.server.ServerApplication;
-import de.aperepublic.server.models.User;
 import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
@@ -10,14 +9,12 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,13 +30,13 @@ public class UserAuthServiceTest {
     @Autowired
     private ActiveUserService activeUserService;
 
-    private static User registeredUser;
+    private static Users registeredUser;
 
-    private static User unregisteredUser;
+    private static Users unregisteredUser;
 
     @BeforeAll
     public static void setupMockUsers() {
-        registeredUser = new User.UserBuilder(0L)
+        registeredUser = new Users.UserBuilder(0L)
                 .setUsername("enexhd")
                 .setEmail("enexhd@gmail.com")
                 .setFirstname("Marc")
@@ -47,7 +44,7 @@ public class UserAuthServiceTest {
                 .setPassword("123")
                 .setBirthday("2002-08-07")
                 .build();
-        unregisteredUser = new User.UserBuilder(1L)
+        unregisteredUser = new Users.UserBuilder(1L)
                 .setUsername("haupti")
                 .setEmail("POLIZFI@gmail.com")
                 .setFirstname("Hauptanzeigen")

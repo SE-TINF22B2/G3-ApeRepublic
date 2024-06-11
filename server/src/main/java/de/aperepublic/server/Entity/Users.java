@@ -1,5 +1,6 @@
 package de.aperepublic.server.Entity;
 
+import de.aperepublic.server.models.requests.UserRegisterRequest;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,7 +10,6 @@ import java.sql.Date;
 @Table(name = "User")
 @Data
 public class Users {
-
         public static final String COLUMN_IDUSER= "idUser";
         public static final String COLUMN_BIRTHDAY= "birthday";
         public static final String COLUMN_FIRSTNAME = "firstName";
@@ -40,5 +40,17 @@ public class Users {
 
         @Column(name = COLUMN_BIRTHDAY, nullable = false)
         public Date birthday;
+
+        public static Users buildFromRegisterRequest(UserRegisterRequest request) {
+                Users newUser = new Users();
+                newUser.userID = 1;
+                newUser.username = request.username;
+                newUser.email = request.email;
+                newUser.password = request.password;
+                newUser.firstname = request.firstname;
+                newUser.lastname = request.lastname;
+                newUser.birthday = Date.valueOf(request.birthday);
+                return newUser;
+        }
 
     }

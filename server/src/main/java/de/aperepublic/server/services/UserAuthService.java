@@ -1,6 +1,6 @@
 package de.aperepublic.server.services;
 
-import de.aperepublic.server.models.User;
+import de.aperepublic.server.Entity.Users;
 import de.aperepublic.server.models.UserDetails;
 import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
@@ -37,18 +37,18 @@ public class UserAuthService {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.EMAIL_TAKEN).toString());
         }
         UUID sessionToken = activeUserService.createToken(userRegisterRequest.email);
-        User newUser = User.buildFromRegisterRequest(userRegisterRequest);
+        de.aperepublic.server.Entity.Users newUser = de.aperepublic.server.Entity.Users.buildFromRegisterRequest(userRegisterRequest);
         userRepository.save(newUser);
-        UserDetails userDetails = UserDetails.build(userRepository.findByEmail(userRegisterRequest.email).orElse(new User()));
+        UserDetails userDetails = UserDetails.build(userRepository.findByEmail(userRegisterRequest.email).orElse(new Users()));
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionTokenId(sessionToken).addUserDetails(userDetails).toString());
     }
 
     public ResponseEntity<String> processLoginUser(UserLoginRequest userLoginRequest) {
-        Optional<User> optRequestUser = userRepository.findByEmail(userLoginRequest.email);
+        Optional<de.aperepublic.server.Entity.Users> optRequestUser = userRepository.findByEmail(userLoginRequest.email);
         if(optRequestUser.isEmpty()) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.UNSUCCESSFUL_LOGIN).toString());
         }
-        User requestUser = optRequestUser.get();
+        de.aperepublic.server.Entity.Users requestUser = optRequestUser.get();
         if(!requestUser.password.contentEquals(userLoginRequest.password)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.UNSUCCESSFUL_LOGIN).toString());
         }
