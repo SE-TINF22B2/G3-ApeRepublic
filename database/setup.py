@@ -1,18 +1,34 @@
-import subprocess
-import glob
+import os
+import mysql.connector
 
-# Alle SQL-Skriptdateien im Verzeichnis finden
-sql_files = glob.glob("./*.sql")
+# Datenbankverbindungsinformationen
+db_config = {
+    'host': 'localhost',
+    'port': 3306,
+    'user': 'root',
+    'password': 'anisasSexyStock'
+}
 
-# MySQL-Verbindungsdaten
-username = "root"
-password = "anisasSexyStock"
-host = "localhost"
-port = "3306"
+def execute_sql_file(file_paths):
+    # Verbindung zur Datenbank herstellen
+    connection = mysql.connector.connect(**db_config)
+    cursor = connection.cursor()
 
-# Für jede SQL-Datei das Skript ausführen
-for sql_file in sql_files:
-    # Befehl zum Ausführen des SQL-Skripts mit dem mysql Befehl
-    command = f"mysql -u {username} -p{password} -h {host} -P {port} < {sql_file}"
-    print(command)
-    subprocess.run(command, shell=True)
+    # SQL-Datei ausführen
+    for file_path in file_paths:
+        print(f"Execute {file_path}")
+        with open(file_path, 'r', encoding='utf-8') as file:
+            sql_script = file.read()
+            for statement in sql_script.split(';'):
+                if statement.strip():
+                    cursor.execute(statement)
+                    connection.commit()
+
+    # Verbindung schließen
+    cursor.close()
+    connection.close()
+
+
+if __name__ == '__main__':
+    # Ausführen der SQL-Dateien
+    execute_sql_file(['init_tables.sql', 'insert_tables.sql'])
