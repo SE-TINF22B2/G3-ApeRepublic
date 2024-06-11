@@ -1,0 +1,4 @@
+<div [style.width]="width" style="height: 400px; padding: 0; background-color: #32373A" class="border-shadow">
+  <mat-spinner *ngIf="!chartLoaded()" style="position:absolute; top: 50%; left: 50%; transform: translate(-50%, 0); z-index: 1000"></mat-spinner>
+  <span [id]="chartId" [style.width]="width"></span>
+</div>
