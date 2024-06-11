@@ -7,5 +7,9 @@ import {StockInterface} from "../../models/stock/stockIntf";
 export class StockInfoService {
   currentStock = signal<StockInterface | undefined | null>(undefined);
   symbol : string = "";
+  latestPrice: any = "----";
+  prices: [] = [];
+  firstPrice: any = 0;
+  firstTimestamp: any = 0;
   constructor() { }
 }

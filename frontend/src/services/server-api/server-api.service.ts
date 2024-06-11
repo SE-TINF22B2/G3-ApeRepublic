@@ -24,7 +24,7 @@ export class ServerApiService implements ServerApi, CanActivate {
     return false;
   }
 
-  getStockPrice() : string {
+  getStockPrice() {
     let form = this.fb.nonNullable.group({
       token: [localStorage.getItem('token')??'', Validators.required],
       symbol: [this.stockService.symbol, Validators.required]
@@ -32,12 +32,33 @@ export class ServerApiService implements ServerApi, CanActivate {
     this.http.post<any>(this.host + "/stock/price/realtime", form.getRawValue()  )
       .pipe(
         tap((response) => {
-          console.log(response);
+          if (this.stockService.latestPrice == "----") {
+            this.stockService.firstPrice = response.prices[0].price;
+            this.stockService.firstTimestamp = response.prices[0].timestamp;
+          }
+          this.stockService.latestPrice = response.prices[0].price;
         })
       )
       .subscribe(() => {
       });
-    return "lol";
+  }
+
+  getStockProgression() {
+    let form = this.fb.nonNullable.group({
+      token: [localStorage.getItem('token')??'', Validators.required],
+      symbol: [this.stockService.symbol, Validators.required]
+    });
+    this.http.post<any>(this.host + "/stock/price/progression", form.getRawValue()  )
+      .pipe(
+        tap((response) => {
+          for (const price of response.prices) {
+          // @ts-ignore
+            this.stockService.prices.push(price);
+          }
+        })
+      )
+      .subscribe(() => {
+      });
   }
 
   getStockInfo(symbol: string | null): Observable<boolean> {
@@ -150,6 +171,11 @@ export class ServerApiService implements ServerApi, CanActivate {
           observer.complete();
         });
     });
+  }
+
+  openWebsocket(symbol: string) {
+    this.http.get<any>(this.host + "/stock/openWebSocket",{params: {symbol: symbol}})
+      .pipe(tap()).subscribe();
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

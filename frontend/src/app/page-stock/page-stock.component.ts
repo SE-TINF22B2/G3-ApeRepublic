@@ -1,22 +1,55 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {StockInfoService} from "../../services/stockInfo/stock-info.service";
 import {AuthService} from "../../services/auth/auth.service";
 import {ServerApiService} from "../../services/server-api/server-api.service";
 import {Router} from "@angular/router";
+import {interval, Subscription, takeWhile} from "rxjs";
 
 @Component({
   selector: 'app-page-stock',
   templateUrl: './page-stock.component.html',
   styleUrls: ['./page-stock.component.scss']
 })
-export class PageStockComponent implements OnInit {
-  latestStockPrice: string = "";
+export class PageStockComponent implements OnInit, OnDestroy {
+  latestStockPrice: any = "----";
 
-  constructor(public dialog: MatDialog, public stock: StockInfoService, public user: AuthService, private serverApi: ServerApiService, private router : Router) {}
+  mySub: Subscription | undefined;
+
+  constructor(public dialog: MatDialog, public stock: StockInfoService, private serverApi: ServerApiService, private router : Router) {}
 
   ngOnInit(): void {
-    this.latestStockPrice = this.serverApi.getStockPrice();
+    this.serverApi.getStockPrice();
+    this.serverApi.getStockProgression();
+    this.mySub = interval(1000).subscribe((func => {
+      this.serverApi.getStockPrice();
+      this.serverApi.getStockProgression();
+      if (this.stock.latestPrice !== '----') {
+        this.latestStockPrice = parseFloat(this.stock.latestPrice).toFixed(2);
+      }
+    }))
+  }
+
+
+  firstEntryTime() {
+    return new Date(parseInt(this.stock.firstTimestamp)).toLocaleTimeString();
+  }
+
+  isAbsoluteDifferencePositive(): boolean {
+    return parseFloat(this.absoluteDifference()) >= 0;
+  }
+
+  absoluteDifference() {
+    return (this.latestStockPrice - this.stock.firstPrice).toFixed(2);
+  }
+
+  relativeDifference() {
+    return ((this.stock.firstPrice / this.latestStockPrice) - 1).toFixed(2);
+
+  }
+
+  ngOnDestroy(): void {
+    this.mySub?.unsubscribe();
   }
 
   openBuyDialog(): void {
@@ -64,9 +97,7 @@ export class PageStockComponent implements OnInit {
     this.router.navigate(['/main']);
   }
 
-  getStockPrice() : string {
-    return this.serverApi.getStockPrice();
-  }
+  protected readonly parseFloat = parseFloat;
 }
 
 export interface DialogData {

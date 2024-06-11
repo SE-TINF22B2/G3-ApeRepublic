@@ -8,12 +8,13 @@
       <div style="flex-direction: column; margin-left: 5%;">
         <div><b>{{ stock.currentStock()?.name }}</b></div>
         <div><b>{{ latestStockPrice }}</b></div>
-        <div style="color: green">+2.00$ (1.8%)</div>
+        <div [ngStyle]="{ color: isAbsoluteDifferencePositive() ? 'green' : 'red' }">{{ absoluteDifference() }}$ ({{ relativeDifference() }}%)</div>
+        <div style="font-size: smaller">(since {{firstEntryTime()}})</div>
       </div>
     </div>
   </div>
   <div class="graphDiv">
-    <app-graph [width]="'808px'">
+    <app-graph [width]="'808px'" [datapoints]=(this.stock.prices) [chartId]="'stockChartContainer'">
     </app-graph>
   </div>
   <div class="buySellDiv">

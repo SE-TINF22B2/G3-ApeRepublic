@@ -3,8 +3,10 @@ package de.aperepublic.server.models.response;
 import com.google.gson.Gson;
 import de.aperepublic.server.models.UserDetails;
 import lombok.Getter;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.List;
 import java.util.UUID;
 
 public class APIResponse {
@@ -29,6 +31,11 @@ public class APIResponse {
     }
 
     public APIResponse addAttribute(String key, String value) {
+        attributes.put(key, value);
+        return this;
+    }
+
+    public APIResponse addList(String key, JSONArray value) {
         attributes.put(key, value);
         return this;
     }

@@ -57,7 +57,6 @@ const MaterialComponents = [MatButtonModule, MatInputModule, MatSlideToggleModul
     AppRoutingModule,
     BrowserAnimationsModule,
 
-    GraphComponent,
 
     MatDatepickerModule,
     MatNativeDateModule,
