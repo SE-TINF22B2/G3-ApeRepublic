@@ -3,15 +3,15 @@ package de.aperepublic.server.services;
 import de.aperepublic.server.models.User;
 import de.aperepublic.server.models.UserDetails;
 import de.aperepublic.server.models.requests.TokenRequest;
-import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
 import de.aperepublic.server.models.response.ResponseStatus;
 import de.aperepublic.server.models.response.APIResponse;
-import de.aperepublic.server.repositories.MockUserRepository;
+import de.aperepublic.server.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,27 +23,28 @@ public class UserAuthService {
     private ActiveUserService activeUserService;
 
     @Autowired
-    private MockUserRepository mockUserRepository;
+    private UserRepository userRepository;
 
+    @Transactional
     public ResponseEntity<String> processRegisterUser(UserRegisterRequest userRegisterRequest) {
-        // TODO: Possible SQL Injection???
         if(!userRegisterRequest.isValid()) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.MISSING_PARAMS).toString());
         }
-        if(mockUserRepository.existsByUsername(userRegisterRequest.username)) {
+        if(userRepository.existsByUsername(userRegisterRequest.username)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.USERNAME_TAKEN).toString());
         }
-        if(mockUserRepository.existsByEmail(userRegisterRequest.email)) {
+        if(userRepository.existsByEmail(userRegisterRequest.email)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.EMAIL_TAKEN).toString());
         }
-        // TODO: Register DB Integration
         UUID sessionToken = activeUserService.createToken(userRegisterRequest.email);
-        UserDetails userDetails = UserDetails.build(mockUserRepository.findByEmail(userRegisterRequest.email).orElse(new User()));
+        User newUser = User.buildFromRegisterRequest(userRegisterRequest);
+        userRepository.save(newUser);
+        UserDetails userDetails = UserDetails.build(userRepository.findByEmail(userRegisterRequest.email).orElse(new User()));
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionTokenId(sessionToken).addUserDetails(userDetails).toString());
     }
 
     public ResponseEntity<String> processLoginUser(UserLoginRequest userLoginRequest) {
-        Optional<User> optRequestUser = mockUserRepository.findByEmail(userLoginRequest.email);
+        Optional<User> optRequestUser = userRepository.findByEmail(userLoginRequest.email);
         if(optRequestUser.isEmpty()) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.UNSUCCESSFUL_LOGIN).toString());
         }

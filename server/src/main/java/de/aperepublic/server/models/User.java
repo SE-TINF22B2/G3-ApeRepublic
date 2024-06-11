@@ -1,5 +1,7 @@
 package de.aperepublic.server.models;
 
+import de.aperepublic.server.models.requests.UserRegisterRequest;
+import de.aperepublic.server.repositories.UserRepository;
 import jakarta.persistence.*;
 
 @Entity
@@ -91,6 +93,18 @@ public class User {
             return new User(this);
         }
 
+    }
+
+    public static User buildFromRegisterRequest(UserRegisterRequest request) {
+        User newUser = new User();
+        newUser.userID = 1L;
+        newUser.username = request.username;
+        newUser.email = request.email;
+        newUser.password = request.password;
+        newUser.firstname = request.firstname;
+        newUser.lastname = request.lastname;
+        newUser.birthday = request.birthday;
+        return newUser;
     }
 
 }
