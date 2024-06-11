@@ -10,10 +10,16 @@ import java.util.UUID;
 @Service
 public class ActiveUserService {
 
-    private final List<SessionToken> sessionTokens;
+    private List<SessionToken> sessionTokens;
 
     public ActiveUserService() {
+        // init with testtoken
         sessionTokens = new ArrayList<>();
+        addStaticTestToken();
+    }
+
+    private void addStaticTestToken() {
+        sessionTokens.add(new SessionToken(UUID.fromString("84393891-5198-483b-930a-6505a37cb532"), "enexhd@gmail.com"));
     }
 
     public UUID createToken(String email) {

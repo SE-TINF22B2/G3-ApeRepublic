@@ -5,8 +5,6 @@ import de.aperepublic.server.models.User;
 import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
 import de.aperepublic.server.models.requests.UserRegisterRequest;
-import de.aperepublic.server.repositories.MockUserRepository;
-import de.aperepublic.server.repositories.UserRepository;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,9 +26,6 @@ import static org.mockito.ArgumentMatchers.any;
 @SpringBootTest(classes = ServerApplication.class)
 @ExtendWith(MockitoExtension.class)
 public class UserAuthServiceTest {
-
-    @Autowired
-    private MockUserRepository userRepository;
 
     @Autowired
     private UserAuthService userAuthService;
@@ -208,6 +203,7 @@ public class UserAuthServiceTest {
 
         String sessionTokenId = loginResBody.getString("sessionTokenId");
 
+        System.out.println("TokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenTokenToken:" + sessionTokenId);
         // Logout with SessionTokenId
         TokenRequest tokenRequest = new TokenRequest(sessionTokenId);
 
