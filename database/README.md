@@ -2,7 +2,7 @@
 Dieses Dokument erklärt dir, wie du auf deinem System eine Datenbank mit Testdaten zum Laufen bekommst.
 
 ## Windows
-
+-
 
 ## Mac
 1. Lade [Docker Desktop](https://www.docker.com/products/docker-desktop/) herunter
