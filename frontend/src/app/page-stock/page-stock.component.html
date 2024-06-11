@@ -1,24 +1,87 @@
-<div style="flex-direction: column">
+<div class="border-shadow" style="flex-direction: column; width: fit-content;">
   <div class="headerDiv">
     <div class="backDiv">
-      <button mat-raised-button color="primary"><div><mat-icon>arrow_back</mat-icon></div></button>
+      <button mat-raised-button color="primary" (click)="backToMain()"><div><mat-icon>arrow_back</mat-icon></div></button>
     </div>
     <div class="stockHeadInfoDiv">
-      <div><b>Apple</b></div>
-      <div><b>120.78$</b></div>
-      <div style="color: green">+2.00$ (1.8%)</div>
+      <img style="width: 10%; height: auto" src="{{ stock.currentStock()?.logo }}" alt="">
+      <div style="flex-direction: column; margin-left: 5%;">
+        <div><b>{{ stock.currentStock()?.name }}</b></div>
+        <div><b>{{ latestStockPrice }}</b></div>
+        <div [ngStyle]="{ color: isAbsoluteDifferencePositive() ? 'green' : 'red' }">{{ absoluteDifference() }}$ ({{ relativeDifference() }}%)</div>
+        <div style="font-size: smaller">(since {{firstEntryTime()}})</div>
+      </div>
     </div>
   </div>
   <div class="graphDiv">
-    <app-graph>
+    <app-graph [width]="'808px'" [datapoints]=(this.stock.prices) [chartId]="'stockChartContainer'">
     </app-graph>
   </div>
   <div class="buySellDiv">
-    <button class="buy" mat-raised-button color="primary" >BUY</button>
-    <button class="sell" mat-raised-button color="primary">SELL</button>
+    <button class="buy" mat-raised-button color="primary" (click)="openBuyDialog()" >BUY</button>
+    <button class="sell" mat-raised-button color="primary" (click)="openSellDialog()">SELL</button>
   </div>
-  <div>
+  <div class="positionDiv">
+    <h2>Position</h2>
+    <div style="display: table">
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3><b>Total</b></h3>
+          300$
+        </div>
+        <div style="display: table-cell">
+          <h3><b>Shares</b></h3>
+          7.4
+        </div>
+        <div style="display: table-cell">
+          <h3><b>Buy In</b></h3>
+          50$
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="metricsDiv">
     <h2>Metrics</h2>
+    <div style="display: table">
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3><b> Name </b></h3>
+        </div>
+        <div style="display: table-cell">
+          <h3><b> Ticker </b></h3>
+        </div>
+        <div style="display: table-cell">
+          <h3><b> Country </b></h3>
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.name}}</h3>
+        </div>
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.ticker}}</h3>
+        </div>
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.country}}</h3>
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3><b> Market Capitalization </b></h3>
+        </div>
+        <div style="display: table-cell">
+          <h3><b> Exchange </b></h3>
+        </div>
+      </div>
+      <div style="display: table-row">
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.marketCapitalization }}</h3>
+        </div>
+        <div style="display: table-cell">
+          <h3>{{ stock.currentStock()?.exchange}}</h3>
+        </div>
+      </div>
+    </div>
   </div>
   <div style="flex-direction: column;">
     <h2>Information</h2>

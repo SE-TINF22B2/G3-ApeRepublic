@@ -1,10 +1,14 @@
-<div style="flex-direction: column; align-items: center">
-  <div style="justify-content: space-between; width: 100%">
-    <div style="border-radius: 20px; background-color: black; color: white; width: fit-content; padding: 1%; font-size: large; align-items: center">
-        Ape Republic
+<div style="flex-direction: column; align-items: center;">
+  <div style="justify-content: space-between; width: 100%; background-color: black; position: sticky; top: 0; z-index: 999;
+  -webkit-box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);">
+    <div [routerLink]="['/main']" style="cursor: pointer; user-select: none; border-radius: 20px; background-color: black; color: white; width: fit-content; padding: 1%; font-size: large; align-items: center;">
+      <img src="assets/ape.png" alt="Ape Republic">
+      Ape Republic
     </div>
-    <div>
-      <button mat-raised-button>LOG OUT</button>
+    <div style="border-radius: 20px; background-color: black; color: white; width: fit-content; padding: 1%; font-size: large; align-items: center;">
+      <button *ngIf="loggedIn()" mat-raised-button (click)="logOut()" style="background-color:  #E5E5E5">LOG OUT</button>
     </div>
   </div>
   <div class="router-outlet">

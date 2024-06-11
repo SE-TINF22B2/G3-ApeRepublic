@@ -3,10 +3,12 @@ package de.aperepublic.server.controller;
 import de.aperepublic.server.models.CompanyProfile2;
 import de.aperepublic.server.services.FinnhubCompanyProfile2Service;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 public class UnternehmenController {
