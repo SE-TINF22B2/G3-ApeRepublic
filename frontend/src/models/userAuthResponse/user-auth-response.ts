@@ -1,8 +1,8 @@
-import {UserInterface} from "../user/user";
+import {SuccessInterface} from "./success";
+import {ErrorInterface} from "./error";
 
 export interface UserAuthResponse {
-  statusText: string;
-  message: string;
-  attributes: Record<string, any>;
-  user: UserInterface;
+  successError: SuccessInterface | ErrorInterface;
 }
+
+

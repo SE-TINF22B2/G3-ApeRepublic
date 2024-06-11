@@ -1,7 +1,6 @@
 package de.aperepublic.server.controller;
 
 import de.aperepublic.server.models.requests.StockPriceRequest;
-import de.aperepublic.server.models.response.PriceEntry;
 import de.aperepublic.server.services.FinnhubStockPriceService;
 import de.aperepublic.server.services.StockPriceService;
 import lombok.AllArgsConstructor;
@@ -9,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
+@CrossOrigin
 @RestController
 @AllArgsConstructor
 public class StockPriceController {
@@ -22,14 +18,19 @@ public class StockPriceController {
 
     FinnhubStockPriceService finnhubStockPriceService;
 
-    @GetMapping("/stock/price/realtime")
+    @PostMapping("/stock/price/realtime")
     public ResponseEntity<String> serveRealtimeStockPriceRequest(@RequestBody StockPriceRequest stockPriceRequest) {
         return stockPriceService.processRealtimeStockPriceRequest(stockPriceRequest);
     }
 
-    @GetMapping("/stock/price/progression")
+    @PostMapping("/stock/price/progression")
     public ResponseEntity<String> serverProgressionStockPriceRequest(@RequestBody StockPriceRequest stockPriceRequest) {
         return stockPriceService.processProgressionStockPriceRequest(stockPriceRequest);
+    }
+
+    @GetMapping("/stock/openWebSocket")
+    public ResponseEntity<String> openWebSockets(@RequestParam String symbol) throws InterruptedException {
+        return stockPriceService.openWebSockets(symbol);
     }
 
 //    @PostMapping("/aktie/handeln") //bin mir nicht sicher ob hier ein get kommt

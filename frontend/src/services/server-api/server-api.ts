@@ -1,14 +1,17 @@
-import {Stock} from "../../models/stock/stock";
+import {Observable} from "rxjs";
 
 export interface ServerApi {
-  stockExists: (isin: string) => boolean;
-  getStock: (isin: string) => Stock;
-  buyStock: () => boolean;
-  sellStock: () => boolean;
+  stockExists: (symbol: string) => boolean;
+  getStockInfo: (symbol: string | null) => Observable<boolean>;
+  getStockPrice: (symbol: string) => void;
+  getStockProgression: (symbol: string) => void;
+  buyStock: (symbol: any, result: any) => boolean;
+  sellStock: (symbol: string | undefined, result: any) => boolean;
+  openWebsocket: (symbol: string) => void;
 
   register: (email: string, username: string, firstname: string, lastname: string, password: string, birthday: string) => void;
-  login: (email: string, password: string) => void;
+  login: (email: string, password: string, username: string) => Observable<boolean>;
   logout: (token: string) => void;
 
-  validate: (token: string) => boolean;
+  validate: (token: string) => Observable<boolean>;
 }

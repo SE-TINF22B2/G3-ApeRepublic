@@ -105,7 +105,6 @@ html {
 }
 body {
   margin: 0;
-  padding: 3%;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 .router-outlet {
@@ -116,4 +115,15 @@ body {
 
 div {
   display: flex;
+}
+
+.mat-mdc-autocomplete-panel {
+  flex-direction: column;
+}
+
+.border-shadow {
+  padding: 3%; background-color: #ffffff;
+  border: 3px solid #000000;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
 }
