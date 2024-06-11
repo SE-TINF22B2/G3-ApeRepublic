@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class UserLoginRequest {
+public class RealtimeStockPriceRequest {
 
-    @JsonProperty("email")
-    public String email;
+    @JsonProperty("token")
+    public String token;
 
-    @JsonProperty("password")
-    public String password;
+    @JsonProperty("isin")
+    public String isin;
 
 }
