@@ -29,7 +29,7 @@ public class StockPriceController {
     }
 
     @GetMapping("/stock/openWebSocket")
-    public String openWebSockets(@RequestParam String symbol) throws InterruptedException {
+    public ResponseEntity<String> openWebSockets(@RequestParam String symbol) throws InterruptedException {
         return stockPriceService.openWebSockets(symbol);
     }
 
