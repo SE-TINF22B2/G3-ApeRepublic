@@ -16,6 +16,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,22 +39,21 @@ public class UserAuthServiceTest {
 
     @BeforeAll
     public static void setupMockUsers() {
-        registeredUser = new Users.UserBuilder(0L)
-                .setUsername("enexhd")
-                .setEmail("enexhd@gmail.com")
-                .setFirstname("Marc")
-                .setLastname("Schillinger")
-                .setPassword("123")
-                .setBirthday("2002-08-07")
-                .build();
-        unregisteredUser = new Users.UserBuilder(1L)
-                .setUsername("haupti")
-                .setEmail("POLIZFI@gmail.com")
-                .setFirstname("Hauptanzeigen")
-                .setLastname("Meister")
-                .setPassword("321")
-                .setBirthday("2000-12-12")
-                .build();
+        registeredUser = new Users();
+        registeredUser.username = "enexhd";
+        registeredUser.email = ("enexhd@gmail.com");
+        registeredUser.firstname = ("Marc");
+        registeredUser.lastname = ("Schillinger");
+        registeredUser.password = ("123");
+        registeredUser.birthday = new Date(2001, 9, 11);
+
+        unregisteredUser = new Users();
+        unregisteredUser.username = "haupti";
+        unregisteredUser.email = ("POLIZFI@gmail.com");
+        unregisteredUser.firstname = ("Hauptanzeigen");
+        unregisteredUser.lastname = ("Meister");
+        unregisteredUser.password = ("123");
+        unregisteredUser.birthday = new Date(2001, 9, 11);
     }
 
     @BeforeEach
@@ -87,7 +88,7 @@ public class UserAuthServiceTest {
 
     @Test
     public void testRegisteringNewUser() {
-        UserRegisterRequest userRegisterRequest = new UserRegisterRequest(unregisteredUser.username, unregisteredUser.email, unregisteredUser.password, unregisteredUser.firstname, unregisteredUser.lastname, unregisteredUser.birthday);
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest(unregisteredUser.username, unregisteredUser.email, unregisteredUser.password, unregisteredUser.firstname, unregisteredUser.lastname, unregisteredUser.birthday.toString());
 
         ResponseEntity<String> res = userAuthService.processRegisterUser(userRegisterRequest);
 
@@ -98,7 +99,7 @@ public class UserAuthServiceTest {
 
     @Test
     public void testRegisteringRegisteredUser() {
-        UserRegisterRequest userRegisterRequest = new UserRegisterRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.firstname, registeredUser.lastname, registeredUser.birthday);
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest(registeredUser.username, registeredUser.email, registeredUser.password, registeredUser.firstname, registeredUser.lastname, registeredUser.birthday.toString());
 
         ResponseEntity<String> res = userAuthService.processRegisterUser(userRegisterRequest);
 
@@ -109,7 +110,7 @@ public class UserAuthServiceTest {
 
     @Test
     public void testIfTokenIsStoredAfterRegister() {
-        UserRegisterRequest userRegisterRequest = new UserRegisterRequest(unregisteredUser.username, unregisteredUser.email, unregisteredUser.password, unregisteredUser.firstname, unregisteredUser.lastname, unregisteredUser.birthday);
+        UserRegisterRequest userRegisterRequest = new UserRegisterRequest(unregisteredUser.username, unregisteredUser.email, unregisteredUser.password, unregisteredUser.firstname, unregisteredUser.lastname, unregisteredUser.birthday.toString());
         ResponseEntity<String> res = userAuthService.processRegisterUser(userRegisterRequest);
 
         assertEquals(HttpStatus.OK, res.getStatusCode());

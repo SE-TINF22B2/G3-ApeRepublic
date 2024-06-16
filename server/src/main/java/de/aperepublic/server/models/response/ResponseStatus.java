@@ -9,7 +9,7 @@ public enum ResponseStatus {
     // logout
     SUCCESSFUL_LOGOUT("success", "Logout successful!"), UNSUCCESSFUL_LOGOUT("error", "Invalid logout parameter!"),
     // token
-    INVALID_TOKEN("error", "The provided token is invalid!"),
+    INVALID_TOKEN("error", "The provided token is invalid!"), SUCCESSFUL_VALIDATION("success", "The token is valid"),
     // stock
     INVALID_SYMBOL("error", "The provided symbol is not registered!"), SUCCESSFUL_PRICE_REQUEST("success", "PriceRequest successful!"),
     // else

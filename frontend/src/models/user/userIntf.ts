@@ -4,7 +4,4 @@ export interface UserInterface {
   firstname: string;
   lastname: string;
   birthday: string;
-  password: string;
-  token: string;
-
 }

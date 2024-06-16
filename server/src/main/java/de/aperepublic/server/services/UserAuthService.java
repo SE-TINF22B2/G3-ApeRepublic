@@ -22,12 +22,8 @@ public class UserAuthService {
     @Autowired
     private ActiveUserService activeUserService;
 
-    private UserRepository userRepository;
-
     @Autowired
-    public UserAuthService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private UserRepository userRepository;
 
     @Transactional
     public ResponseEntity<String> processRegisterUser(UserRegisterRequest userRegisterRequest) {
@@ -61,7 +57,7 @@ public class UserAuthService {
     }
 
     public ResponseEntity<String> processLogoutUser(TokenRequest userLogoutRequest) {
-        if(!activeUserService.removeIfTokenMatch(userLogoutRequest.getToken())) {
+        if(!activeUserService.removeIfTokenMatch(userLogoutRequest.token)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.UNSUCCESSFUL_LOGOUT).toString());
         }
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_LOGOUT).toString());
@@ -74,14 +70,14 @@ public class UserAuthService {
     public ResponseEntity<String> processValidateToken(TokenRequest tokenValidationRequest) {
         UUID token = null;
         try {
-            token = UUID.fromString(tokenValidationRequest.getToken());
+            token = UUID.fromString(tokenValidationRequest.token);
         } catch(IllegalArgumentException e) {
-            return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
+            return ResponseEntity.ok(new APIResponse(ResponseStatus.INVALID_TOKEN).toString());
         }
         if(!activeUserService.containsToken(token)) {
-            return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
+            return ResponseEntity.ok(new APIResponse(ResponseStatus.INVALID_TOKEN).toString());
         }
-        return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_LOGIN).toString());
+        return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_VALIDATION).toString());
     }
 
 }

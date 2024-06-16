@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import { Router } from '@angular/router';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ServerApiService} from "../../services/server-api/server-api.service";
 
 
 @Component({
   selector: 'app-page-sign-up',
   templateUrl: './page-sign-up.component.html',
-  styleUrls: ['./page-sign-up.component.scss']
+  styleUrls: ['./page-sign-up.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PageSignUpComponent {
   Username : String = '';
@@ -15,14 +16,15 @@ export class PageSignUpComponent {
   retypePassword :string = '';
   isPasswordsmatch : boolean = false;
   isEnabled : boolean = false;
+  hide: boolean = true;
 
   form = new FormGroup({
-    email: new FormControl(''),
-    username: new FormControl(''),
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    password: new FormControl(''),
-    birthday: new FormControl(''),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    birthday: new FormControl('', [Validators.required]),
   });
 
   constructor(private router: Router, private serverApi : ServerApiService) {
@@ -39,6 +41,17 @@ this.password = (<HTMLInputElement>e.target).value;
     this.retypePassword = (<HTMLInputElement>e.target).value;
      this.isPasswordsmatch = this.password === this.retypePassword;
   }
-  public userValidation(){
+  public register(){
+    for (const controlName in this.form.controls) {
+      const control = this.form.get(controlName);
+      if (control?.value === '') {
+        return;
+      }
+    }
+    this.serverApi.register(this.form.value.email ?? '', this.form.value.username ?? '', this.form.value.firstname ?? '', this.form.value.lastname ?? '', this.form.value.password ?? '', this.form.value.birthday ?? '').subscribe((registerSuccessful) => {
+      if (registerSuccessful) {
+        this.router.navigate(['/main']);
+      }
+    });
   }
 }
