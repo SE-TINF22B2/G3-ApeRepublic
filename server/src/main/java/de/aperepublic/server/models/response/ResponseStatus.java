@@ -5,7 +5,7 @@ public enum ResponseStatus {
     // register
     SUCCESSFUL_REGISTER("success", "Registration successful!"), USERNAME_TAKEN("error", "Username taken!"), EMAIL_TAKEN("error", "Email is already registered!"),
     // login
-    SUCCESSFUL_LOGIN("success", "Login successful!"), UNSUCCESSFUL_LOGIN("error", "Invalid username, email or password!"),
+    SUCCESSFUL_LOGIN("success", "Login successful!"), UNSUCCESSFUL_LOGIN("error", "Invalid email or password!"),
     // logout
     SUCCESSFUL_LOGOUT("success", "Logout successful!"), UNSUCCESSFUL_LOGOUT("error", "Invalid logout parameter!"),
     // token

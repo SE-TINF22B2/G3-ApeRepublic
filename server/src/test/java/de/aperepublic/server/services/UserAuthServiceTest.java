@@ -1,5 +1,6 @@
 package de.aperepublic.server.services;
 
+import de.aperepublic.server.Entity.Users;
 import de.aperepublic.server.ServerApplication;
 import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;

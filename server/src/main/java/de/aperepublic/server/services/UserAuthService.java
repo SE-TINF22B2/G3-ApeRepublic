@@ -22,8 +22,12 @@ public class UserAuthService {
     @Autowired
     private ActiveUserService activeUserService;
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserAuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Transactional
     public ResponseEntity<String> processRegisterUser(UserRegisterRequest userRegisterRequest) {
@@ -37,14 +41,14 @@ public class UserAuthService {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.EMAIL_TAKEN).toString());
         }
         UUID sessionToken = activeUserService.createToken(userRegisterRequest.email);
-        de.aperepublic.server.Entity.Users newUser = de.aperepublic.server.Entity.Users.buildFromRegisterRequest(userRegisterRequest);
+        Users newUser = Users.buildFromRegisterRequest(userRegisterRequest);
         userRepository.save(newUser);
         UserDetails userDetails = UserDetails.build(userRepository.findByEmail(userRegisterRequest.email).orElse(new Users()));
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_REGISTER).addSessionTokenId(sessionToken).addUserDetails(userDetails).toString());
     }
 
     public ResponseEntity<String> processLoginUser(UserLoginRequest userLoginRequest) {
-        Optional<de.aperepublic.server.Entity.Users> optRequestUser = userRepository.findByEmail(userLoginRequest.email);
+        Optional<Users> optRequestUser = userRepository.findByEmail(userLoginRequest.email);
         if(optRequestUser.isEmpty()) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.UNSUCCESSFUL_LOGIN).toString());
         }
@@ -57,7 +61,7 @@ public class UserAuthService {
     }
 
     public ResponseEntity<String> processLogoutUser(TokenRequest userLogoutRequest) {
-        if(!activeUserService.removeIfTokenMatch(userLogoutRequest.token)) {
+        if(!activeUserService.removeIfTokenMatch(userLogoutRequest.getToken())) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.UNSUCCESSFUL_LOGOUT).toString());
         }
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_LOGOUT).toString());
@@ -70,14 +74,13 @@ public class UserAuthService {
     public ResponseEntity<String> processValidateToken(TokenRequest tokenValidationRequest) {
         UUID token = null;
         try {
-            token = UUID.fromString(tokenValidationRequest.token);
+            token = UUID.fromString(tokenValidationRequest.getToken());
         } catch(IllegalArgumentException e) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
         }
         if(!activeUserService.containsToken(token)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
         }
-        // TODO: SUCCESSFUL_LOGIN zu SUCCESSFUL_VALIDATION umändern
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_LOGIN).toString());
     }
 
