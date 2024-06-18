@@ -1,7 +1,7 @@
 package de.aperepublic.server.Repository;
 
 
-import de.aperepublic.server.Entity.Users;
+import de.aperepublic.server.Entity.User;
 import de.aperepublic.server.repositories.UsersRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UsersRepositoryTest {
+public class UserRepositoryTest {
 
     @Autowired
     @PersistenceContext
@@ -28,7 +28,7 @@ public class UsersRepositoryTest {
     @Test
     @Transactional
     public void benutzerausDBLaden(){
-        Users u = uRp.getReferenceById(1);
+        User u = uRp.getReferenceById(1);
         System.out.println(u.toString());
         assertNotNull(u);
     }
@@ -36,14 +36,14 @@ public class UsersRepositoryTest {
     @Test
     @Transactional
     public void benutzerErstellen(){
-        Users u = new Users();
+        User u = new User();
         u.setFirstname("intelli");
         u.setLastname("J");
         u.setPassword("pw");
         u.setUsername("usernam");
         u.setEmail("email@email.com");
         u.setBirthday(java.sql.Date.valueOf("2004-10-02"));
-        Users i = uRp.saveAndFlush(u);
+        User i = uRp.saveAndFlush(u);
         uRp.flush();
         System.out.println(i.toString());
         assertNotNull(uRp.getReferenceById(i.getUserID()));

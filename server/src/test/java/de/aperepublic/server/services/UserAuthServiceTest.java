@@ -1,6 +1,6 @@
 package de.aperepublic.server.services;
 
-import de.aperepublic.server.Entity.Users;
+import de.aperepublic.server.Entity.User;
 import de.aperepublic.server.ServerApplication;
 import de.aperepublic.server.models.requests.TokenRequest;
 import de.aperepublic.server.models.requests.UserLoginRequest;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.sql.Date;
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,13 +32,13 @@ public class UserAuthServiceTest {
     @Autowired
     private ActiveUserService activeUserService;
 
-    private static Users registeredUser;
+    private static User registeredUser;
 
-    private static Users unregisteredUser;
+    private static User unregisteredUser;
 
     @BeforeAll
     public static void setupMockUsers() {
-        registeredUser = new Users();
+        registeredUser = new User();
         registeredUser.username = "enexhd";
         registeredUser.email = ("enexhd@gmail.com");
         registeredUser.firstname = ("Marc");
@@ -47,7 +46,7 @@ public class UserAuthServiceTest {
         registeredUser.password = ("123");
         registeredUser.birthday = new Date(2001, 9, 11);
 
-        unregisteredUser = new Users();
+        unregisteredUser = new User();
         unregisteredUser.username = "haupti";
         unregisteredUser.email = ("POLIZFI@gmail.com");
         unregisteredUser.firstname = ("Hauptanzeigen");

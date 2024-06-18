@@ -7,9 +7,9 @@ import lombok.Data;
 import java.sql.Date;
 
 @Entity
-@Table(name = "User")
+@Table(name = "Users")
 @Data
-public class Users {
+public class User {
     public static final String COLUMN_IDUSER = "idUser";
     public static final String COLUMN_BIRTHDAY = "birthday";
     public static final String COLUMN_FIRSTNAME = "firstName";
@@ -41,8 +41,8 @@ public class Users {
     @Column(name = COLUMN_BIRTHDAY, nullable = false)
     public Date birthday;
 
-    public static Users buildFromRegisterRequest(UserRegisterRequest request) {
-        Users newUser = new Users();
+    public static User buildFromRegisterRequest(UserRegisterRequest request) {
+        User newUser = new User();
         newUser.username = request.username;
         newUser.email = request.email;
         newUser.password = request.password;

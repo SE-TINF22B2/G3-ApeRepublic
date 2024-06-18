@@ -4,10 +4,10 @@ create schema if not exists aperepublic;
 
 USE aperepublic;
 
--- Tabelle 'User' anlegen
+-- Tabelle 'Users' anlegen
 
-create table if not exists User(
-	idUser integer auto_increment,
+create table if not exists Users(
+    idUser integer auto_increment,
     username varchar(32),
     firstName varchar(32),
     lastName varchar(32),
@@ -17,37 +17,37 @@ create table if not exists User(
     Primary Key (idUser)
 );
 
--- Tabelle 'Stock' anlegen
+-- Tabelle 'Stocks' anlegen
 
-create table if not exists Stock(
-	ISIN Varchar(12),
+create table if not exists Stocks(
     symbol varchar(10),
+    ISIN Varchar(12),
     name varchar(45),
     description varchar(2048),
-    Primary Key (ISIN)
+    Primary Key (symbol)
 );
 
--- Tabelle 'Trade' anlegen
+-- Tabelle 'Trades' anlegen
 
-create table if not exists Trade(
-	idTrade integer auto_increment,
+create table if not exists Trades(
+    idTrade integer auto_increment,
     price decimal(10,2),
     amount decimal(10,2),
-    ISIN varchar(12),
+    symbol varchar(10),
     idUser integer,
     Primary Key (idTrade),
-    Foreign Key (ISIN) references Stock(ISIN),
+    Foreign Key (symbol) references Stock(symbol),
     Foreign Key (idUser) references User(idUser)
 );
 
 -- Tabelle 'Positions' anlegen
 
 create table if not exists Positions(
-	idUser integer not null,
-    ISIN varchar(12) not null,
+    idUser integer not null,
+    symbol varchar(10) not null,
     amount decimal(10,2) not null,
     avgBuyPrice decimal(10,2) not null,
-    Primary Key(idUser, ISIN),
-    Foreign Key (ISIN) references Stock(ISIN),
+    Primary Key(idUser, symbol),
+    Foreign Key (symbol) references Stock(symbol),
     Foreign Key (idUser) references User(idUser)
 );

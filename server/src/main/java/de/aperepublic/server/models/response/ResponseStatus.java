@@ -13,7 +13,7 @@ public enum ResponseStatus {
     // stock
     INVALID_SYMBOL("error", "The provided symbol is not registered!"), SUCCESSFUL_PRICE_REQUEST("success", "PriceRequest successful!"),
     // else
-    ERROR("error", "An error occurred handling your request!"), MISSING_PARAMS("error", "One or more parameter are missing!");
+    VALID_REQUEST("success", "Request was processed!"), ERROR("error", "An error occurred handling your request!"), MISSING_PARAMS("error", "One or more parameter are missing!");
 
     String statusText = "error";
     String message = "No message";

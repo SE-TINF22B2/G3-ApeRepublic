@@ -31,7 +31,8 @@ public class FinnhubStockPriceService {
     private String streamLatestPrice(@RequestParam String symbol) {
         double result = priceHistoryTracker.getLatestPriceOf(symbol).price();
         if (result == 0) {
-            return "No price yet";
+            // No Price found
+            return "0";
         } else {
             return String.valueOf(priceHistoryTracker.getLatestPriceOf(symbol).price());
         }
@@ -40,7 +41,8 @@ public class FinnhubStockPriceService {
     public String getLatestPriceEntry(String symbol) {
         PriceEntry entry = priceHistoryTracker.getLatestPriceOf(symbol);
         if (entry.price() == 0) {
-            return "No price yet";
+            // No Price found
+            return "0";
         } else {
             return String.valueOf(entry);
         }
