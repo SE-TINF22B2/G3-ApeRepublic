@@ -131,4 +131,6 @@ export class PageMainComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  protected readonly parseFloat = parseFloat;
 }
