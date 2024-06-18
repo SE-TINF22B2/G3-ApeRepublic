@@ -12,8 +12,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDetails {
 
     @SerializedName("username")

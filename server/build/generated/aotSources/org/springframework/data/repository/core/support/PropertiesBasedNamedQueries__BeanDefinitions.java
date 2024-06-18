@@ -42,26 +42,4 @@ public class PropertiesBasedNamedQueries__BeanDefinitions {
     beanDefinition.setInstanceSupplier(PropertiesBasedNamedQueriesFactoryBean::new);
     return beanDefinition;
   }
-
-  /**
-   * Get the bean definition for 'named-queries#3'.
-   */
-  public static BeanDefinition getNamedqueriesBeanDefinition3() {
-    RootBeanDefinition beanDefinition = new RootBeanDefinition(PropertiesBasedNamedQueriesFactoryBean.class);
-    beanDefinition.getPropertyValues().addPropertyValue("locations", "classpath*:META-INF/jpa-named-queries.properties");
-    beanDefinition.getPropertyValues().addPropertyValue("ignoreResourceNotFound", true);
-    beanDefinition.setInstanceSupplier(PropertiesBasedNamedQueriesFactoryBean::new);
-    return beanDefinition;
-  }
-
-  /**
-   * Get the bean definition for 'named-queries#4'.
-   */
-  public static BeanDefinition getNamedqueriesBeanDefinition4() {
-    RootBeanDefinition beanDefinition = new RootBeanDefinition(PropertiesBasedNamedQueriesFactoryBean.class);
-    beanDefinition.getPropertyValues().addPropertyValue("locations", "classpath*:META-INF/jpa-named-queries.properties");
-    beanDefinition.getPropertyValues().addPropertyValue("ignoreResourceNotFound", true);
-    beanDefinition.setInstanceSupplier(PropertiesBasedNamedQueriesFactoryBean::new);
-    return beanDefinition;
-  }
 }
