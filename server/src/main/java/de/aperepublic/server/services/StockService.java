@@ -38,7 +38,7 @@ public class StockService {
     private TradeRepository tradeRepository;
 
     @Autowired
-    private FinnhubStockPriceService finnhubStockPriceService;
+    private PriceHistoryTracker priceHistoryTracker;
 
     public ResponseEntity<String> processPositionRequest(StockRequest stockRequest) {
         // Check Token
@@ -135,7 +135,7 @@ public class StockService {
             position = optPosition.get();
         }
         // Get Current Price
-        BigDecimal curPrice = finnhubStockPriceService.getLatestPrice(tradeRequest.symbol);
+        BigDecimal curPrice = priceHistoryTracker.getLatestPriceOf(tradeRequest.symbol);
         // Create Trade
         Trade trade = new Trade(0, curPrice, tradeRequest.amount, tradeRequest.symbol, user.userID);
         tradeRepository.saveAndFlush(trade);

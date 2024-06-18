@@ -28,6 +28,14 @@ public class FinnhubStockPriceService {
         return "Opened";
     }
 
+    public void connectWebSocketDualBoot() throws InterruptedException {
+        ws = new FinnhubWebSocket(URI.create(WEBSOCKET_URI_STRING));
+        ws.connectBlocking();
+        ws.setPriceTracker(priceHistoryTracker);
+        ws.subscribeToStock("AAPL");
+        ws.subscribeToStock("MSFT");
+    }
+
     @GetMapping("/stream/stock")
     private String streamLatestPrice(@RequestParam String symbol) {
         double result = priceHistoryTracker.getLatestPriceOf(symbol).price();
@@ -46,16 +54,6 @@ public class FinnhubStockPriceService {
             return "0";
         } else {
             return String.valueOf(entry);
-        }
-    }
-
-    public BigDecimal getLatestPrice(String symbol) {
-        PriceEntry entry = priceHistoryTracker.getLatestPriceOf(symbol);
-        if (entry.price() == 0) {
-            // No Price found
-            return BigDecimal.ZERO;
-        } else {
-            return BigDecimal.valueOf(entry.price());
         }
     }
 

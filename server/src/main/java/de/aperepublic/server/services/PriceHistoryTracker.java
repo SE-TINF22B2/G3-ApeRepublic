@@ -3,6 +3,7 @@ package de.aperepublic.server.services;
 import de.aperepublic.server.models.response.PriceEntry;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
