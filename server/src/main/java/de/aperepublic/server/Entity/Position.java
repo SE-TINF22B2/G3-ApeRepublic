@@ -22,12 +22,10 @@ public class Position {
     public static final String COLUMN_AVGBUYPRICE = "avgBuyPrice";
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = COLUMN_IDUSER, insertable = true, updatable = true)
     public Integer idUser;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = COLUMN_SYMBOL, nullable = false, length = 10, insertable = true, updatable = true)
     public String symbol;
 

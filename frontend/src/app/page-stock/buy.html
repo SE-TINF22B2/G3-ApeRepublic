@@ -12,7 +12,7 @@
 </style>
 <h1 mat-dialog-title>Buy {{data.name}}</h1>
 <div mat-dialog-content>
-  <p>{{ this.data.capital }} Cash available</p>
+  <!-- <p>{{ this.data.capital }} Cash available</p> -->
 <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
   <mat-tab label="Amount">
     <div class="table" style="padding-top: 3%;" >
@@ -57,7 +57,7 @@
           </div>
           <div class="table-cell">
             <mat-form-field>
-              <input label="Shares" matInput [(ngModel)]="data.price" disabled>
+              <input label="Shares" matInput [(ngModel)]="stock.latestPrice" disabled>
             </mat-form-field>
           </div>
         </div>
@@ -78,5 +78,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Back</button>
-  <button mat-button [mat-dialog-close]="data.amount" [disabled]="!this.enoughCapital()">Invest</button>
+  <button mat-button [mat-dialog-close]="data.shares" [disabled]="!this.enoughCapital()">Invest</button>
 </div>

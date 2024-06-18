@@ -12,7 +12,8 @@
 </style>
 <h1 mat-dialog-title>Sell {{data.name}}</h1>
 <div mat-dialog-content>
-  <p>Owning {{ Math.round(parseFloat(this.data.position) / parseFloat(this.data.price) * 100) / 100 }} Shares</p>
+  <!--<p>Owning {{ Math.round(parseFloat(this.data.position) / parseFloat(this.stock.latestPrice) * 100) / 100 }} Shares</p>-->
+  <p>Owning {{ this.stock.currentStock()?.userShares }} Shares</p>
   <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [selectedIndex]="1">
     <mat-tab label="Amount">
       <div class="table" style="padding-top: 3%;" >
@@ -57,7 +58,7 @@
             </div>
             <div class="table-cell">
               <mat-form-field>
-                <input label="Shares" matInput [(ngModel)]="data.price" disabled>
+                <input label="Shares" matInput [(ngModel)]="this.stock.latestPrice" disabled>
               </mat-form-field>
             </div>
           </div>
@@ -78,5 +79,5 @@
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Back</button>
-  <button mat-button [mat-dialog-close]="data.amount" [disabled]="!this.enoughPosition()">Sell</button>
+  <button mat-button [mat-dialog-close]="data.shares" [disabled]="!this.enoughPosition()">Sell</button>
 </div>

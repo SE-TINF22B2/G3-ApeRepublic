@@ -77,7 +77,15 @@ public class UserAuthService {
         if(!activeUserService.containsToken(token)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.INVALID_TOKEN).toString());
         }
-        return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_VALIDATION).toString());
+
+        if (activeUserService.getEmailByToken(token.toString()).isPresent()) {
+            Optional<User> optRequestUser = userRepository.findByEmail(activeUserService.getEmailByToken(token.toString()).get());
+            if (optRequestUser.isPresent()) {
+                User requestUser = optRequestUser.get();
+                return ResponseEntity.ok((new APIResponse(ResponseStatus.SUCCESSFUL_VALIDATION).addUserDetails(UserDetails.build(requestUser))).toString());
+            }
+        }
+        return ResponseEntity.ok((new APIResponse(ResponseStatus.SUCCESSFUL_VALIDATION)).toString());
     }
 
 }

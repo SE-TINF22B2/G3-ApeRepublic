@@ -4,4 +4,5 @@ export interface UserInterface {
   firstname: string;
   lastname: string;
   birthday: string;
+  portfolioPrice: number
 }

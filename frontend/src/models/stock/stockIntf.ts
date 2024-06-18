@@ -11,4 +11,7 @@ export interface StockInterface {
   shareOutstanding: number;
   ticker: string;
   weburl: string;
+
+  userShares: string;
+  buyIn: string;
 }

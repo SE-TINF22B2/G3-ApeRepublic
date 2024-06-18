@@ -32,8 +32,6 @@ public class FinnhubStockPriceService {
         ws = new FinnhubWebSocket(URI.create(WEBSOCKET_URI_STRING));
         ws.connectBlocking();
         ws.setPriceTracker(priceHistoryTracker);
-        ws.subscribeToStock("AAPL");
-        ws.subscribeToStock("MSFT");
     }
 
     @GetMapping("/stream/stock")

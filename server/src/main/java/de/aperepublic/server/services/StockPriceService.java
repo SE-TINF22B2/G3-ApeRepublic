@@ -72,7 +72,6 @@ public class StockPriceService {
         ws.connectBlocking();
         ws.setPriceTracker(priceHistoryTracker);
         ws.subscribeToStock(symbol);
-        ws.subscribeToStock("MSFT"); //subscribe to microsoft (hardcoded)
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_PRICE_REQUEST).toString());
     }
 

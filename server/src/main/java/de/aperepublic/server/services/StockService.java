@@ -13,6 +13,8 @@ import de.aperepublic.server.repositories.TradeRepository;
 import de.aperepublic.server.repositories.UserRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -116,12 +118,13 @@ public class StockService {
         Optional<Position> optPosition = positionRepository.findAll().stream().filter(p -> p.symbol.contentEquals(tradeRequest.symbol)).filter(p -> p.idUser == user.userID).findFirst();
         Position position;
         // If sell, check if User has enough stocks
+        boolean firstEntry = false;
         if(tradeRequest.amount.signum() < 1) {
             if(optPosition.isEmpty()) {
                 // TODO: Not enough stocks
                 return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
             }
-            if(-1 == tradeRequest.amount.compareTo(optPosition.get().amount)) {
+            if(1 == tradeRequest.amount.abs().compareTo(optPosition.get().amount)) {
                 // TODO: Not enough stocks
                 return ResponseEntity.ok(new APIResponse(ResponseStatus.ERROR).toString());
             }
@@ -131,6 +134,7 @@ public class StockService {
             System.out.println("Position created (buy)");
             position = new Position(user.userID, tradeRequest.symbol, tradeRequest.amount, BigDecimal.ZERO);
             positionRepository.saveAndFlush(position);
+            firstEntry = true;
         } else {
             System.out.println("Position loaded");
             position = optPosition.get();
@@ -141,9 +145,13 @@ public class StockService {
         Trade trade = new Trade(0, curPrice, tradeRequest.amount, tradeRequest.symbol, user.userID);
         tradeRepository.saveAndFlush(trade);
         // Update Position
-        position.amount = position.amount.add(tradeRequest.amount);
-        // avgBuyPrice = (avgBuyPrice*amount_bought + curPrice*amount_buying) / (amount_bought + amount_buying)
-        position.avgBuyPrice = (position.avgBuyPrice.multiply(position.amount).add(curPrice.multiply(tradeRequest.amount))).divide(position.amount.add(trade.amount), 2, RoundingMode.HALF_UP);
+        if (!firstEntry) {
+            position.amount = position.amount.add(tradeRequest.amount);
+            // avgBuyPrice = (avgBuyPrice*amount_bought + curPrice*amount_buying) / (amount_bought + amount_buying)
+            position.avgBuyPrice = (position.avgBuyPrice.multiply(position.amount).add(curPrice.multiply(tradeRequest.amount))).divide(position.amount.add(trade.amount), 2, RoundingMode.HALF_UP);
+        } else { // if first ever Entry of Position
+           position.avgBuyPrice = curPrice;
+        }
         positionRepository.update(position);
         // Return Trades
         return ResponseEntity.ok(new APIResponse(ResponseStatus.VALID_REQUEST).addAttribute("trade", trade.toJSON()).toString());
