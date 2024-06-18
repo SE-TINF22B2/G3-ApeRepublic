@@ -36,7 +36,6 @@ create table if not exists Trades(
     symbol varchar(10),
     idUser integer,
     Primary Key (idTrade),
-    Foreign Key (symbol) references Stock(symbol),
     Foreign Key (idUser) references User(idUser)
 );
 
