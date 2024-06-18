@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -45,6 +46,16 @@ public class FinnhubStockPriceService {
             return "0";
         } else {
             return String.valueOf(entry);
+        }
+    }
+
+    public BigDecimal getLatestPrice(String symbol) {
+        PriceEntry entry = priceHistoryTracker.getLatestPriceOf(symbol);
+        if (entry.price() == 0) {
+            // No Price found
+            return BigDecimal.ZERO;
+        } else {
+            return BigDecimal.valueOf(entry.price());
         }
     }
 

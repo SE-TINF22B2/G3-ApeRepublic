@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -133,14 +134,15 @@ public class StockService {
             System.out.println("Position loaded");
             position = optPosition.get();
         }
-
         // Get Current Price
-        BigDecimal curPrice = BigDecimal.valueOf(Double.valueOf(finnhubStockPriceService.getLatestPriceEntry(tradeRequest.symbol)));
+        BigDecimal curPrice = finnhubStockPriceService.getLatestPrice(tradeRequest.symbol);
         // Create Trade
         Trade trade = new Trade(0, curPrice, tradeRequest.amount, tradeRequest.symbol, user.userID);
         tradeRepository.saveAndFlush(trade);
         // Update Position
         position.amount = position.amount.add(tradeRequest.amount);
+        // avgBuyPrice = (avgBuyPrice*amount_bought + curPrice*amount_buying) / (amount_bought + amount_buying)
+        position.avgBuyPrice = (position.avgBuyPrice.multiply(position.amount).add(curPrice.multiply(tradeRequest.amount))).divide(position.amount.add(trade.amount), 2, RoundingMode.HALF_UP);
         positionRepository.update(position);
         // Return Trades
         return ResponseEntity.ok(new APIResponse(ResponseStatus.VALID_REQUEST).addAttribute("trade", trade.toJSON()).toString());
