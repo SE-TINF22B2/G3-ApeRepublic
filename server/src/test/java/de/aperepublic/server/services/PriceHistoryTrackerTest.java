@@ -28,7 +28,7 @@ class PriceHistoryTrackerTest {
 
     @Test
     void testGetLatestPrice() {
-        assertEquals(133.1, historyTracker.getLatestPriceOf("AAPL").price());
+        assertEquals(133.1, historyTracker.getLatestPriceOf("AAPL"));
     }
 
     @Test
@@ -44,7 +44,7 @@ class PriceHistoryTrackerTest {
     void testMultipleStocksSaved() {
         historyTracker.addEntry("MSCI", 100, "1707903435");
         historyTracker.addEntry("MSCI", 130, "1707943435");
-        assertEquals(130, historyTracker.getLatestPriceOf("MSCI").price());
+        assertEquals(130, historyTracker.getLatestPriceOf("MSCI"));
     }
 
 }

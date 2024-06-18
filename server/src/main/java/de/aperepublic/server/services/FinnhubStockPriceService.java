@@ -38,17 +38,17 @@ public class FinnhubStockPriceService {
 
     @GetMapping("/stream/stock")
     private String streamLatestPrice(@RequestParam String symbol) {
-        double result = priceHistoryTracker.getLatestPriceOf(symbol).price();
+        double result = priceHistoryTracker.getLatestPriceOf(symbol);
         if (result == 0) {
             // No Price found
             return "0";
         } else {
-            return String.valueOf(priceHistoryTracker.getLatestPriceOf(symbol).price());
+            return String.valueOf(priceHistoryTracker.getLatestPriceOf(symbol));
         }
     }
 
     public String getLatestPriceEntry(String symbol) {
-        PriceEntry entry = priceHistoryTracker.getLatestPriceOf(symbol);
+        PriceEntry entry = priceHistoryTracker.getLatestPriceEntryOf(symbol);
         if (entry.price() == 0) {
             // No Price found
             return "0";

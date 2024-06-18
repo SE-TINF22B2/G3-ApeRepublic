@@ -36,7 +36,7 @@ public class StockPriceService {
         if (!priceHistoryTracker.hasEntry(stockPriceRequest.symbol)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.INVALID_SYMBOL).toString());
         }
-        PriceEntry priceEntry = priceHistoryTracker.getLatestPriceOf(stockPriceRequest.symbol);
+        PriceEntry priceEntry = priceHistoryTracker.getLatestPriceEntryOf(stockPriceRequest.symbol);
 
         JSONObject jo = new JSONObject();
         jo.put("price", priceEntry.price());

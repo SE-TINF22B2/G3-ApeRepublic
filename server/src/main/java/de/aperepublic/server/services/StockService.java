@@ -25,6 +25,7 @@ import java.util.Optional;
 @Service
 public class StockService {
 
+    private static final Logger log = LoggerFactory.getLogger(StockService.class);
     @Autowired
     private ActiveUserService activeUserService;
 
@@ -135,7 +136,7 @@ public class StockService {
             position = optPosition.get();
         }
         // Get Current Price
-        BigDecimal curPrice = priceHistoryTracker.getLatestPriceOf(tradeRequest.symbol);
+        BigDecimal curPrice = BigDecimal.valueOf(priceHistoryTracker.getLatestPriceOf(tradeRequest.symbol));
         // Create Trade
         Trade trade = new Trade(0, curPrice, tradeRequest.amount, tradeRequest.symbol, user.userID);
         tradeRepository.saveAndFlush(trade);

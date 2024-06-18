@@ -17,6 +17,19 @@ export class ServerApiService implements ServerApi, CanActivate {
   constructor(private http : HttpClient, private fb : FormBuilder, private authService : AuthService, private stockService: StockInfoService, private router : Router) { }
 
   buyStock(symbol: any, result: any): boolean {
+    let form = this.fb.nonNullable.group({
+      token: [localStorage.getItem('token')??'', Validators.required],
+      symbol: [this.stockService.symbol, Validators.required],
+      amount: [parseFloat(result), Validators.required],
+    });
+    this.http.post<any>(this.host + "/api/stock/trade", form.getRawValue()  )
+      .pipe(
+        tap((response) => {
+          console.log(response);
+        })
+      )
+      .subscribe(() => {
+      });
     return true;
   }
 
@@ -36,7 +49,9 @@ export class ServerApiService implements ServerApi, CanActivate {
             this.stockService.firstPrice = response.prices[0].price;
             this.stockService.firstTimestamp = response.prices[0].timestamp;
           }
-          this.stockService.latestPrice = response.prices[0].price;
+          if (response.prices) {
+            this.stockService.latestPrice = response.prices[0].price;
+          }
         })
       )
       .subscribe(() => {

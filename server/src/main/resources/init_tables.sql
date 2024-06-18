@@ -36,7 +36,7 @@ create table if not exists Trades(
     symbol varchar(10),
     idUser integer,
     Primary Key (idTrade),
-    Foreign Key (idUser) references User(idUser)
+    Foreign Key (idUser) references Users(idUser)
 );
 
 -- Tabelle 'Positions' anlegen
@@ -47,6 +47,5 @@ create table if not exists Positions(
     amount decimal(10,2) not null,
     avgBuyPrice decimal(10,2) not null,
     Primary Key(idUser, symbol),
-    Foreign Key (symbol) references Stock(symbol),
-    Foreign Key (idUser) references User(idUser)
+    Foreign Key (idUser) references Users(idUser)
 );

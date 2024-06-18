@@ -40,11 +40,18 @@ public class PriceHistoryTracker {
         return stocksMap.get(symbol);
     }
 
-    public PriceEntry getLatestPriceOf(String symbol) {
+    public PriceEntry getLatestPriceEntryOf(String symbol) {
         if (stocksMap.get(symbol) == null) {
             return new PriceEntry(0, "11111111");
         } else {
             return stocksMap.get(symbol).get(0);
+        }
+    }
+    public double getLatestPriceOf(String symbol) {
+        if (stocksMap.get(symbol) == null) {
+            return 0.0;
+        } else {
+            return stocksMap.get(symbol).get(0).price();
         }
     }
 
