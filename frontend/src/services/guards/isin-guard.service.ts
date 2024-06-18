@@ -16,6 +16,8 @@ export class IsinGuardService implements CanActivate{
     obs.subscribe(value => {
       if (value) {
         this.serverApi.openWebsocket(route.queryParamMap.get('symbol')??'');
+        this.stock.prices = [];
+        this.stock.latestPrice = '----';
       }
     });
     return obs;

@@ -32,7 +32,7 @@ export class ServerApiService implements ServerApi, CanActivate {
     this.http.post<any>(this.host + "/stock/price/realtime", form.getRawValue()  )
       .pipe(
         tap((response) => {
-          if (this.stockService.latestPrice == "----") {
+          if (this.stockService.latestPrice == "----" && response.prices) {
             this.stockService.firstPrice = response.prices[0].price;
             this.stockService.firstTimestamp = response.prices[0].timestamp;
           }
@@ -51,9 +51,11 @@ export class ServerApiService implements ServerApi, CanActivate {
     this.http.post<any>(this.host + "/stock/price/progression", form.getRawValue()  )
       .pipe(
         tap((response) => {
-          for (const price of response.prices) {
-          // @ts-ignore
-            this.stockService.prices.push(price);
+          if (response.prices) {
+            for (const price of response.prices) {
+            // @ts-ignore
+              this.stockService.prices.push(price);
+            }
           }
         })
       )
