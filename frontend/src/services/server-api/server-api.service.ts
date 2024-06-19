@@ -4,8 +4,9 @@ import {HttpClient} from "@angular/common/http";
 import {FormBuilder, Validators} from "@angular/forms";
 import {AuthService} from "../auth/auth.service";
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from "@angular/router";
-import {Observable, tap} from "rxjs";
+import {map, Observable, tap} from "rxjs";
 import {StockInfoService} from "../stockInfo/stock-info.service";
+import {Company} from "../../app/page-main/page-main.component";
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +17,90 @@ export class ServerApiService implements ServerApi, CanActivate {
 
   constructor(private http : HttpClient, private fb : FormBuilder, private authService : AuthService, private stockService: StockInfoService, private router : Router) { }
 
-  buyStock(symbol: any, result: any): boolean {
-    return true;
+  buyStock(symbol: any, result: any): Observable<boolean> {
+    const form = this.fb.nonNullable.group({
+      token: [localStorage.getItem('token') ?? '', Validators.required],
+      symbol: [this.stockService.symbol, Validators.required],
+      amount: [parseFloat(result), Validators.required],
+    });
+    return this.http.post<any>(this.host + "/api/stock/trade", form.getRawValue())
+      .pipe(
+        map((response) => response.status === 'success')
+      );
   }
 
-  sellStock(symbol: any, result: any): boolean {
-    return false;
+  sellStock(symbol: any, result: any): Observable<boolean> {
+    const form = this.fb.nonNullable.group({
+      token: [localStorage.getItem('token') ?? '', Validators.required],
+      symbol: [this.stockService.symbol, Validators.required],
+      amount: [Math.abs(parseFloat(result)) * -1, Validators.required],
+    });
+    return this.http.post<any>(this.host + "/api/stock/trade", form.getRawValue())
+      .pipe(
+        map((response) => response.status === 'success')
+      );
+  }
+
+  updatePosition(symbol: any) {
+    const form = this.fb.nonNullable.group({
+      token: [localStorage.getItem('token') ?? '', Validators.required],
+      symbol: [this.stockService.symbol, Validators.required],
+    });
+    this.http.post<any>(this.host + "/api/stock/position", form.getRawValue()  )
+      .pipe(
+        tap((response) => {
+          if (response.position) {
+            this.stockService.currentStock()!.userShares = response.position.amount;
+            this.stockService.currentStock()!.buyIn = response.position.avgBuyPrice;
+          }
+        })
+      )
+      .subscribe(() => {
+      });
+  }
+
+  getPositions(): Observable<Company[]> {
+    const form = this.fb.nonNullable.group({
+      token: [localStorage.getItem('token') ?? '', Validators.required]
+    });
+
+    return this.http.post<any>(`${this.host}/api/stock/portfolio`, form.getRawValue())
+      .pipe(
+        map((response) => {
+          let arr: Company[] = [];
+          for (const position of response.positions) {
+            if (position.amount != 0) {
+              this.http.get<any>(this.host + "/companySymbol", {params: {symbol: position.symbol,}})
+                .pipe(
+                  tap((response2) => {
+                    let form = this.fb.nonNullable.group({
+                      token: [localStorage.getItem('token')??'', Validators.required],
+                      symbol: [position.symbol, Validators.required]
+                    });
+                    this.http.post<any>(this.host + "/stock/price/realtime", form.getRawValue()  )
+                      .pipe(
+                        tap((response3) => {
+                          arr.push({
+                            symbol: position.symbol,
+                            name: response2.name,
+                            amount: String((response3.prices[0].price * position.amount).toFixed(2)),
+                            absolute: String(((response3.prices[0].price - position.avgBuyPrice) * position.amount).toFixed(2)),
+                            relative: String(((response3.prices[0].price / position.avgBuyPrice) * 100 - 100).toFixed(2))
+                          });
+                          console.log(arr);
+                        })
+                      )
+                      .subscribe(() => {
+                      });
+                  })
+                )
+                .subscribe(() => {
+                });
+            }
+          }
+          return arr;
+        })
+      );
   }
 
   getStockPrice() {
@@ -32,11 +111,13 @@ export class ServerApiService implements ServerApi, CanActivate {
     this.http.post<any>(this.host + "/stock/price/realtime", form.getRawValue()  )
       .pipe(
         tap((response) => {
-          if (this.stockService.latestPrice == "----") {
+          if (this.stockService.latestPrice == "----" && response.prices) {
             this.stockService.firstPrice = response.prices[0].price;
             this.stockService.firstTimestamp = response.prices[0].timestamp;
           }
-          this.stockService.latestPrice = response.prices[0].price;
+          if (response.prices) {
+            this.stockService.latestPrice = response.prices[0].price;
+          }
         })
       )
       .subscribe(() => {
@@ -51,9 +132,11 @@ export class ServerApiService implements ServerApi, CanActivate {
     this.http.post<any>(this.host + "/stock/price/progression", form.getRawValue()  )
       .pipe(
         tap((response) => {
-          for (const price of response.prices) {
-          // @ts-ignore
-            this.stockService.prices.push(price);
+          if (response.prices) {
+            for (const price of response.prices) {
+            // @ts-ignore
+              this.stockService.prices.push(price);
+            }
           }
         })
       )
@@ -130,9 +213,9 @@ export class ServerApiService implements ServerApi, CanActivate {
       this.http.post<any>(this.host + "/api/user/auth/register", form.getRawValue())
         .pipe(
           tap((response) => {
-            if (response.success) {
-              localStorage.setItem('token', response.success.sessionTokenId);
-              this.authService.currentUserSig.set(response.success.userDetails);
+            if (response.status === 'success') {
+              localStorage.setItem('token', response.sessionTokenId);
+              this.authService.currentUserSig.set(response.userDetails);
               observer.next(true);
             } else {
               observer.next(false);
@@ -161,6 +244,7 @@ export class ServerApiService implements ServerApi, CanActivate {
             if (response.status == 'success') {
               observer.next(true);
               this.authService.isValid = true;
+              this.authService.currentUserSig.set(response.userDetails);
             } else {
               observer.next(false);
               this.authService.isValid = false;

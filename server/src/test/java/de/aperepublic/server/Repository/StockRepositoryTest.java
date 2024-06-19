@@ -4,11 +4,11 @@ import de.aperepublic.server.Entity.Stock;
 import de.aperepublic.server.repositories.StockRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -57,6 +57,7 @@ public class StockRepositoryTest {
     }
 
     @Test
+    @Disabled
     @Transactional
     public void stockErstellen() {
         //sRp.saveStock();

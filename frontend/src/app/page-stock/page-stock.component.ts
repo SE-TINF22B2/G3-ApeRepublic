@@ -21,13 +21,14 @@ export class PageStockComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.serverApi.getStockPrice();
     this.serverApi.getStockProgression();
+    this.serverApi.updatePosition(this.stock.currentStock()!.ticker);
     this.mySub = interval(1000).subscribe((func => {
       this.serverApi.getStockPrice();
       this.serverApi.getStockProgression();
       if (this.stock.latestPrice !== '----') {
         this.latestStockPrice = parseFloat(this.stock.latestPrice).toFixed(2);
       }
-    }))
+    }));
   }
 
 
@@ -60,11 +61,15 @@ export class PageStockComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        if (this.serverApi.buyStock(this.stock.currentStock()?.ticker, result)) {
-          this.openSuccessDialog();
-        } else {
-          this.openErrorDialog();
-        }
+        this.serverApi.buyStock(this.stock.currentStock()?.ticker, result).subscribe((isSuccess) => {
+          if (isSuccess) {
+            this.serverApi.updatePosition(this.stock.currentStock()?.ticker);
+            this.openSuccessDialog();
+          }
+          else {
+            this.openErrorDialog();
+          }
+        })
       }
     });
   }
@@ -77,11 +82,15 @@ export class PageStockComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        if (this.serverApi.sellStock(this.stock.currentStock()?.ticker, result)) {
-          this.openSuccessDialog();
-        } else {
-          this.openErrorDialog();
-        }
+        this.serverApi.sellStock(this.stock.currentStock()?.ticker, result).subscribe((isSuccess) => {
+          if (isSuccess) {
+            this.serverApi.updatePosition(this.stock.currentStock()?.ticker);
+            this.openSuccessDialog();
+          }
+          else {
+            this.openErrorDialog();
+          }
+        })
       }
     });
   }
@@ -117,21 +126,23 @@ export class BuyPopup {
 
   constructor(
     public dialogRef: MatDialogRef<BuyPopup>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    public stock: StockInfoService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData)
+  {
       this.data.shares = "0";
       this.data.amount = "0";
   }
 
   public OnAmountInputChanged (e : Event){
     this.data.amount = this.data.amount.replace(/^0+/, "");
-    this.data.shares = String(Math.round(parseFloat(this.data.amount) / parseFloat(this.data.price) * 100) / 100);
+    this.data.shares = String(Math.round(parseFloat(this.data.amount) / parseFloat(this.stock.latestPrice) * 100) / 100);
     if (this.data.shares == "NaN") {
      this.data.shares = "0";
     }
   }
   public OnShareInputChanged (e : Event){
     if (!this.data.shares.startsWith('0.')) { this.data.shares = this.data.shares.replace(/^0+/, "");}
-    this.data.amount = String(parseFloat(this.data.shares) * parseFloat(this.data.price));
+    this.data.amount = String(parseFloat(this.data.shares) * parseFloat(this.stock.latestPrice));
     if (this.data.amount == "NaN") {
       this.data.amount = "0";
     }
@@ -143,7 +154,8 @@ export class BuyPopup {
   }
 
   enoughCapital() {
-    return parseFloat(this.data.amount) <= parseFloat(this.data.capital) && parseFloat(this.data.amount) > 0 ;
+    //return parseFloat(this.data.amount) <= parseFloat(this.data.capital) && parseFloat(this.data.amount) > 0 ;
+    return parseFloat(this.data.amount) > 0
   }
 }
 
@@ -155,6 +167,7 @@ export class SellPopup {
 
   constructor(
     public dialogRef: MatDialogRef<BuyPopup>,
+    public stock: StockInfoService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     this.data.shares = "0";
     this.data.amount = "0";
@@ -162,14 +175,14 @@ export class SellPopup {
 
   public OnAmountInputChanged (e : Event){
     this.data.amount = this.data.amount.replace(/^0+/, "");
-    this.data.shares = String(Math.round(parseFloat(this.data.amount) / parseFloat(this.data.price) * 100) / 100);
+    this.data.shares = String(Math.round(parseFloat(this.data.amount) / parseFloat(this.stock.latestPrice) * 100) / 100);
     if (this.data.shares == "NaN") {
       this.data.shares = "0";
     }
   }
   public OnShareInputChanged (e : Event){
     if (!this.data.shares.startsWith('0.')) { this.data.shares = this.data.shares.replace(/^0+/, "");}
-    this.data.amount = String(parseFloat(this.data.shares) * parseFloat(this.data.price));
+    this.data.amount = String(parseFloat(this.data.shares) * parseFloat(this.stock.latestPrice));
     if (this.data.amount == "NaN") {
       this.data.amount = "0";
     }
@@ -181,7 +194,7 @@ export class SellPopup {
   }
 
   enoughPosition() {
-    return parseFloat(this.data.amount) <= parseFloat(this.data.position) && parseFloat(this.data.amount) > 0 ;
+    return parseFloat(this.data.shares) <= parseFloat(this.stock.currentStock()?.userShares??'') && parseFloat(this.data.amount) > 0 ;
   }
 
   protected readonly Math = Math;

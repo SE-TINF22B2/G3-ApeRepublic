@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -60,5 +61,23 @@ public class ActiveUserService {
         return sessionTokens.stream().anyMatch(token -> token.getEmail().contentEquals(email));
     }
 
+    public Optional<String> getEmailByToken(String token) {
+        Optional<UUID> optUUID = getUUID(token);
+        if(optUUID.isPresent()) {
+            Optional<SessionToken> optSessionToken = sessionTokens.stream().filter(t -> t.getSessionTokenId().equals(optUUID.get())).findFirst();
+            if(optSessionToken.isPresent()) {
+                return Optional.of(optSessionToken.get().getEmail());
+            }
+        }
+        return Optional.empty();
+    }
+
+    private Optional<UUID> getUUID(String stringToken) {
+        try {
+            return Optional.of(UUID.fromString(stringToken));
+        } catch(IllegalArgumentException e) {
+            return Optional.empty();
+        }
+    }
 
 }

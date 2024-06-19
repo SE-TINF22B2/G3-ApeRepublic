@@ -1,15 +1,12 @@
 package de.aperepublic.server.models;
 
-import com.google.gson.Gson;
-import de.aperepublic.server.Entity.Users;
+import de.aperepublic.server.Entity.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Data
 @NoArgsConstructor
@@ -31,7 +28,7 @@ public class UserDetails {
     @SerializedName("birthday")
     public Date birthday;
 
-    public static UserDetails build(Users user) {
+    public static UserDetails build(User user) {
         return new UserDetails(user.username, user.firstname, user.lastname, user.email, user.birthday);
     }
 

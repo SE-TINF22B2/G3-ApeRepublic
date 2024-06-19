@@ -64,6 +64,9 @@
     </form>
   </div>
   <div style="justify-content: center">
+    <mat-error *ngIf="!registerSuccessful">Email or Username already exist</mat-error>
+  </div>
+  <div style="justify-content: center">
     <a [routerLink]="['/login']">
       Already have an Account?
     </a>
@@ -74,7 +77,7 @@
 
   <div>
 
-    <button  mat-raised-button (click)="register()" [disabled]="isEnabled" ><b>Sign up</b></button>
+    <button  mat-raised-button (click)="register()" [disabled]="!this.isPasswordsmatch" ><b>Sign up</b></button>
 
   </div>
 </div>

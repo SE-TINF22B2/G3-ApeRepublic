@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -27,20 +28,28 @@ public class FinnhubStockPriceService {
         return "Opened";
     }
 
+    public void connectWebSocketDualBoot() throws InterruptedException {
+        ws = new FinnhubWebSocket(URI.create(WEBSOCKET_URI_STRING));
+        ws.connectBlocking();
+        ws.setPriceTracker(priceHistoryTracker);
+    }
+
     @GetMapping("/stream/stock")
     private String streamLatestPrice(@RequestParam String symbol) {
-        double result = priceHistoryTracker.getLatestPriceOf(symbol).price();
+        double result = priceHistoryTracker.getLatestPriceOf(symbol);
         if (result == 0) {
-            return "No price yet";
+            // No Price found
+            return "0";
         } else {
-            return String.valueOf(priceHistoryTracker.getLatestPriceOf(symbol).price());
+            return String.valueOf(priceHistoryTracker.getLatestPriceOf(symbol));
         }
     }
 
     public String getLatestPriceEntry(String symbol) {
-        PriceEntry entry = priceHistoryTracker.getLatestPriceOf(symbol);
+        PriceEntry entry = priceHistoryTracker.getLatestPriceEntryOf(symbol);
         if (entry.price() == 0) {
-            return "No price yet";
+            // No Price found
+            return "0";
         } else {
             return String.valueOf(entry);
         }

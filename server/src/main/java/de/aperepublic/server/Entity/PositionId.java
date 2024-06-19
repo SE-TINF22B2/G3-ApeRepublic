@@ -6,6 +6,15 @@ public class PositionId implements Serializable {
 
     private Integer idUser;
 
+    private String symbol;
+
+    public PositionId(Integer idUser, String symbol) {
+        this.idUser = idUser;
+        this.symbol = symbol;
+    }
+    public PositionId() {
+    }
+
     public Integer getIdUser() {
         return idUser;
     }
@@ -14,21 +23,12 @@ public class PositionId implements Serializable {
         this.idUser = idUser;
     }
 
-    public String getIsin() {
-        return isin;
+    public String getSymbol() {
+        return symbol;
     }
 
-    public void setIsin(String isin) {
-        this.isin = isin;
-    }
-
-    private String isin;
-
-    public PositionId(Integer idUser, String isin) {
-        this.idUser = idUser;
-        this.isin = isin;
-    }
-    public PositionId() {
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
 }

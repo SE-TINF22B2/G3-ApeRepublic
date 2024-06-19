@@ -36,7 +36,7 @@ public class StockPriceService {
         if (!priceHistoryTracker.hasEntry(stockPriceRequest.symbol)) {
             return ResponseEntity.ok(new APIResponse(ResponseStatus.INVALID_SYMBOL).toString());
         }
-        PriceEntry priceEntry = priceHistoryTracker.getLatestPriceOf(stockPriceRequest.symbol);
+        PriceEntry priceEntry = priceHistoryTracker.getLatestPriceEntryOf(stockPriceRequest.symbol);
 
         JSONObject jo = new JSONObject();
         jo.put("price", priceEntry.price());
@@ -72,7 +72,6 @@ public class StockPriceService {
         ws.connectBlocking();
         ws.setPriceTracker(priceHistoryTracker);
         ws.subscribeToStock(symbol);
-        ws.subscribeToStock("MSFT"); //subscribe to microsoft (hardcoded)
         return ResponseEntity.ok(new APIResponse(ResponseStatus.SUCCESSFUL_PRICE_REQUEST).toString());
     }
 

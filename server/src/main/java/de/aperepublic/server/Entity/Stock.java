@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Stock")
+@Table(name = "Stocks")
 public class Stock {
 
     @Id
@@ -20,6 +20,5 @@ public class Stock {
 
     @Column(name = "description", nullable = true, length = 2048)
     public String description;
-
 
 }

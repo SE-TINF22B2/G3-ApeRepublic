@@ -1,15 +1,22 @@
-import {Component, ElementRef, OnInit, ViewChild, WritableSignal} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild, WritableSignal} from '@angular/core';
 import { Router } from '@angular/router'
 import {AuthService} from "../../services/auth/auth.service";
 import {FormControl, Validators} from "@angular/forms";
-import {map, Observable, startWith} from "rxjs";
+import {interval, map, Observable, startWith, Subscription} from "rxjs";
+import {ServerApiService} from "../../services/server-api/server-api.service";
+import {MatTable} from "@angular/material/table";
 
 export interface Company {
-  symbol: String;
-  name: String;
-  amount: String;
-  absolute: String;
-  relative: String
+  symbol: string;
+  name: string;
+  amount: string;
+  absolute: string;
+  relative: string
+}
+
+export interface PriceData {
+  price: number;
+  timestamp: number;
 }
 
 @Component({
@@ -17,21 +24,22 @@ export interface Company {
   templateUrl: './page-main.component.html',
   styleUrls: ['./page-main.component.scss']
 })
-export class PageMainComponent implements OnInit {
+
+export class PageMainComponent implements OnInit, OnDestroy {
   @ViewChild('symbolInput') symbolInput!: ElementRef;
+  @ViewChild('myTable') table!: MatTable<Company>;
 
   error = false;
 
   displayedColumns: String[] = ["Symbol", "Name", "Amount", "Absolute", "Relative"];
-  dataSource: Company[] = [
-    {symbol : "182312838", name : "Apple", amount : "3030$", absolute : "483428", relative : "283282%"},
-    {symbol : "182312838", name : "Google", amount : "3843724$", absolute : "398248", relative : "956%"},
-    {symbol : "182312838", name : "Nvidia", amount : "12313$", absolute : "1273", relative : "127321%"},
-  ]
+  dataSource: Company[] = [];
 
   myControl = new FormControl('');
   options: string[] = [];
   filteredOptions: Observable<string[]> = new Observable<string[]>();
+
+  mySub: Subscription | undefined;
+  portfolioPriceHistory: [] = [];
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
@@ -39,7 +47,7 @@ export class PageMainComponent implements OnInit {
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private serverAPI: ServerApiService, public authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -48,6 +56,47 @@ export class PageMainComponent implements OnInit {
       startWith(''),
       map((value: any) => this._filter(value || '')),
     );
+    this.serverAPI.getPositions().subscribe((companies) => {
+      this.dataSource = companies;
+    });
+    setTimeout(() => {
+      this.dataSource.sort((a, b) => parseFloat(b.amount) - parseFloat(a.amount));
+      this.table.renderRows();
+      let sum = 0;
+      for (const company of this.dataSource) {
+        sum += parseFloat(company.amount);
+      }
+      // @ts-ignore
+      this.portfolioPriceHistory.push({price: sum, timestamp: Date.now()});
+      this.authService.currentUserSig()!.portfolioPrice = sum;
+    }, 1000);
+    this.mySub = interval(5000).subscribe((func => {
+      this.serverAPI.getPositions().subscribe((companies) => {
+        setTimeout(() => {
+          let sum = 0;
+          for (const company of companies) {
+            sum += parseFloat(company.amount);
+          }
+          // @ts-ignore
+          this.portfolioPriceHistory.push({price: sum, timestamp: Date.now()});
+          this.authService.currentUserSig()!.portfolioPrice = sum;
+        }, 1000)
+      });
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.mySub?.unsubscribe();
+  }
+
+  updateTable() {
+    this.serverAPI.getPositions().subscribe((companies) => {
+      this.dataSource = companies;
+    });
+    setTimeout(() => {
+      this.dataSource.sort((a, b) => parseFloat(b.amount) - parseFloat(a.amount));
+      this.table.renderRows();
+    }, 1000);
   }
 
   saveSearchTerm(term: string) {
@@ -82,4 +131,6 @@ export class PageMainComponent implements OnInit {
       }
     });
   }
+
+  protected readonly parseFloat = parseFloat;
 }

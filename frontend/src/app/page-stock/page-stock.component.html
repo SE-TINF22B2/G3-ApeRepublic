@@ -7,7 +7,7 @@
       <img style="width: 10%; height: auto" src="{{ stock.currentStock()?.logo }}" alt="">
       <div style="flex-direction: column; margin-left: 5%;">
         <div><b>{{ stock.currentStock()?.name }}</b></div>
-        <div><b>{{ latestStockPrice }}</b></div>
+        <div><b>{{ latestStockPrice }} $</b></div>
         <div [ngStyle]="{ color: isAbsoluteDifferencePositive() ? 'green' : 'red' }">{{ absoluteDifference() }}$ ({{ relativeDifference() }}%)</div>
         <div style="font-size: smaller">(since {{firstEntryTime()}})</div>
       </div>
@@ -27,15 +27,15 @@
       <div style="display: table-row">
         <div style="display: table-cell">
           <h3><b>Total</b></h3>
-          300$
+          {{ (parseFloat(stock.currentStock()?.userShares??'0') * latestStockPrice).toFixed(2) }} $
         </div>
         <div style="display: table-cell">
           <h3><b>Shares</b></h3>
-          7.4
+          {{ stock.currentStock()?.userShares }}
         </div>
         <div style="display: table-cell">
           <h3><b>Buy In</b></h3>
-          50$
+          {{ stock.currentStock()?.buyIn }} $
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
       </div>
       <div style="display: table-row">
         <div style="display: table-cell">
-          <h3>{{ stock.currentStock()?.marketCapitalization }}</h3>
+          <h3>{{ stock.currentStock()?.marketCapitalization }} $</h3>
         </div>
         <div style="display: table-cell">
           <h3>{{ stock.currentStock()?.exchange}}</h3>
